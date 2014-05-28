@@ -1,7 +1,6 @@
 $(document).ready(function() {
-  $("#nav li:has(ul)").hover(function(){
-    $(this).find("ul").slideDown();
-  }, function(){
-    $(this).find("ul").hide();
-  });
+ 	$("#top-menu-bar li:has(ul)").on( "click", function() {
+  		console.log('clicked');
+    	$(this).find("ul").slideDown();
+  	});
 });

@@ -15,7 +15,7 @@
 		</div>
 	</header>
 	<main>
-		<div id="nav">
+		<div id="top-menu-bar">
 			<ul>
 				<li>File
 					<ul>

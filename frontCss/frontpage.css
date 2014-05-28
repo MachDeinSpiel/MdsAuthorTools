@@ -1,15 +1,17 @@
-#nav {}
-#nav ul{ 
+#top-menu-bar {}
+#top-menu-bar ul{ 
 	list-style-type:none; 
 	margin:0; 
 	padding:0; 
 }
-#nav li { 
+#top-menu-bar li { 
 	float:left; 
 	padding:0; 
-	margin:0;
+	margin-right: 10px;
+	cursor: pointer;
+	
 }
-#nav li a { 
+#top-menu-bar li a { 
 	width:150px; 
 	display:block; 
 	text-align:center; 
@@ -22,18 +24,18 @@
 	border:1px 
 	solid #ccc; 
 }
-#nav li a:hover { 
+#top-menu-bar li a:hover { 
 	color:#f00; 
 }
-#nav ul ul { 
+#top-menu-bar ul ul { 
 	display:none; 
 	position:absolute; 
 	z-index:999; 
 }
-#nav li li { 
+#top-menu-bar li li { 
 	float:none; 
 }
-#nav li li a { 
+#top-menu-bar li li a { 
 	background:#EBE7E6!important; 
 	text-align:left; height:auto; 
 	line-height:1; 
