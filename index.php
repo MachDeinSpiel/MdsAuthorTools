@@ -14,63 +14,65 @@
 		</div>
 	</header>
 	<main>
-		<div id="top-menu-bar">
-			<li>File
-				<ul>
-					<li>menu 1</li>
-					<li>menu 1</li>
-					<li>menu 1</li>
-					<li>menu 1</li>
-				</ul>
-			</li>
-			<li>Edit
-				<ul>
-					<li>menu 1</li>
-					<li>menu 1</li>
-					<li>menu 1</li>
-					<li>menu 1</li>					
-				</ul>
-			</li>
-			<li>Selection
-				<ul>
-					<li>menu 1</li>
-					<li>menu 1</li>
-					<li>menu 1</li>
-					<li>menu 1</li>					
-				</ul>
-			</li>
-			<li>Find
-				<ul>
-					<li>menu 1</li>
-					<li>menu 1</li>
-					<li>menu 1</li>
-					<li>menu 1</li>					
-				</ul>
-			</li>
-			<li>View
-				<ul>
-					<li>menu 1</li>
-					<li>menu 1</li>
-					<li>menu 1</li>
-					<li>menu 1</li>					
-				</ul>
-			</li>
-			<li>Preferences
-				<ul>
-					<li>menu 1</li>
-					<li>menu 1</li>
-					<li>menu 1</li>
-					<li>menu 1</li>					
-			</ul>
+		<div id="nav">
+			<ul>
+				<li>File
+					<ul>
+						<li>menu 1</li>
+						<li>menu 1</li>
+						<li>menu 1</li>
+						<li>menu 1</li>
+					</ul>
 				</li>
-			<li>Help
-				<ul>
-					<li>menu 1</li>
-					<li>menu 1</li>
-					<li>menu 1</li>
-					<li>menu 1</li>					
+				<li>Edit
+					<ul>
+						<li>menu 1</li>
+						<li>menu 1</li>
+						<li>menu 1</li>
+						<li>menu 1</li>					
+					</ul>
+				</li>
+				<li>Selection
+					<ul>
+						<li>menu 1</li>
+						<li>menu 1</li>
+						<li>menu 1</li>
+						<li>menu 1</li>					
+					</ul>
+				</li>
+				<li>Find
+					<ul>
+						<li>menu 1</li>
+						<li>menu 1</li>
+						<li>menu 1</li>
+						<li>menu 1</li>					
+					</ul>
+				</li>
+				<li>View
+					<ul>
+						<li>menu 1</li>
+						<li>menu 1</li>
+						<li>menu 1</li>
+						<li>menu 1</li>					
+					</ul>
+				</li>
+				<li>Preferences
+					<ul>
+						<li>menu 1</li>
+						<li>menu 1</li>
+						<li>menu 1</li>
+						<li>menu 1</li>					
 				</ul>
-			</li>
+					</li>
+				<li>Help
+					<ul>
+						<li>menu 1</li>
+						<li>menu 1</li>
+						<li>menu 1</li>
+						<li>menu 1</li>					
+					</ul>
+				</li>
+			</ul>
 		</div>
 	</main>
 	<footer>
