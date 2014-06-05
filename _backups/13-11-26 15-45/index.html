@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+	<head>
+		<meta charset="utf-8">
+		<title>FinitStateMashine for MachDeinSpiel</title>
+
+		<!-- CSS HIER EINBINDEN -->
+		 <link rel="stylesheet" type="text/css" href="css/its-all-about-styles.css" />
+		 <link rel="stylesheet" type="text/css" href="css/fsm-style.css" />
+		 <link rel="stylesheet" type="text/css" href="css/upper-menu-style.css" />
+		 <link rel="stylesheet" type="text/css" href="css/side-tool-bar.css" />
+		 <link rel="stylesheet" type="text/css" href="css/fsm-states-style.css" />
+		 <link rel="stylesheet" type="text/css" href="css/fsm-popup-style.css" />
+
+
+	</head>
+	<body>
+		<div id="fsm-wrapper">
+			<div id="upper-menu-bar" class="open">
+				<!-- Some nice funktions here. maybe such as: Save As, Load (As?), Toggle Chat etc.  -->
+			</div>
+				<div id="fsm-tool">
+					<div id="side-tool-bar" class="fsm-tools">
+						<!-- Alle the tools we need for creating fsm's are placed here. Maybe drag'n'drop elemts? -->
+						<div id="tool-multiselect" class="toolbar-item"></div>
+						<div id="tool-newbox" class="toolbar-item"></div>
+						<div id="tool-link" class="toolbar-item"></div>
+						<div id="tool-move-box" class="toolbar-item"></div>
+						<div id="tool-move-canvas" class="toolbar-item"></div>
+					</div>
+					<div id="workspace">
+						<div id="states">
+						<!-- All statedivs are in here. -->
+						</div>
+						<canvas id="canvas">	
+						 	Your Browser does not work with HTML5 CANVAS! :(	
+						</canvas>	
+						<div id="workspace-popup"></div>
+						<div id="workspace-popup-content"></div>
+						
+					</div>		
+					<div id="bottom-information-bar" class="closed">
+						<!-- Informations like: How many states, how many arrows, how many end/start points, views/hoursInWork? -->
+					</div>
+				</div>
+		<div id="chat" class="chat-closed">
+			<!-- obviously for the chat! we should not work on this before fsm is running! just created it here! -->
+		</div>
+		<script type="text/javascript" src="js/domLoaded.js"></script>
+		<script type="text/javascript" src="js/State.js"></script>
+		<script type="text/javascript" src="js/StateManager.js"></script>
+		<script type="text/javascript" src="js/Link.js"></script>
+		<script type="text/javascript" src="js/dragdrop.js"></script>
+		<script type="text/javascript" src="js/sideToolBar.js"></script>
+
+		<!-- JAVASCRIPT HIER EINBINDEN -->
+	</body>
+</html>

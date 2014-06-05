@@ -1,0 +1,69 @@
+
+Prototypen(eigeneDatei):
+	
+__________________________________________________________________________________________
+
+	StateManager
+		Attribute:
+			State[] states;
+		Methoden:
+			
+			State createState("jsonObj") 
+			State deleteState(State state)
+			Link linkStates(State startState ,State endState)
+
+__________________________________________________________________________________________
+
+	State
+		Attribute:
+			String title;
+			State[] subStates;
+			Link[] startLinks;
+			Link[] endLinks;
+			int x, y, zIndex;
+			int width, height;
+		Methoden:
+			State();
+			State createSubState();
+			void reSize(int width, int height);
+
+__________________________________________________________________________________________
+
+	Link
+		Attribute:
+			String text;
+			int zIndex;
+			int startX, startY, endX, endY;
+
+		Methoden:
+			Link();
+			void move(int startX, int startY, int endX, int endY);
+			void draw("canvas");
+
+__________________________________________________________________________________________
+
+	Tool
+		Attribute:
+			int type;
+		
+		Methoden:
+			Tool()
+				Switch(type)
+
+					1: 		State
+					2:		Link
+					3:		Move[]
+					4:		hand[moves the canvas around]
+					5:		
+
+__________________________________________________________________________________________
+
+	Map
+		Attribute:
+			int x, y;
+			boolean visible;
+
+		Methoden:
+			move();
+
+__________________________________________________________________________________________

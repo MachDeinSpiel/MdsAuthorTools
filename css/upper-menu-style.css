@@ -1,0 +1,8 @@
+#upper-menu-bar{
+	background: url(pics/binding_dark.png) repeat;
+	height: 50px;
+	width: 100%;
+/*	box-shadow: inset 1px 0px 0px  #fff;*/
+	border-bottom: 1px solid;
+	border-color: #BDBDBD;
+}
