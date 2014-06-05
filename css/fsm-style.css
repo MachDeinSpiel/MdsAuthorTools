@@ -9,7 +9,7 @@ html,body{
 }
 
 #fsm-wrapper{
-	background: url(pics/outlets.png) repeat;
+	background: rgb(200,200,200);
 	position: relative;
 	height: 100%;
 	width: 100%;
@@ -30,8 +30,8 @@ html,body{
 	position: relative;
 	float: left;
 	width: 50px;
-	//height: 100%;
-	background-color: #BDBDBD;
+	height: 100%;
+	background-color: rgb(50,50,50);
 	opacity: 0.5;
 
 }

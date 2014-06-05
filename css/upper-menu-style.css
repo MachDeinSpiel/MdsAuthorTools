@@ -1,8 +1,12 @@
-#upper-menu-bar{
-	background: url(pics/binding_dark.png) repeat;
-	height: 50px;
+#upper-menu-bar{ 
+	
+	background-image: -webkit-linear-gradient(rgb(120,120,120) 0%, white 100%);
+	background-image: -moz-linear-gradient(rgb(120,120,120) 0%, white 100%);
+	background-image: -o-linear-gradient(rgb(120,120,120) 0%, white 100%);
+	background-image: linear-gradient(rgb(120,120,120) 0%, white 100%);
+	height: 25px;
 	width: 100%;
 /*	box-shadow: inset 1px 0px 0px  #fff;*/
-	border-bottom: 1px solid;
-	border-color: #BDBDBD;
-}
+	border-bottom: 1px solid black;
+	
+}	
