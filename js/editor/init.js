@@ -4,6 +4,7 @@ window.addEventListener('load', function() {
 	var files = [
 		'js/editor/application/StateManager.js',
 		'js/editor/value-objects/State.js',
+		'js/editor/value-objects/Command.js'
 	];
 
 	files.forEach(function(file){
