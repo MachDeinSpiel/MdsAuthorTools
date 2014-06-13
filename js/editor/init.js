@@ -14,6 +14,8 @@ window.addEventListener('load', function() {
 		loadScript(file);
 	});
 
+	//TODO: Statemanager nicht global machen
+	var stateManager = new stateManager();
 
 
 	function loadScript(file) {
