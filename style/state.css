@@ -1,0 +1,27 @@
+.state{
+	min-width: 250px;
+	min-height: 150px;
+	position: absolute;
+	border: 1px solid #0086cc;
+	top: 150px;
+	left: 400px;
+}
+
+.end-state{
+	background-color:  #0086cc;
+	top: 100px;
+	left: 700px;
+}
+
+.state .state-title{
+	width: 100%;
+	text-align: center;
+	background-color: #0086cc;
+	color: white;
+	font-weight: 700;
+}
+
+.end-state .state-title{
+	background-color: #ffffff;
+	color: #0086cc;
+}
