@@ -19,36 +19,39 @@
 					<li>View</li>
 				</ul>
 				<ul id="editor-top-switcher" class="menu">
-					<li data-panel="editor-game">GameSettings</li>
-					<li data-panel="editor-state-machine" class="selected">StateMachine</li>
+					<li data-panel="editor-game" class="selected">GameSettings</li>
+					<li data-panel="editor-state-machine">StateMachine</li>
 					<li data-panel="editor-group">GroupEditor</li>
 				</ul>	
 			</div>
 			<div id="workspace-wrapper">
-				<div id="editor-game" class="switch-panel">
+				<div id="editor-game" class="switch-panel editor-form">
 					<h2>GameSettings</h2>
+					<form>
+						<label>GameName</label><input type="text" placeholder="Name" />
+						
+					</form>
 				</div>
 				<div id="editor-state-machine" class="switch-panel">
 					<div id="editor-side-menu">
 						<div id="editor-side-tools"></div>
 						<div id="editor-side-inputs"></div>
 					</div>
-						<div id="editor-canvas"></div>
-						<div id="editor-divs">
+					<div id="editor-canvas"></div>
+					<div id="editor-divs">
 
-							<div class="state">
-								<div class="state-title">Move Around</div>
-							</div>
-							<div class="state end-state">
-								<div class="state-title">EndState</div>
-							</div>
-							<div class="state start-state">
-								<div class="state-title">StartState</div>
-							</div>
+						<div class="state">
+							<div class="state-title">Move Around</div>
+						</div>
+						<div class="state end-state">
+							<div class="state-title">EndState</div>
+						</div>
+						<div class="state start-state">
+							<div class="state-title">StartState</div>
 						</div>
 					</div>
 				</div>
-				<div id="group-game" class="switch-panel">
+				<div id="editor-group" class="switch-panel editor-form">
 					<h2>GroupEditor</h2>
 				</div>
 			</div>

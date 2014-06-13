@@ -11,5 +11,13 @@ var menuItems = document.querySelectorAll("#editor-top-switcher li");
 		  	otherItem.classList.remove('selected');
 		});
 		this.classList.add('selected');
+		[].forEach.call(
+		  document.querySelectorAll("#workspace-wrapper .switch-panel"), 
+		  function(panel){
+		  	panel.classList.add('invisible');
+		});
+		console.log(document.querySelector('#'+this.getAttribute('data-panel')));
+		document.querySelector('#'+this.getAttribute('data-panel')).classList.remove('invisible');
+
   	})
 });
