@@ -19,13 +19,16 @@
 					<li>View</li>
 				</ul>
 				<ul id="editor-top-switcher" class="menu">
-					<li data-panel="game-settings">GameSettings</li>
-					<li data-panel="state-machine" class="selected">StateMachine</li>
-					<li data-panel="group-editor">GroupEditor</li>
+					<li data-panel="editor-game">GameSettings</li>
+					<li data-panel="editor-state-machine" class="selected">StateMachine</li>
+					<li data-panel="editor-group">GroupEditor</li>
 				</ul>	
 			</div>
 			<div id="workspace-wrapper">
-				<div id="editor-state-machine">
+				<div id="editor-game" class="switch-panel">
+					<h2>GameSettings</h2>
+				</div>
+				<div id="editor-state-machine" class="switch-panel">
 					<div id="editor-side-menu">
 						<div id="editor-side-tools"></div>
 						<div id="editor-side-inputs"></div>
@@ -37,6 +40,9 @@
 							<div class="state start-state"><div class="state-title">StartState</div></div>
 						</div>
 					</div>
+				</div>
+				<div id="group-game" class="switch-panel">
+					<h2>GroupEditor</h2>
 				</div>
 			</div>
 		</div>
