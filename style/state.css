@@ -3,20 +3,15 @@
 	min-height: 150px;
 	position: absolute;
 	border: 1px solid #0086cc;
-	top: 150px;
-	left: 400px;
 }
 
 .end-state{
 	background-color:  #0086cc;
-	top: 100px;
-	left: 700px;
+
 }
 
 .start-state{
 	border: 1px solid #ff7800;
-	top: 600px;
-	left: 100px;
 }
 
 .state .state-title{

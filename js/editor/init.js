@@ -6,7 +6,7 @@ window.addEventListener('load', function() {
 		'js/editor/application/topswitcher.js',
 		'js/editor/application/menu.js',
 		'js/editor/value-objects/State.js',
-		'js/editor/value-objects/Command.js',
+		'js/editor/application/commands/Command.js',
 		'js/editor/dragndrop.js'
 	];
 
