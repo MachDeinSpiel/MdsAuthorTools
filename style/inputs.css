@@ -1,0 +1,29 @@
+.input-wrapper{
+	margin: 8px;
+	height: 36px;
+}
+.input-wrapper.large{
+	width: 300px;
+}
+
+.input-wrapper.small{
+	width: 100px;
+	float: left;
+}
+
+
+.input-wrapper input{
+	font-size: 12pt;
+	width: 100%;
+}
+
+.input-wrapper .label{
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	color: #0086cc;
+	margin-top: -2px;
+	opacity: 0;
+	transition: opacity 0.5s ease;
+}
