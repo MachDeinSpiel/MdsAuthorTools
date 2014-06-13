@@ -15,7 +15,7 @@
 
 #top-title{
 	font-size: 18pt;
-	padding: 8px 0px 8px 0px;
+	padding: 6px 0px 8px 0px;
 }
 
 #window-menu{
@@ -28,10 +28,32 @@
 	width: 128px;
 	height: 61px;
 	float: left;
-	padding-left: 8px;
+	margin: 2px 16px 2px 4px;
 }
 
-#window-menu span{
+#window-menu li{
 	padding-right: 8px;
-	cursor: pointer;
 }
+
+#editor-top-switcher{
+	float: right;
+	margin-top: -32px;
+}
+
+#editor-top-switcher li{
+	padding: 4px 17px;
+	margin: 0px -2px 0px -2px;
+	/* background-color: #0086cc; */
+	border-bottom: 1px solid #0086cc;
+	color: #0086cc;
+}
+
+#editor-top-switcher li.selected{
+	background-color: white;
+	color: #0086cc;
+	border-top: 1px solid #0086cc;
+	border-right: 1px solid #0086cc;
+	border-bottom: none;
+	border-left: 1px solid #0086cc;
+}
+

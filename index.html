@@ -2,30 +2,39 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>FinitStateMashine for MachDeinSpiel</title>
+		<title>MDS GameCreator</title>
 		<link href='http://fonts.googleapis.com/css?family=Gudea:400,700,400italic' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" type="text/css" href="style/global.css">
 		<link rel="stylesheet" type="text/css" href="style/layout.css">
+		<link rel="stylesheet" type="text/css" href="style/state.css">
 	</head>
 	<body>
 		<div id="wrapper">
 			<div id="top-bar">
 				<div id="header-logo"></div>
 				<div id="top-title">Unnamed Game</div>
-				<div id="window-menu">
-					<span>File</span>
-					<span>Edit</span>
-					<span>View</span>
-				</div>
+				<ul id="window-menu" class="menu">
+					<li>File</li>
+					<li>Edit</li>
+					<li>View</li>
+				</ul>
+				<ul id="editor-top-switcher" class="menu">
+					<li data-panel="game-settings">GameSettings</li>
+					<li data-panel="state-machine" class="selected">StateMachine</li>
+					<li data-panel="group-editor">GroupEditor</li>
+				</ul>	
 			</div>
 			<div id="editor">
-				<div id="editor-top-switcher"></div>	
 				<div id="editor-side-menu">
 					<div id="editor-side-tools"></div>
 					<div id="editor-side-inputs"></div>
 
 				</div>
-				<div id="editor-workspace"></div>
+				<div id="editor-workspace">
+					<div class="state"><div class="state-title">Move Around</div></div>
+					<div class="state end-state"><div class="state-title">EndState</div></div>
+
+				</div>
 			</div>
 		</div>
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
