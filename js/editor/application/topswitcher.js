@@ -1,4 +1,3 @@
-console.log("topswitcher");
 var menuItems = document.querySelectorAll("#editor-top-switcher li");
 [].forEach.call(
   menuItems, 
