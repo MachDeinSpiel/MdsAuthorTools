@@ -1,6 +1,8 @@
 var stateManager;
 
 window.addEventListener('load', function() {
+
+
 	console.error('onload');
 
 	var files = [
@@ -17,7 +19,7 @@ window.addEventListener('load', function() {
 	});
 
 	//TODO: Statemanager nicht global machen
-	stateManager = new stateManager();
+
 
 
 	function loadScript(file) {
