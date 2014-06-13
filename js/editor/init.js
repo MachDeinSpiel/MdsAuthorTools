@@ -7,6 +7,7 @@ window.addEventListener('load', function() {
 		'js/editor/application/StateManager.js',
 		'js/editor/application/topswitcher.js',
 		'js/editor/application/menu.js',
+		'js/editor/application/export.js',
 		'js/editor/value-objects/State.js',
 		'js/editor/application/commands/Command.js',
 		'js/editor/dragndrop.js'
