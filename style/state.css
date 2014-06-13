@@ -13,6 +13,12 @@
 	left: 700px;
 }
 
+.start-state{
+	border: 1px solid #ff7800;
+	top: 600px;
+	left: 100px;
+}
+
 .state .state-title{
 	width: 100%;
 	text-align: center;
@@ -24,4 +30,9 @@
 .end-state .state-title{
 	background-color: #ffffff;
 	color: #0086cc;
+}
+
+.start-state .state-title{
+	background-color: #ff7800;
+	color: #ffffff;
 }
