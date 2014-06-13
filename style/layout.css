@@ -77,3 +77,18 @@
 	height: 100%;
 }
 
+#editor-divs{
+	position: absolute;
+	width: 100%;	
+	height: 100%;
+	top: 0px;
+	left: 0px;
+}
+
+#editor-canvas{
+	position: absolute;
+	width: 100%;	
+	height: 100%;
+	top: 0px;
+	left: 0px;
+}
