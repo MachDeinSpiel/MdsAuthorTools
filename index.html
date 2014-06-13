@@ -7,6 +7,7 @@
 		<link rel="stylesheet" type="text/css" href="style/global.css">
 		<link rel="stylesheet" type="text/css" href="style/layout.css">
 		<link rel="stylesheet" type="text/css" href="style/state.css">
+		<link rel="stylesheet" type="text/css" href="style/inputs.css">
 	</head>
 	<body>
 		<div id="wrapper">
@@ -28,8 +29,18 @@
 				<div id="editor-game" class="switch-panel editor-form">
 					<h2>GameSettings</h2>
 					<form>
-						<label>GameName</label><input type="text" placeholder="Name" />
-						
+						<div class="input-wrapper large">
+							<input type="text" placeholder="Gamename" class="large" />
+							<div class="label"></div>
+						</div>
+						<div class="input-wrapper small">
+							<input type="text" placeholder="min player" class="small" />
+							<div class="label"></div>
+						</div>
+						<div class="input-wrapper small">
+							<input type="text" placeholder="max player" class="small" />
+							<div class="label"></div>
+						</div>
 					</form>
 				</div>
 				<div id="editor-state-machine" class="switch-panel">

@@ -1,0 +1,27 @@
+.input-wrapper{
+	margin: 8px;
+	height: 24px;
+}
+.input-wrapper.large{
+	width: 300px;
+}
+
+.input-wrapper.small{
+	width: 100px;
+	float: left;
+}
+
+
+.input-wrapper input{
+	font-size: 12pt;
+	width: 100%;
+}
+
+.input-wrapper .label{
+	width: 100%;
+	height: 0px; /*muss so, sonst kann man nicht ins feld klicken*/
+	margin-top: -21px;
+	text-align: right;
+	opacity: 0;
+	transition: opacity 0.5s ease;
+}
