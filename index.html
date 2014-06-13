@@ -8,6 +8,8 @@
 		<link rel="stylesheet" type="text/css" href="style/layout.css">
 		<link rel="stylesheet" type="text/css" href="style/state.css">
 		<link rel="stylesheet" type="text/css" href="style/inputs.css">
+		<link rel="stylesheet" type="text/css" href="style/editor.css">
+		<link rel="stylesheet" type="text/css" href="style/toolbox.css">
 	</head>
 	<body>
 		<div id="wrapper">
@@ -53,21 +55,18 @@
 				</div>
 				<div id="editor-state-machine" class="switch-panel">
 					<div id="editor-side-menu">
-						<div id="editor-side-tools"></div>
+						<div id="editor-side-tools">
+							<div id="tools-wrapper">
+								
+							</div>
+						</div>
 						<div id="editor-side-inputs"></div>
 					</div>
-					<div id="editor-canvas"></div>
-					<div id="editor-divs">
-						<div class="state" data-id="1" style="top: 100px; left: 200px;">
-							<div class="state-title" >Move Around</div>
-						</div>
-						<div class="state end-state" data-id="2" 	style="top: 100px; left: 700px;">
-							<div class="state-title">EndState</div>
-						</div>
-						<div class="state start-state" data-id="3" style="top: 400px; left: 400px;">
-							<div class="state-title">StartState</div>
-						</div>
+					<div id="editor-workspace">
+						<div id="editor-canvas"></div>
+						<div id="editor-divs"></div>
 					</div>
+					
 					
 					</div>
 				</div>

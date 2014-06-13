@@ -12,7 +12,8 @@ window.addEventListener('load', function() {
 		'js/editor/application/export.js',
 		'js/editor/value-objects/State.js',
 		'js/editor/application/commands/Command.js',
-		'js/editor/dragndrop.js'
+		'js/editor/dragndrop.js',
+		'js/editor/application/sidebarHandler.js'
 	];
 
 	files.forEach(function(file){
