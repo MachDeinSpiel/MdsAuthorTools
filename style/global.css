@@ -16,3 +16,13 @@ ul.menu{
 	margin: 0px;
 	padding: 0px;
 }
+
+.invisible{
+	display: none;
+}
+
+
+input{
+	width: 250px;
+	font-size: 21pt;
+}

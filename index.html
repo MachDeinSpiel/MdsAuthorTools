@@ -19,31 +19,40 @@
 					<li>View</li>
 				</ul>
 				<ul id="editor-top-switcher" class="menu">
-					<li data-panel="game-settings">GameSettings</li>
-					<li data-panel="state-machine" class="selected">StateMachine</li>
-					<li data-panel="group-editor">GroupEditor</li>
+					<li data-panel="editor-game" class="selected">GameSettings</li>
+					<li data-panel="editor-state-machine">StateMachine</li>
+					<li data-panel="editor-group">GroupEditor</li>
 				</ul>	
 			</div>
 			<div id="workspace-wrapper">
-				<div id="editor-state-machine">
+				<div id="editor-game" class="switch-panel editor-form">
+					<h2>GameSettings</h2>
+					<form>
+						<label>GameName</label><input type="text" placeholder="Name" />
+						
+					</form>
+				</div>
+				<div id="editor-state-machine" class="switch-panel">
 					<div id="editor-side-menu">
 						<div id="editor-side-tools"></div>
 						<div id="editor-side-inputs"></div>
 					</div>
-						<div id="editor-canvas"></div>
-						<div id="editor-divs">
-
-							<div class="state" data-id="1" style="top: 100px; left: 200px;">
-								<div class="state-title" >Move Around</div>
-							</div>
-							<div class="state end-state" data-id="2" 	style="top: 100px; left: 700px;">
-								<div class="state-title">EndState</div>
-							</div>
-							<div class="state start-state" data-id="3" style="top: 400px; left: 400px;">
-								<div class="state-title">StartState</div>
-							</div>
+					<div id="editor-canvas"></div>
+					<div id="editor-divs">
+						<div class="state" data-id="1" style="top: 100px; left: 200px;">
+							<div class="state-title" >Move Around</div>
+						</div>
+						<div class="state end-state" data-id="2" 	style="top: 100px; left: 700px;">
+							<div class="state-title">EndState</div>
+						</div>
+						<div class="state start-state" data-id="3" style="top: 400px; left: 400px;">
+							<div class="state-title">StartState</div>
 						</div>
 					</div>
+					</div>
+				</div>
+				<div id="editor-group" class="switch-panel editor-form">
+					<h2>GroupEditor</h2>
 				</div>
 			</div>
 		</div>
