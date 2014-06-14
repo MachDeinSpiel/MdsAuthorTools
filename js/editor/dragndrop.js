@@ -1,5 +1,4 @@
-
-DRAGDROP = window.DRAGDROP || {};
+var DRAGDROP = {};
 
 DRAGDROP.LoadStateDrag = function() {
     var stateID;
@@ -31,23 +30,53 @@ DRAGDROP.LoadStateDrag = function() {
     })
 }
 
-DRAGDROP.LoadToolDrag = function(){
-     $(".tooldrag").draggable({
+DRAGDROP.LoadToolDrag = function() {
+
+    $(".tooldrag").draggable({
         cursor: "move",
         stack: "#editor-divs div",
         distance: 10,
-        revert: "invalid",
+        revert: function(obj) {
+            if (!obj) {
+
+            } else {
+                console.log(obj[0].getClientRects());
+            }
+
+        },
+        helper: function() {
+
+            return DRAGDROP.createStateDom();
+        },
         start: function() {
 
         },
         drag: function() {
 
         },
-        stop: function() {
-
+        stop: function(event, ui) {
+            if(ui.helper.data('dropped')){
+                console.log(ui.helper.position().left);
+                stateManager.addState(parseInt(ui.helper.position().left -300), parseInt(ui.helper.position().top));
+            }
         }
     })
 }
+
+
+DRAGDROP.createStateDom = function() {
+    var titlediv = $("<div></div>", {
+        "class": "state-title",
+        text: "Insert Title"
+    });
+
+    var domObj = $("<div></div>", {
+        "class": "state",
+    }).append(titlediv);
+
+    return domObj;
+}
+
 
 
 DRAGDROP.LoadStateDrag();
@@ -55,6 +84,6 @@ DRAGDROP.LoadStateDrag();
 
 $("#editor-divs").droppable({
     drop: function(event, ui) {
-        console.log('dropped');
+        ui.helper.data('dropped', true);
     }
 });

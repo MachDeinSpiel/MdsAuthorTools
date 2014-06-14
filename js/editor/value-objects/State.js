@@ -12,7 +12,8 @@ function State(x, y, id) {
 	this.isStart = false;
 	this.isEnd = false;
 
-	this.createDom();
+	this.createDom().appendTo("#editor-divs");
+	DRAGDROP.LoadStateDrag();
 }
 
 
@@ -25,10 +26,8 @@ State.prototype.createDom = function() {
 	this.domObj = $("<div></div>", {
 		"class": "state",
 		'style': "left: " + this.x + "px; top: " + this.y + "px;"
-	}).appendTo("#editor-divs")
-		.data("id", this.id)
+	}).data("id", this.id)
 		.append(titlediv);
 
-	DRAGDROP.LoadStateDrag();
 	return this.domObj;
 }
