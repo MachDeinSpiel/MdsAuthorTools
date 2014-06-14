@@ -55,9 +55,9 @@ DRAGDROP.LoadToolDrag = function() {
 
         },
         stop: function(event, ui) {
-            if(ui.helper.data('dropped')){
-                console.log(ui.helper.position().left);
-                stateManager.addState(parseInt(ui.helper.position().left -300), parseInt(ui.helper.position().top));
+            if (ui.helper.data('dropped')) {
+                console.log(ui);
+                stateManager.addState(parseInt(ui.offset.left - 300), parseInt(ui.offset.top - 64));
             }
         }
     })
