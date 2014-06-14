@@ -1,6 +1,7 @@
 .state{
-	min-width: 250px;
-	min-height: 150px;
+	cursor: pointer;
+	min-width: 100px;
+	min-height: 50px;
 	position: absolute;
 	border: 1px solid #0086cc;
 	background-color:  #ffffff;

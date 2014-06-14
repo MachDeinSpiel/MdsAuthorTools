@@ -28,7 +28,15 @@ DRAGDROP.LoadStateDrag = function() {
             deltaY = parseInt(this.style.top) - startY;
         }
     })
+    $(".state").on('click', function(event) {
+        var cl = $(this).attr("class").split(' ')[0];
+        if (cl === 'state') {
+            SIDEBAR.showInputs();
+        } 
+    });
 }
+
+
 
 DRAGDROP.LoadToolDrag = function() {
 
@@ -58,6 +66,7 @@ DRAGDROP.LoadToolDrag = function() {
             if (ui.helper.data('dropped')) {
                 console.log(ui);
                 stateManager.addState(parseInt(ui.offset.left - 300), parseInt(ui.offset.top - 64));
+                SIDEBAR.showInputs();
             }
         }
     })
@@ -87,3 +96,4 @@ $("#editor-divs").droppable({
         ui.helper.data('dropped', true);
     }
 });
+

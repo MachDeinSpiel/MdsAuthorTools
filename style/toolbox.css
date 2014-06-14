@@ -5,6 +5,14 @@
 	height: 500px;
 }
 
+#editor-side-tools{
+	position: relative;
+	left: 0px;
+	top: 0px;
+	transition: left .2s ease-in-out;
+}
+
+
 .toolbox-item{
 	position: relative;
 	float: left;
