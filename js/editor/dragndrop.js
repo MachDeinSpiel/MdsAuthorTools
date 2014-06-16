@@ -29,13 +29,12 @@ DRAGDROP.LoadStateDrag = function() {
         }
     })
 
-    $(".state").on('click', function(event) {
+    $(".state").one('click', function(event) {
         var cl = $(this).attr("class").split(' ')[0];
         if (cl === 'state') {
             /**
              * Current State setzen
              */
-            console.error("click on state");
             SIDEBAR.setState(stateManager.getStateByID($(this).attr('state-id')));
             SIDEBAR.showInputs();
             //dont propagete event to the parent
@@ -106,5 +105,6 @@ $("#editor-divs").droppable({
 });
 
 $("#editor-divs").on('click', function(){
+    console.log("klick on editor-divs");
     SIDEBAR.saveInputs();
 });
