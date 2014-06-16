@@ -5,7 +5,7 @@ function State(x, y, id) {
 	this.domObj = undefined;
 	this.id = id;
 	//Game related
-	this.name = "Unnamed State";
+	this.name = "State " +id;
 	this.startAction = undefined;
 	this.doAction = undefined;
 	this.endAction = undefined;
@@ -13,6 +13,7 @@ function State(x, y, id) {
 	this.isEnd = false;
 
 	this.createDom().appendTo("#editor-divs");
+
 	DRAGDROP.LoadStateDrag();
 }
 
@@ -35,8 +36,9 @@ State.prototype.createDom = function() {
 
 
 State.prototype.validate = function(){
-	console.log(this.name);
-	var newDom = this.createDom();
-	console.log($("#editor-divs").find("[state-id='" + this.id + "']").replaceWith(newDom));
+	var dom = $("#editor-divs").find("[state-id='" + this.id + "']");
+	if(dom != []){
+		dom.find(".state-title").html(this.name);
+	}
 	DRAGDROP.LoadStateDrag();
 }

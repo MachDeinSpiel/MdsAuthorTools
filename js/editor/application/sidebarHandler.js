@@ -1,5 +1,7 @@
 SIDEBAR = window.SIDEBAR || {};
 
+/** @type {STATE} [The Actual State is stored here] */
+SIDEBAR.currentState = false;
 
 
 /**
@@ -44,15 +46,20 @@ SIDEBAR.showTools = function() {
 	});
 }
 
+/** Saves old state and set new one */
+SIDEBAR.setState = function(state){
+	SIDEBAR.saveInputs();
+	SIDEBAR.currentState = state;
+}
 
-SIDEBAR.showInputs = function(id) {
-	console.info('STATEID: ' +id);
-	if (id == undefined) {
+
+SIDEBAR.showInputs = function() {
+	if (SIDEBAR.currentState.id == undefined) {
 		SIDEBAR.createInputs();
 	} else {
 		try {
 
-			SIDEBAR.createInputs(stateManager.getStateByID(id));
+			SIDEBAR.createInputs();
 
 		} catch (e) {
 			console.error(e.msg);
@@ -62,11 +69,15 @@ SIDEBAR.showInputs = function(id) {
 	}
 }
 
-SIDEBAR.saveInputs = function(state) {
-	var name = $( "input[name='state-name']" ).val();
-	state.name = name;
-	state.validate();
+SIDEBAR.saveInputs = function() {
+	if(!!SIDEBAR.currentState){
+		var name = $( "input[name='state-name']" ).val();
+		SIDEBAR.currentState.name = name;
+		SIDEBAR.currentState.validate();
+	}
+
 	SIDEBAR.slideOutInputs();
+	//TODO: Rest speichern, Command erstellen
 }
 
 SIDEBAR.slideInInputs = function() {
@@ -79,10 +90,10 @@ SIDEBAR.slideOutInputs = function() {
 	$("#editor-side-tools").css("left", 0);
 }
 
-SIDEBAR.createInputs = function(state) {
+SIDEBAR.createInputs = function() {
 	
 	var dom = $("#inputs-wrapper").html('');
-	dom.append($("<input type='text' name='state-name' placeholder='State Name' autofocus value='"+state.name+"' />"));
+	dom.append($("<input type='text' name='state-name' placeholder='State Name' autofocus value='"+SIDEBAR.currentState.name+"' />"));
 	dom.append($("<input type='text' name='state-action' placeholder='State Action' autofocus />"));
 	dom.append($("<form>")
 		.append($("<input type='radio' name='state-type' value='State'><label>State </label> <br>"))
@@ -91,7 +102,7 @@ SIDEBAR.createInputs = function(state) {
 	);
 
 	dom.append($("<button name='save' >Save</button>").on('click', function() {
-		SIDEBAR.saveInputs(state);
+		SIDEBAR.saveInputs();
 	}));
 	return dom;
 }
