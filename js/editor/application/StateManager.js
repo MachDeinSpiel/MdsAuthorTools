@@ -4,15 +4,23 @@ function StateManager() {
 
 }
 
-StateManager.prototype.addState = function(x,y) {
+StateManager.prototype.addState = function(x, y) {
 
 	var stateId = this.states.length + 1;
-	console.info('stateid: ' + stateId);
+	this.states.push(new State(x, y, stateId));
+	return stateId;
+}
 
-	this.states.push(new State(x,y,stateId));
+StateManager.prototype.getStateByID = function(id) {
+	var state = this.states[id-1];
+	console.log(this.states.length);
+	console.log(state);
+	if (state === undefined) {
+		throw new undefinedStateException(id);
+	} 
+	return state;
 }
 
 
 
 stateManager = new StateManager();
-

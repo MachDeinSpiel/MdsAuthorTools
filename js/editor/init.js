@@ -13,7 +13,8 @@ window.addEventListener('load', function() {
 		'js/editor/value-objects/State.js',
 		'js/editor/application/commands/Command.js',
 		'js/editor/dragndrop.js',
-		'js/editor/application/sidebarHandler.js'
+		'js/editor/application/sidebarHandler.js',
+		'js/editor/application/exceptions/undefinedStateException.js'
 	];
 
 	files.forEach(function(file){

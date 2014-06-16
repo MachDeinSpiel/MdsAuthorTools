@@ -28,10 +28,12 @@ DRAGDROP.LoadStateDrag = function() {
             deltaY = parseInt(this.style.top) - startY;
         }
     })
+
     $(".state").on('click', function(event) {
         var cl = $(this).attr("class").split(' ')[0];
         if (cl === 'state') {
-            SIDEBAR.showInputs();
+            console.info('auf state geklickt');
+            SIDEBAR.showInputs($(this).attr('state-id'));
         } 
     });
 }
@@ -46,9 +48,9 @@ DRAGDROP.LoadToolDrag = function() {
         distance: 10,
         revert: function(obj) {
             if (!obj) {
-
+                //TODO: HANDELN
             } else {
-                console.log(obj[0].getClientRects());
+               
             }
 
         },
@@ -64,9 +66,7 @@ DRAGDROP.LoadToolDrag = function() {
         },
         stop: function(event, ui) {
             if (ui.helper.data('dropped')) {
-                console.log(ui);
-                stateManager.addState(parseInt(ui.offset.left - 300), parseInt(ui.offset.top - 64));
-                SIDEBAR.showInputs();
+                SIDEBAR.showInputs(stateManager.addState(parseInt(ui.offset.left - 300), parseInt(ui.offset.top - 64)));
             }
         }
     })
@@ -81,6 +81,7 @@ DRAGDROP.createStateDom = function() {
 
     var domObj = $("<div></div>", {
         "class": "state",
+        "data-id" : 1
     }).append(titlediv);
 
     return domObj;

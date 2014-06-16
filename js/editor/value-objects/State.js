@@ -3,7 +3,7 @@ function State(x, y, id) {
 	this.x = x;
 	this.y = y;
 	this.domObj = undefined;
-	this.id;
+	this.id = id;
 	//Game related
 	this.name = "Unnamed State";
 	this.startAction = undefined;
@@ -17,17 +17,26 @@ function State(x, y, id) {
 }
 
 
-State.prototype.createDom = function() {
+
+State.prototype.createDom = function() { 	
 	var titlediv = $("<div></div>", {
 		"class": "state-title",
-		text: "Insert Title"
+		text: this.name
 	});
 
 	this.domObj = $("<div></div>", {
-		"class": "state",
-		'style': "left: " + this.x + "px; top: " + this.y + "px;"
-	}).data("id", this.id)
-		.append(titlediv);
+		"class"		: "state",
+		"style"		: "left: " + this.x + "px; top: " + this.y + "px;",
+		"state-id"	: ""+this.id
+	}).append(titlediv);
 
 	return this.domObj;
+}
+
+
+State.prototype.validate = function(){
+	console.log(this.name);
+	var newDom = this.createDom();
+	console.log($("#editor-divs").find("[state-id='" + this.id + "']").replaceWith(newDom));
+	DRAGDROP.LoadStateDrag();
 }
