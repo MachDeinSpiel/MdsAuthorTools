@@ -30,7 +30,6 @@ DRAGDROP.LoadStateDrag = function() {
     })
 
     $(".state").unbind( "click" ).on('click', function(event) {
-        console.log("klick on State");
         var cl = $(this).attr("class").split(' ')[0];
         if (cl === 'state') {
             /**
@@ -107,6 +106,5 @@ $("#editor-divs").droppable({
 });
 
 $("#editor-divs").unbind( "click" ).on('click', function() {
-    console.log("klick on editor-divs");
     SIDEBAR.saveInputs();
 });
