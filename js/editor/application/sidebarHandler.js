@@ -3,6 +3,7 @@ SIDEBAR = window.SIDEBAR || {};
 /** @type {STATE} [The Actual State is stored here] */
 SIDEBAR.currentState = false;
 
+SIDEBAR.currentTool = null;
 
 /**
  * [tools description]
@@ -21,8 +22,14 @@ SIDEBAR.tools = {
 		'path': ''
 	},
 	'New Link': {
-		'class': 'toolbox-item tooldrag',
-		'path': ''
+		'class': 'toolbox-item',
+		'path': '',
+		'func': function(){
+			SIDEBAR.setCurrentTool('New Link');
+			SIDEBAR.slideOutInputs();
+			$("#inputs-wrapper").html('Click on two states which should be connected!');
+			SIDEBAR.slideInInputs();
+		}
 	},
 	'Move': {
 		'class': 'toolbox-item',
@@ -40,6 +47,10 @@ SIDEBAR.showTools = function() {
 			$("<div></div>", {
 				"class": value.class,
 				text: index
+			}).on('click', function(){
+				if(value.func){
+					value.func();
+				}
 			})
 		);
 	});
@@ -104,4 +115,9 @@ SIDEBAR.createInputs = function() {
 		SIDEBAR.saveInputs();
 	}));
 	return dom;
+}
+
+
+SIDEBAR.setCurrentTool = function(tool){
+	SIDEBAR.currentTool = tool;
 }
