@@ -25,4 +25,3 @@ StateManager.prototype.addStateByState = function(state) {
 
 };
 
-stateManager = new StateManager();

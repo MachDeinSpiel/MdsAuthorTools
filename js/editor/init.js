@@ -1,33 +1,14 @@
-var stateManager;
+var stateManager,
+	historyManager;
 
-window.addEventListener('load', function() {
+$(window).load(function() {
 
-
-	console.error('onload');
-
-	var files = [
-		'js/editor/application/StateManager.js',
-		'js/editor/application/topswitcher.js',
-		'js/editor/application/menu.js',
-		'js/editor/application/export.js',
-		'js/editor/value-objects/State.js',
-		'js/editor/application/commands/Command.js',
-		'js/editor/dragndrop.js',
-		'js/editor/application/sidebarHandler.js',
-		'js/editor/application/exceptions/undefinedStateException.js'
-	];
-
-	files.forEach(function(file){
-		loadScript(file);
-	});
-
-	//TODO: Statemanager nicht global machen
+	stateManager = new StateManager();
+	historyManager = new HistoryManager();
 
 
+	SIDEBAR.showTools();
+	DRAGDROP.LoadToolDrag();
+	DRAGDROP.LoadStateDrag();
 
-	function loadScript(file) {
-		var scr = document.createElement("script");
-		scr.src = file;
-		document.body.appendChild(scr);
-	}
 });

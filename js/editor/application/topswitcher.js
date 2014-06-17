@@ -3,7 +3,6 @@ var menuItems = document.querySelectorAll("#editor-top-switcher li");
   menuItems, 
   function(item){
   	item.addEventListener('click', function(){
-  		console.log("showing "+this.getAttribute('data-panel'));
   		[].forEach.call(
 		  menuItems, 
 		  function(otherItem){

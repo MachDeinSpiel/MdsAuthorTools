@@ -35,7 +35,6 @@ SIDEBAR.tools = {
  * @return {[type]} [description]
  */
 SIDEBAR.showTools = function() {
-
 	$.each(SIDEBAR.tools, function(index, value) {
 		$('#tools-wrapper').append(
 			$("<div></div>", {
@@ -106,6 +105,3 @@ SIDEBAR.createInputs = function() {
 	}));
 	return dom;
 }
-
-SIDEBAR.showTools();
-DRAGDROP.LoadToolDrag();

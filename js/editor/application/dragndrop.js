@@ -39,7 +39,7 @@ DRAGDROP.LoadStateDrag = function() {
             SIDEBAR.showInputs();
             //dont propagete event to the parent
             event.stopPropagation();
-        } 
+        }
     });
 }
 
@@ -55,7 +55,7 @@ DRAGDROP.LoadToolDrag = function() {
             if (!obj) {
                 //TODO: HANDELN
             } else {
-               
+
             }
 
         },
@@ -71,7 +71,13 @@ DRAGDROP.LoadToolDrag = function() {
         },
         stop: function(event, ui) {
             if (ui.helper.data('dropped')) {
-                SIDEBAR.setState(stateManager.addState(parseInt(ui.offset.left - 300), parseInt(ui.offset.top - 64)));
+                // SIDEBAR.setState(stateManager.addState(parseInt(ui.offset.left - 300), ));
+                SIDEBAR.setState(historyManager.onNewCommand(new CreateStateCommand({
+                    'left': parseInt(ui.offset.left - 300),
+                    'top': parseInt(ui.offset.top - 64)
+                })));
+
+                console.log(SIDEBAR.currentState);
                 SIDEBAR.showInputs();
             }
         }
@@ -87,16 +93,11 @@ DRAGDROP.createStateDom = function() {
 
     var domObj = $("<div></div>", {
         "class": "state",
-        "data-id" : 1
+        "data-id": 1
     }).append(titlediv);
 
     return domObj;
 }
-
-
-
-DRAGDROP.LoadStateDrag();
-
 
 $("#editor-divs").droppable({
     drop: function(event, ui) {
@@ -104,7 +105,7 @@ $("#editor-divs").droppable({
     }
 });
 
-$("#editor-divs").on('click', function(){
+$("#editor-divs").one('click', function() {
     console.log("klick on editor-divs");
     SIDEBAR.saveInputs();
 });
