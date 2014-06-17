@@ -15,9 +15,15 @@ CreateStateCommand.prototype.execute = function(){
 }
 
 CreateStateCommand.prototype.undo = function(){
-	stateManager.removeState(this.data);
+	console.log("CreateStateCommand - undo");
+	return stateManager.removeState(this.data);
 }
 
 CreateStateCommand.prototype.getDescription = function(){
 	return "Add new State";
+}
+
+CreateStateCommand.prototype.redo = function(){
+	console.log("redo dom",this.data.domObj);
+	stateManager.addStateByState(this.data);
 }
