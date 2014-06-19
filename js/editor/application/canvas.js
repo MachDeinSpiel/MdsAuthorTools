@@ -29,7 +29,7 @@ CANVAS.init = function(){
 
 		CANVAS.clear();
 		CANVAS.drawLine(0,0,200,200);
-		stateManager.drawLinks();
+		stateManager.drawTransitions();
 
 		window.requestAnimFrame(function(){
 			tick();
