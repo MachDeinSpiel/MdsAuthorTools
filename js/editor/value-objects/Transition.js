@@ -10,4 +10,8 @@ function Transition(startState, endState){
 
 Transition.prototype.draw = function() {
 	console.log("draw transition");
+	var x = parseInt(this.domObj.style.left);
+	var y = parseInt(this.domObj.style.top);
+	CANVAS.drawLine(this.startState.x, this.startState.y, x, y);
+	CANVAS.drawArrow(x, y, this.endState.x, this.endState.y);
 };
