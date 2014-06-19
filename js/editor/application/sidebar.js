@@ -4,6 +4,12 @@ SIDEBAR = window.SIDEBAR || {};
 SIDEBAR.currentState = false;
 SIDEBAR.currentTool = null;
 
+SIDEBAR.transition = {
+	start: null,
+	end: null,
+	mode: true
+};
+
 /**
  * [tools description]
  *
@@ -18,7 +24,12 @@ SIDEBAR.currentTool = null;
 SIDEBAR.tools = {
 	'New State': {
 		'class': 'toolbox-item tooldrag',
-		'path': ''
+		'path': '',
+		'func': function() {
+			SIDEBAR.setCurrentTool('New State');
+			SIDEBAR.slideOutInputs();
+			SIDEBAR.slideInInputs();
+		}
 	},
 	'New Link': {
 		'class': 'toolbox-item',
@@ -78,17 +89,33 @@ SIDEBAR.showInputs = function() {
 }
 
 SIDEBAR.saveInputs = function() {
-	if (!!SIDEBAR.currentState) {
-		var name = $("input[name='state-name']").val();
-		SIDEBAR.currentState.name = name;
-		SIDEBAR.currentState.validate();
-	}
+	if (SIDEBAR.currentTool === 'New State') {
+		if (!!SIDEBAR.currentState) {
+			var name = $("input[name='state-name']").val();
+			SIDEBAR.currentState.name = name;
+			SIDEBAR.currentState.validate();
+		}
 
-	SIDEBAR.slideOutInputs();
-	//TODO: Rest speichern, Command erstellen
+	}
+	if (SIDEBAR.currentTool === 'New Link') {
+		console.log('saved new link');
+		historyManager.onNewCommand(new CreateTransitionCommand({
+			start: SIDEBAR.transition.start,
+			end: SIDEBAR.transition.end
+		}));
+	SIDEBAR.transition.start = null;
+	SIDEBAR.transition.end = null;
+	SIDEBAR.transition.mode = true;
+}
+
+
+
+SIDEBAR.slideOutInputs();
+//TODO: Rest speichern, Command erstellen
 }
 
 SIDEBAR.slideInInputs = function() {
+	SIDEBAR.createInputs();
 	$("#editor-side-inputs").css("left", 0);
 	$("#editor-side-tools").css("left", -300);
 }
@@ -100,26 +127,41 @@ SIDEBAR.slideOutInputs = function() {
 
 SIDEBAR.createInputs = function() {
 	var dom = $("#inputs-wrapper").html('');
+
 	if (SIDEBAR.currentTool === 'New Link') {
-		dom.html('Click on two states which should be connected!');
+		dom.html('Choos two states!');
+		if (SIDEBAR.transition.start != null) {
+			dom.html('Choos <b>another</b> states!');
+			dom.append($("<p>" + SIDEBAR.transition.start.name + "</p>"));
+		}
+
+		if (SIDEBAR.transition.end != null) {
+			dom.html('Setted both states!');
+			dom.append($("<button name='save' >Save</button>").on('click', function() {
+				SIDEBAR.saveInputs();
+			}));
+		}
 		return;
 	}
-	
-	dom.append($("<input type='text' name='state-name' placeholder='State Name' autofocus value='" + SIDEBAR.currentState.name + "' />"));
-	dom.append($("<input type='text' name='state-action' placeholder='State Action' autofocus />"));
-	dom.append($("<form>")
-		.append($("<input type='radio' name='state-type' value='State'><label>State </label> <br>"))
-		.append($("<input type='radio' name='state-type' value='Start State'><label>Start State </label><br>"))
-		.append($("<input type='radio' name='state-type' value='End State'><label>End State </label><br>"))
-	);
+	if (SIDEBAR.currentTool === 'New State') {
+		dom.append($("<input type='text' name='state-name' placeholder='State Name' autofocus value='" + SIDEBAR.currentState.name + "' />"));
+		dom.append($("<input type='text' name='state-action' placeholder='State Action' autofocus />"));
+		dom.append($("<form>")
+			.append($("<input type='radio' name='state-type' value='State'><label>State </label> <br>"))
+			.append($("<input type='radio' name='state-type' value='Start State'><label>Start State </label><br>"))
+			.append($("<input type='radio' name='state-type' value='End State'><label>End State </label><br>"))
+		);
+		dom.append($("<button name='save' >Save</button>").on('click', function() {
+			SIDEBAR.saveInputs();
+		}));
+		return
+	}
 
-	dom.append($("<button name='save' >Save</button>").on('click', function() {
-		SIDEBAR.saveInputs();
-	}));
-	
+
 }
 
 
 SIDEBAR.setCurrentTool = function(tool) {
 	SIDEBAR.currentTool = tool;
+	console.error(tool);
 }

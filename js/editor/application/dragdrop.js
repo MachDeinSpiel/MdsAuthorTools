@@ -31,7 +31,13 @@ DRAGDROP.LoadStateDrag = function() {
 
     $(".state").unbind( "click" ).on('click', function(event) {
         if(SIDEBAR.currentTool === 'New Link'){
-            console.log("libk start");
+            if(SIDEBAR.transition.mode){
+                SIDEBAR.transition.start = stateManager.getStateByID($(this).attr('state-id'));
+                SIDEBAR.transition.mode = false;
+            } else {
+                SIDEBAR.transition.end = stateManager.getStateByID($(this).attr('state-id'));
+            }
+            SIDEBAR.createInputs();
             event.stopPropagation();
         }else{
             var cl = $(this).attr("class").split(' ')[0];
@@ -81,8 +87,7 @@ DRAGDROP.LoadToolDrag = function() {
                     'left': parseInt(ui.offset.left - 300),
                     'top': parseInt(ui.offset.top - 64)
                 })));
-
-                console.log(SIDEBAR.currentState);
+                SIDEBAR.setCurrentTool("New State");
                 SIDEBAR.showInputs();
             }
         }

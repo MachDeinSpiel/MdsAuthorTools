@@ -10,7 +10,7 @@ CreateTransitionCommand.prototype.constructor = CreateTransitionCommand;
 
 /** will ever return data */
 CreateTransitionCommand.prototype.execute = function() {
-	this.data = stateManager.linkStates(data.start, data.endState);
+	this.data = stateManager.linkStates(this.data.start, this.data.end);
 	return this.data;
 }
 
