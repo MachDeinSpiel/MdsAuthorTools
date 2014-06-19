@@ -33,3 +33,14 @@
 	background-color: #ff7800;
 	color: #ffffff;
 }
+
+.transition{
+	background-color: #ffffff;
+	border: 1px solid #0086cc;
+	padding: 5px;
+	position: absolute; 
+	cursor: pointer;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}

@@ -103,12 +103,11 @@ SIDEBAR.saveInputs = function() {
 			start: SIDEBAR.transition.start,
 			end: SIDEBAR.transition.end
 		}));
-	SIDEBAR.transition.start = null;
-	SIDEBAR.transition.end = null;
-	SIDEBAR.transition.mode = true;
-}
-
-
+		SIDEBAR.transition.start = null;
+		SIDEBAR.transition.end = null;
+		SIDEBAR.transition.mode = true;
+		SIDEBAR.setCurrentTool(null);
+	}
 
 SIDEBAR.slideOutInputs();
 //TODO: Rest speichern, Command erstellen

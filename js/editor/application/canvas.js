@@ -41,7 +41,6 @@ CANVAS.init = function(){
 	(function tick(){
 
 		CANVAS.clear();
-		CANVAS.drawArrow(0,0,200,200);
 		stateManager.drawTransitions();
 
 		window.requestAnimFrame(function(){

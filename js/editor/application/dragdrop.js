@@ -15,11 +15,13 @@ DRAGDROP.LoadStateDrag = function() {
         start: function() {
             startX = parseInt(this.style.left);
             startY = parseInt(this.style.top);
-            stateID = this.getAttribute('data-id');
+            stateID = $(this).attr('state-id');
         },
         drag: function() {
-            deltaX = parseInt(this.style.left) - startX;
-            deltaY = parseInt(this.style.top) - startY;
+            stateManager.getStateByID(stateID).x = parseInt(this.style.left);
+            stateManager.getStateByID(stateID).y = parseInt(this.style.top);
+            //deltaX = parseInt(this.style.left) - startX;
+            //deltaY = parseInt(this.style.top) - startY;
         },
         stop: function() {
 
@@ -94,6 +96,15 @@ DRAGDROP.LoadToolDrag = function() {
     })
 }
 
+
+DRAGDROP.loadTransitionDrag = function(){
+    $(".transition").draggable({
+        cursor: "move",
+        stack: "#editor-divs div",
+        distance: 10,
+        revert: "invalid"
+    });
+}
 
 DRAGDROP.createStateDom = function() {
     var titlediv = $("<div></div>", {
