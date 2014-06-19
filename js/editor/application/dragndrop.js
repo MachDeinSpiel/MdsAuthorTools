@@ -30,15 +30,20 @@ DRAGDROP.LoadStateDrag = function() {
     })
 
     $(".state").unbind( "click" ).on('click', function(event) {
-        var cl = $(this).attr("class").split(' ')[0];
-        if (cl === 'state') {
-            /**
-             * Current State setzen
-             */
-            SIDEBAR.setState(stateManager.getStateByID($(this).attr('state-id')));
-            SIDEBAR.showInputs();
-            //dont propagete event to the parent
+        if(SIDEBAR.currentTool === 'New Link'){
+            console.log("libk start");
             event.stopPropagation();
+        }else{
+            var cl = $(this).attr("class").split(' ')[0];
+            if (cl === 'state') {
+                /**
+                 * Current State setzen
+                 */
+                SIDEBAR.setState(stateManager.getStateByID($(this).attr('state-id')));
+                SIDEBAR.showInputs();
+                //dont propagete event to the parent
+                event.stopPropagation();
+            }
         }
     });
 }
@@ -99,12 +104,3 @@ DRAGDROP.createStateDom = function() {
     return domObj;
 }
 
-$("#editor-divs").droppable({
-    drop: function(event, ui) {
-        ui.helper.data('dropped', true);
-    }
-});
-
-$("#editor-divs").unbind( "click" ).on('click', function() {
-    SIDEBAR.saveInputs();
-});

@@ -2,7 +2,6 @@ SIDEBAR = window.SIDEBAR || {};
 
 /** @type {STATE} [The Actual State is stored here] */
 SIDEBAR.currentState = false;
-
 SIDEBAR.currentTool = null;
 
 /**

@@ -11,4 +11,14 @@ $(window).load(function() {
 	DRAGDROP.LoadToolDrag();
 	DRAGDROP.LoadStateDrag();
 
+	$("#editor-divs").droppable({
+    drop: function(event, ui) {
+        ui.helper.data('dropped', true);
+    }
+	});
+
+	$("#editor-divs").on('click', function() {
+	    SIDEBAR.saveInputs();
+	});
+
 });
