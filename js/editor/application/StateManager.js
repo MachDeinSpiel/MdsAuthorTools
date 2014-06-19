@@ -41,3 +41,8 @@ StateManager.prototype.removeState = function(state) {
 		throw new Error('NO INDEX -1 WOW');
 	}
 };
+
+
+StateManager.prototype.drawLinks = function(){
+	
+}

@@ -21,4 +21,6 @@ $(window).load(function() {
 	    SIDEBAR.saveInputs();
 	});
 
+	CANVAS.init();
+
 });
