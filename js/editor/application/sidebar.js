@@ -23,10 +23,9 @@ SIDEBAR.tools = {
 	'New Link': {
 		'class': 'toolbox-item',
 		'path': '',
-		'func': function(){
+		'func': function() {
 			SIDEBAR.setCurrentTool('New Link');
 			SIDEBAR.slideOutInputs();
-			$("#inputs-wrapper").html('Click on two states which should be connected!');
 			SIDEBAR.slideInInputs();
 		}
 	},
@@ -46,8 +45,8 @@ SIDEBAR.showTools = function() {
 			$("<div></div>", {
 				"class": value.class,
 				text: index
-			}).on('click', function(){
-				if(value.func){
+			}).on('click', function() {
+				if (value.func) {
 					value.func();
 				}
 			})
@@ -56,7 +55,7 @@ SIDEBAR.showTools = function() {
 }
 
 /** Saves old state and set new one */
-SIDEBAR.setState = function(state){
+SIDEBAR.setState = function(state) {
 	SIDEBAR.saveInputs();
 	SIDEBAR.currentState = state;
 }
@@ -79,8 +78,8 @@ SIDEBAR.showInputs = function() {
 }
 
 SIDEBAR.saveInputs = function() {
-	if(!!SIDEBAR.currentState){
-		var name = $( "input[name='state-name']" ).val();
+	if (!!SIDEBAR.currentState) {
+		var name = $("input[name='state-name']").val();
 		SIDEBAR.currentState.name = name;
 		SIDEBAR.currentState.validate();
 	}
@@ -100,9 +99,13 @@ SIDEBAR.slideOutInputs = function() {
 }
 
 SIDEBAR.createInputs = function() {
-	
 	var dom = $("#inputs-wrapper").html('');
-	dom.append($("<input type='text' name='state-name' placeholder='State Name' autofocus value='"+SIDEBAR.currentState.name+"' />"));
+	if (SIDEBAR.currentTool === 'New Link') {
+		dom.html('Click on two states which should be connected!');
+		return;
+	}
+	
+	dom.append($("<input type='text' name='state-name' placeholder='State Name' autofocus value='" + SIDEBAR.currentState.name + "' />"));
 	dom.append($("<input type='text' name='state-action' placeholder='State Action' autofocus />"));
 	dom.append($("<form>")
 		.append($("<input type='radio' name='state-type' value='State'><label>State </label> <br>"))
@@ -113,10 +116,10 @@ SIDEBAR.createInputs = function() {
 	dom.append($("<button name='save' >Save</button>").on('click', function() {
 		SIDEBAR.saveInputs();
 	}));
-	return dom;
+	
 }
 
 
-SIDEBAR.setCurrentTool = function(tool){
+SIDEBAR.setCurrentTool = function(tool) {
 	SIDEBAR.currentTool = tool;
 }

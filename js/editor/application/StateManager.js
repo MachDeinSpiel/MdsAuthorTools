@@ -1,7 +1,7 @@
 function StateManager() {
 
 	this.states = [];
-
+	this.transitions = [];
 }
 
 StateManager.prototype.addState = function(x, y) {
@@ -38,6 +38,37 @@ StateManager.prototype.removeState = function(state) {
 	if(i != -1){
 		this.states.splice(i, 1);
 	} else {
-		throw new Error('NO INDEX -1 WOW');
+		throw new Error('NO INDEX -1 in states');
 	}
+};
+
+StateManager.prototype.linkStates = function(state_1, state_2){
+	var temp = new Transition(state_1, state_2);
+	this.transitions.push(temp);
+	return temp;
+}
+
+StateManager.prototype.addTransitionByTransition = function(trans) {
+	this.transitions.push(trans);
+};
+
+StateManager.prototype.removeTransition = function(trans) {
+	var i = -1;
+	$.each(this.transitions, function(index, value){
+		if (value = trans) {
+			i = index;
+		}
+	});
+	if(i != -1){
+		this.transitions.splice(i, 1);
+	} else {
+		throw new Error('NO INDEX -1 in transitions');
+	}
+};
+
+StateManager.prototype.drawTransitions = function() {
+	$.each(this.transitions, function(index, value){
+		value.draw();
+	});
+	
 };

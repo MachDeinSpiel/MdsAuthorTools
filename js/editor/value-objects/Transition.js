@@ -6,3 +6,8 @@ function Transition(startState, endState){
 	this.points = [];
 	this.domObj = undefined;
 }
+
+
+Transition.prototype.draw = function() {
+	console.log("draw transition");
+};
