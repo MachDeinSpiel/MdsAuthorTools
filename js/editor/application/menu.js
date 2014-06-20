@@ -11,3 +11,23 @@
 			}
 		});
 	});
+
+
+[].forEach.call(
+	document.querySelectorAll('#window-menu li'),
+	function(item) {
+		$(item).on('click', function(){
+			MENU.execute($(item).attr('data-command'));
+		});
+	});
+
+MENU = {};
+
+MENU.execute = function(what){
+	switch(what){
+		case 'undo': historyManager.undo();
+				break;
+		case 'redo': historyManager.redo();
+				break;
+	}
+}
