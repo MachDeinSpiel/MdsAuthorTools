@@ -9,6 +9,13 @@
 			} else {
 				label.style.opacity = "1";
 			}
+			if($(this).attr('name') === 'config-game-name'){
+				var title = this.value;
+				title.replace(/\s/g, '');
+				title = (title=='') ? 'Unnamed Game' : title;
+				$('#top-title').html(title);
+				document.title = title + " - MDS GameCreator";
+			}
 		});
 	});
 
@@ -25,9 +32,12 @@ MENU = {};
 
 MENU.execute = function(what){
 	switch(what){
-		case 'undo': historyManager.undo();
-				break;
-		case 'redo': historyManager.redo();
-				break;
+		case 'undo':	historyManager.undo();
+						$("li[data-panel='editor-state-machine']").click(); 
+						break;
+
+		case 'redo':	historyManager.redo();
+						$("li[data-panel='editor-state-machine']").click(); 
+						break;
 	}
 }
