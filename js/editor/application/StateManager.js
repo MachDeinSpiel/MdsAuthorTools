@@ -23,6 +23,7 @@ StateManager.prototype.getStateByID = function(id) {
 StateManager.prototype.addStateByState = function(state) {
 	this.states.push(state);
 	$("#editor-divs").append(state.domObj);
+	DRAGDROP.LoadStateDrag();
 };
 
 StateManager.prototype.removeState = function(state) {
@@ -50,6 +51,8 @@ StateManager.prototype.linkStates = function(state_1, state_2){
 
 StateManager.prototype.addTransitionByTransition = function(trans) {
 	this.transitions.push(trans);
+	$("#editor-divs").append(trans.domObj);
+	DRAGDROP.loadTransitionDrag();
 };
 
 StateManager.prototype.removeTransition = function(trans) {
@@ -59,6 +62,7 @@ StateManager.prototype.removeTransition = function(trans) {
 			i = index;
 		}
 	});
+	trans.domObj.remove();
 	if(i != -1){
 		this.transitions.splice(i, 1);
 	} else {

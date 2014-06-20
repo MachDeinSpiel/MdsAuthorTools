@@ -11,7 +11,7 @@ DRAGDROP.LoadStateDrag = function() {
         stack: "#editor-divs div",
         distance: 10,
         revert: "invalid",
-
+        containment: "parent",
         start: function() {
             startX = parseInt(this.style.left);
             startY = parseInt(this.style.top);
@@ -31,17 +31,26 @@ DRAGDROP.LoadStateDrag = function() {
         }
     })
 
-    $(".state").unbind( "click" ).on('click', function(event) {
-        if(SIDEBAR.currentTool === 'New Link'){
-            if(SIDEBAR.transition.mode){
+    $(".state").unbind("click").on('click', function(event) {
+
+
+        if (SIDEBAR.currentTool === 'New Link') {
+            if (SIDEBAR.transition.mode) {
                 SIDEBAR.transition.start = stateManager.getStateByID($(this).attr('state-id'));
                 SIDEBAR.transition.mode = false;
             } else {
                 SIDEBAR.transition.end = stateManager.getStateByID($(this).attr('state-id'));
+                historyManager.onNewCommand(new CreateTransitionCommand({
+                    start: SIDEBAR.transition.start,
+                    end: SIDEBAR.transition.end
+                }));
+                SIDEBAR.saveInputs();
             }
+
             SIDEBAR.createInputs();
             event.stopPropagation();
-        }else{
+        } else {
+            SIDEBAR.currentTool = 'New State';
             var cl = $(this).attr("class").split(' ')[0];
             if (cl === 'state') {
                 /**
@@ -97,12 +106,13 @@ DRAGDROP.LoadToolDrag = function() {
 }
 
 
-DRAGDROP.loadTransitionDrag = function(){
+DRAGDROP.loadTransitionDrag = function() {
     $(".transition").draggable({
         cursor: "move",
         stack: "#editor-divs div",
         distance: 10,
-        revert: "invalid"
+        revert: "invalid",
+        containment: "parent"
     });
 }
 
@@ -119,4 +129,3 @@ DRAGDROP.createStateDom = function() {
 
     return domObj;
 }
-

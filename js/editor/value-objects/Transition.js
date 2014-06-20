@@ -21,20 +21,20 @@ function Transition(startState, endState){
 
 Transition.prototype.draw = function() {
 	
-	var x = parseInt(this.domObj[0].style.left);
-	var y = parseInt(this.domObj[0].style.top);
+	var x = parseInt(this.domObj.position().left);
+	var y = parseInt(this.domObj.position().top);
 	var w = this.domObj.width();
 	var h = this.domObj.height();
 
-	var p1 = this.findDrawingPoints(this.startState.x,
-								this.startState.y,
+	var p1 = this.findDrawingPoints(this.startState.domObj.position().left,
+								this.startState.domObj.position().top,
 								this.startState.domObj.width(),
 								this.startState.domObj.height(),
 								x, y, w, h);
 
 	var p2 = this.findDrawingPoints(x, y, w, h,
-								this.endState.x,
-								this.endState.y,
+								this.endState.domObj.position().left,
+								this.endState.domObj.position().top,
 								this.endState.domObj.width(),
 								this.endState.domObj.height());
 

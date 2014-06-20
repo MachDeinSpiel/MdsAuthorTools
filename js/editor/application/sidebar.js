@@ -99,18 +99,14 @@ SIDEBAR.saveInputs = function() {
 	}
 	if (SIDEBAR.currentTool === 'New Link') {
 		console.log('saved new link');
-		historyManager.onNewCommand(new CreateTransitionCommand({
-			start: SIDEBAR.transition.start,
-			end: SIDEBAR.transition.end
-		}));
 		SIDEBAR.transition.start = null;
 		SIDEBAR.transition.end = null;
 		SIDEBAR.transition.mode = true;
 		SIDEBAR.setCurrentTool(null);
 	}
 
-SIDEBAR.slideOutInputs();
-//TODO: Rest speichern, Command erstellen
+	SIDEBAR.slideOutInputs();
+	//TODO: Rest speichern, Command erstellen
 }
 
 SIDEBAR.slideInInputs = function() {
@@ -140,7 +136,8 @@ SIDEBAR.createInputs = function() {
 				SIDEBAR.saveInputs();
 			}));
 		}
-		return;
+
+
 	}
 	if (SIDEBAR.currentTool === 'New State') {
 		dom.append($("<input type='text' name='state-name' placeholder='State Name' autofocus value='" + SIDEBAR.currentState.name + "' />"));

@@ -37,7 +37,8 @@
 .transition{
 	background-color: #ffffff;
 	border: 1px solid #0086cc;
-	padding: 5px;
+	min-height: 25px;
+	min-width: 50px;
 	position: absolute; 
 	cursor: pointer;
 	-webkit-box-sizing: border-box;
