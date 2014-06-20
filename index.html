@@ -11,6 +11,7 @@
 		<link rel="stylesheet" type="text/css" href="style/editor.css">
 		<link rel="stylesheet" type="text/css" href="style/toolbox.css">
 		<link rel="stylesheet" type="text/css" href="style/sidebar-inputs.css">
+		<link rel="stylesheet" type="text/css" href="style/group-editor.css">
 	</head>
 	<body>
 		<div id="wrapper">
@@ -68,11 +69,37 @@
 						<div id="editor-divs"></div>
 					</div>
 					
-					
-					</div>
 				</div>
 				<div id="editor-group" class="switch-panel editor-form">
 					<h2>GroupEditor</h2>
+					<div id="groups-list" class="group-editor-list">
+						<div class="group-editor-list-title">Groups</div>
+						<ul>
+							<li class="selected">Bombs</li>
+							<li>Medipacks</li>
+							<li>Players</li>
+						</ul>
+					</div>
+					<div id="group-overview" class="group-editor-list">
+						<div class="group-editor-list-title">Bombs</div>
+						<div class="group-editor-sublist-title">Members</div>
+						<ul>
+							<li>Bomb1</li>
+							<li class="selected">Bomb2</li>
+							<li>Bomb3</li>
+						</ul>
+						<div class="group-editor-sublist-title">Attributes</div>
+						<ul>
+							<li>Text</li>
+							<li>Image</li>
+							<li class="selected">Position</li>
+							<li>Action</li>
+						</ul>
+					</div>
+					<div id="group-detail" class="group-editor-list">
+						<div class="group-editor-list-title">Position of Bomb2</div>
+						<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1199.0319453910151!2d8.78306042327837!3d53.055159444242854!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sde!2sde!4v1403219195099" width="600" height="450" frameborder="0" style="border:0" class="group-editor-map"></iframe>
+					</div>
 				</div>
 			</div>
 		</div>
