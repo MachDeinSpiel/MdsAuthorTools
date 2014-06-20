@@ -10,11 +10,14 @@
 				label.style.opacity = "1";
 			}
 			if($(this).attr('name') === 'config-game-name'){
-				var title = this.value;
-				title.replace(/\s/g, '');
-				title = (title=='') ? 'Unnamed Game' : title;
-				$('#top-title').html(title);
-				document.title = title + " - MDS GameCreator";
+				var title = this.value.replace(/\s/g, '');
+				if(title === ''){
+					$('#top-title').html("Unnamed Game");
+					document.title = "MDS GameCreator";
+				}else{
+					$('#top-title').html(title);
+					document.title = title + " - MDS GameCreator";
+				}
 			}
 		});
 	});

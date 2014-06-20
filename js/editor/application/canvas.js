@@ -26,18 +26,6 @@ CANVAS.init = function(){
 		);
 	}();
 
-	var scope = this;
-	$(window).on('resize', function(){
-		scope.width = scope.canvas.width();
-		scope.height = scope.canvas.height();
-		scope.canvas.attr('width', scope.width);
-		scope.canvas.attr('height', scope.height);
-		scope.ctx = scope.canvas.get(0).getContext("2d");
-		scope.ctx.strokeStyle = '#0086cc';
-		scope.ctx.fillStyle = '#0086cc';
-		scope.ctx.lineWidth = "2";
-	});
-
 	(function tick(){
 
 		CANVAS.clear();
@@ -47,6 +35,18 @@ CANVAS.init = function(){
 			tick();
 		});
 	})();
+}
+
+
+CANVAS.windowUpdate = function(){
+		this.width = this.canvas.width();
+		this.height = this.canvas.height();
+		this.canvas.attr('width', this.width);
+		this.canvas.attr('height', this.height);
+		this.ctx = this.canvas.get(0).getContext("2d");
+		this.ctx.strokeStyle = '#0086cc';
+		this.ctx.fillStyle = '#0086cc';
+		this.ctx.lineWidth = "2";
 }
 
 CANVAS.clear = function(){
