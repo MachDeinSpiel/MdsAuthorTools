@@ -68,7 +68,7 @@ SIDEBAR.showTools = function() {
 /** Saves old state and set new one */
 SIDEBAR.setState = function(state) {
 	SIDEBAR.saveInputs();
-	SIDEBAR.currentState = state;
+	SIDEBAR.currentState = state.getClone();
 }
 
 
@@ -77,9 +77,7 @@ SIDEBAR.showInputs = function() {
 		SIDEBAR.createInputs();
 	} else {
 		try {
-
 			SIDEBAR.createInputs();
-
 		} catch (e) {
 			console.error(e);
 			return;
@@ -89,22 +87,22 @@ SIDEBAR.showInputs = function() {
 }
 
 SIDEBAR.saveInputs = function() {
-	if (SIDEBAR.currentTool === 'New State') {
-		if (!!SIDEBAR.currentState) {
-			var name = $("input[name='state-name']").val();
-			SIDEBAR.currentState.name = name;
-			SIDEBAR.currentState.validate();
+	if(SIDEBAR.currentTool != null){
+		if (SIDEBAR.currentTool === 'New State') {
+			if (!!SIDEBAR.currentState) {
+				var name = $("input[name='state-name']").val();
+				SIDEBAR.currentState.name = name;
+				SIDEBAR.currentState.validate();
+			}
 		}
-
+		if (SIDEBAR.currentTool === 'New Link') {
+			console.log('saved new link');
+			SIDEBAR.transition.start = null;
+			SIDEBAR.transition.end = null;
+			SIDEBAR.transition.mode = true;
+			SIDEBAR.setCurrentTool(null);
+		}
 	}
-	if (SIDEBAR.currentTool === 'New Link') {
-		console.log('saved new link');
-		SIDEBAR.transition.start = null;
-		SIDEBAR.transition.end = null;
-		SIDEBAR.transition.mode = true;
-		SIDEBAR.setCurrentTool(null);
-	}
-
 	SIDEBAR.slideOutInputs();
 	//TODO: Rest speichern, Command erstellen
 }
