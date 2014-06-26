@@ -83,5 +83,5 @@ State.prototype.validate = function(){
 	dom.removeClass('start-state');
 	dom.removeClass('end-state');
 	dom.addClass(this.type);
-	// DRAGDROP.LoadStateDrag();
+	DRAGDROP.LoadStateDrag();
 }
