@@ -1,0 +1,170 @@
+{
+    "actions": [
+        {
+            "name" : "Change lifes of player",
+            "inputs": {
+                "attribute": {
+                    "type": "ATTRIBUTE",
+                    "hint": "Attribute which should be changed"
+                },
+                "amount": {
+                    "type": "NUMBER",
+                    "hint": "Amount player's health will be altered by"
+                },
+                "method":{
+                    "type": "SELECT",
+                    "options": [{"increase":"add"}, {"decrease":"subtract"}],
+                    "hint" : "..."
+                }
+
+
+            },
+            "json":" {\"ident\": \"changeAttribute\", \"defaults\": {\"attribute\": \"notValue.self._attribute_\", \"value\": _amount_, \"valueType\": \"_method_\", \"duration\": \"null\", \"ticks\": \"null\"}}"
+        },
+		{
+            "name" : "SetStringAttribute",
+            "inputs": {
+                "attribute": {
+                    "type": "ATTRIBUTE",
+                    "hint": "Attribute which should be changed, changing strings is useful for changing a players visibility"
+                },
+                "value":{
+                    "type": "STRING",
+                    "hint" : "New value for the attribute"
+                },
+			    "duration":{
+                    "type": "NUMBER",
+                    "hint" : "How long does the effect last in seconds"
+                }
+            },
+            "json":" {\"ident\": \"changeAttribute\", \"defaults\": {\"attribute\": \"notValue.self._attribute_\", \"value\": _value_, \"valueType\": \"set\", \"duration\": \"_duration_\", \"ticks\": \"null\"}}"
+        },
+		{
+            "name" : "SetNumberAttribute",
+            "inputs": {
+                "attribute": {
+                    "type": "ATTRIBUTE",
+                    "hint": "Attribute which should be changed"
+                },
+                "value":{
+                    "type": "NUMBER",
+                    "hint" : "New value for the attribute"
+                }
+            },
+            "json":" {\"ident\": \"changeAttribute\", \"defaults\": {\"attribute\": \"notValue.self._attribute_\", \"value\": _value_, \"valueType\": \"set\", \"duration\": \"null\", \"ticks\": \"null\"}}"
+        },
+		{
+            "name" : "EffectOverTime",
+            "inputs": {
+                "attribute": {
+                    "type": "ATTRIBUTE",
+                    "hint": "Attribute which should be changed"
+                },
+                "value":{
+                    "type": "NUMBER",
+                    "hint" : "a positive number to increase the attribute over course of the effect(healing), a negative number to decrease it(poison)"
+                },
+                "duration":{
+                    "type": "NUMBER",
+                    "hint" : "How long does the effect last in seconds"
+                },
+                "ticks":{
+                    "type": "NUMBER",
+                    "hint" : "How often does the effect take places"
+                }
+            },
+            "json":" {\"ident\": \"changeAttribute\", \"defaults\": {\"attribute\": \"notValue.self._attribute_\", \"value\": _value_, \"valueType\": \"add\", \"duration\": \"_duration_\", \"ticks\": \"_ticks_\"}}"
+        },
+        {
+            "name" : "Show Image",
+            "inputs": {
+                "image": {
+                    "type": "URL",
+                    "hint": "Link to image. If you need to upload something, use imgur.com"
+                }
+            },
+            "json":"\"ident\": \"showImage\", \"defaults\": { \"url\": \"_image_\" }"
+        },
+        {
+            "name" : "Show Text",
+            "inputs": {
+                "text": {
+                    "type": "STRING",
+                    "hint": "The text you want to display"
+                }
+            },
+            "json":"\"ident\": \"showText\", \"defaults\": { \"string\": \"_text_\" }"
+        }
+
+    ],
+    "transitions": [
+        {
+            "name": "Player is next to...",
+            "inputs": {
+                "group": {
+                    "type": "GROUP",
+                    "hint": "..."
+                },
+                "quantifier": {
+                    "type": "SELECT",
+                    "options": [
+                        {"all":"all"},
+                        {"exact":"equals"},
+                        {"min":"lowequals"},
+                        {"max":"highequals"},
+                        {"less than":"lower"},
+                        {"more than":"higher"}
+                    ],
+                    "hint": ""
+                },
+                "value" : {
+                    "type": "NUMBER",
+                    "hint": "This field doesn't matter if \"all\" is selected."
+                },
+                "radius": {
+                    "type": "NUMBER",
+                    "deafult": 0
+                }
+            },
+            "json": " \"event\": \"locationEvent\", \"condition\": { \"name\": \"nearby\", \"params\": { \"object\": { \"name\": \"_group_\", \"quantifier\": { \"checkType\": \"_quantifier_\", \"value\": _value_ } }, \"subject\": { \"name\": \"self\", \"quantifier\": { \"checkType\": \"equals\", \"value\": 1 } }, \"radius\": _radius_ } }"
+
+        },
+        {
+            "name": "Player pressed button",
+            "inputs": {
+                "button": {
+                    "type": "STRING",
+                    "hint": "..."
+                }
+            },
+            "json": "\"event\": \"uiEvent\", \"condition\": { \"name\": \"_button_\", \"params\": { \"action\": \"RELEASE\" } }"
+        },
+        {
+            "name": "Attribute reached value",
+            "inputs": {
+                "attribute": {
+                    "type": "ATTRIBUTE",
+                    "hint": "the attribute that is supposed to be checked"
+                },
+                "checkType": {
+                    "type": "SELECT",
+                    "options": [
+                        {"all":"all"},
+                        {"exact":"equals"},
+                        {"min":"lowequals"},
+                        {"max":"highequals"},
+                        {"less than":"lower"},
+                        {"more than":"higher"}
+                    ],
+                    "hint": "the method by which the values are compared"
+                },
+				"compValue": {
+                    "type": "NUMBER",
+                    "hint": "Value to which the attribute is compared"
+                }
+            },
+            "json": "\"event\": \"whiteBoardEvent\", \"condition\": { \"name\": \"condition\", \"params\": {\"attribute\": \"notValue.self._attribute_\", \"checkType\": { \"checkType\": \"_checkType_\", \"compValue\": _compValue_} }"
+        }
+
+    ]
+}
