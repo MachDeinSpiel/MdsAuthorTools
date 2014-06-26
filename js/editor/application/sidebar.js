@@ -163,9 +163,9 @@ SIDEBAR.createInputs = function() {
 			.append($('<div id="end-action-wrapper"></div>'))   
 			.append($('<div id="action-creator"></div>')
 				.append($("<h4>New Action</h4>"))
-				.append($("<label><input type='radio' name='action-type' value='start action' checked='checked'>Start action</label> <br>"))
-				.append($("<label><input type='radio' name='action-type' value='do action'>Do action</label><br>"))
-				.append($("<label><input type='radio' name='action-type' value='end action'>End action</label><br>"))
+				.append($("<label><input type='radio' name='action-type' value='start-action' checked='checked'>Start action</label> <br>"))
+				.append($("<label><input type='radio' name='action-type' value='do-action'>Do action</label><br>"))
+				.append($("<label><input type='radio' name='action-type' value='end-action'>End action</label><br>"))
 				.append($('<select id="action-selector"></select>').on('change', function(){
 					var action = presetManager.getActions()[this.value];
 					$('#action-inputs').html('');
@@ -206,13 +206,21 @@ SIDEBAR.createInputs = function() {
 					}
 				}))
 				.append($('<div id="action-inputs"></div>'))
-				.append($('<input type="button" value="add" />'))
+				.append($('<input type="button" value="add" />').on('click', function(){
+					var type = $('input[name=action-type]:checked').val();
+					$('#'+type+'-wrapper').append($('<div class="action-element"></div>')
+										.append('<span>'+presetManager.getActions()[$('#action-selector').val()].name+'</span>')
+									);
+				}))
 			)
 		);
 		for(var i=0; i<presetManager.getActions().length; i++){
 			var action = presetManager.getActions()[i];
 			var selected = (i==0) ? " selected" : "";
 			$('#action-selector').append($('<option value="'+i+'"'+selected+'>'+action.name+'</option>'));
+			//var newState = SIDEBAR.getCurrentState().getClone();
+			//newState.do
+			//UpdateStateCommand(data,oldData) 
 		}
 		$("action-selector").change();
 		return

@@ -51,9 +51,12 @@
 #action-inputs input, #action-inputs select{
 	color: black;
 	text-align: right;
-	width: 150px;
 	border: none;
 	padding: 2px 5px 2px 0px;
+}
+
+#action-inputs input{
+	width: 150px;
 }
 
 #action-inputs input[type=text]{
@@ -63,4 +66,5 @@
 #action-inputs input[type=url]{
 }
 #action-inputs select{
+	width: 155px;
 }
