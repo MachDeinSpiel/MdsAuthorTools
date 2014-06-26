@@ -81,7 +81,7 @@ SIDEBAR.showInputs = function() {
 			SIDEBAR.createInputs();
 
 		} catch (e) {
-			console.error(e.msg);
+			console.error(e);
 			return;
 		}
 		SIDEBAR.slideInInputs();
@@ -137,19 +137,84 @@ SIDEBAR.createInputs = function() {
 			}));
 		}
 
+	if(SIDEBAR.currentTool === 'Edit Link'){
+		dom.html('TODO!');
+	}
+
 
 	}
 	if (SIDEBAR.currentTool === 'New State') {
 		dom.append($("<input type='text' name='state-name' placeholder='State Name' autofocus value='" + SIDEBAR.currentState.name + "' />"));
 		dom.append($("<input type='text' name='state-action' placeholder='State Action' autofocus />"));
-		dom.append($("<form>")
-			.append($("<input type='radio' name='state-type' value='State'><label>State </label> <br>"))
-			.append($("<input type='radio' name='state-type' value='Start State'><label>Start State </label><br>"))
-			.append($("<input type='radio' name='state-type' value='End State'><label>End State </label><br>"))
+		dom.append($("<form></form>")
+			.append($("<label><input type='radio' name='state-type' value='State'>State </label> <br>"))
+			.append($("<label><input type='radio' name='state-type' value='Start State'>Start State </label><br>"))
+			.append($("<label><input type='radio' name='state-type' value='End State'>End State </label><br>"))
 		);
 		dom.append($("<button name='save' >Save</button>").on('click', function() {
 			SIDEBAR.saveInputs();
 		}));
+		dom.append($('<div></div>')
+			.append($('<h3>Start actions</h3>'))
+			.append($('<div id="start-action-wrapper"></div>'))   
+			.append($('<h3>Do actions</h3>'))
+			.append($('<div id="do-action-wrapper"></div>'))   
+			.append($('<h3>End actions</h3>'))
+			.append($('<div id="end-action-wrapper"></div>'))   
+			.append($('<div id="action-creator"></div>')
+				.append($("<h4>New Action</h4>"))
+				.append($("<label><input type='radio' name='action-type' value='start action'>Start action</label> <br>"))
+				.append($("<label><input type='radio' name='action-type' value='do action'>Do action</label><br>"))
+				.append($("<label><input type='radio' name='action-type' value='end action'>End action</label><br>"))
+				.append($('<select id="action-selector"></select>').on('change', function(){
+					var action = presetManager.getActions()[this.value];
+					$('#action-inputs').html('');
+					for(key in action.inputs){
+						var input = action.inputs[key];
+						$('#action-inputs').append('<label to="input-'+key+'">'+key+'</label>');
+						switch(input.type){
+							case "NUMBER": 
+								$('#action-inputs').append('<input type="number" id="input-'+key+' /"><br />');
+								break;
+							case "STRING": 
+								$('#action-inputs').append('<input type="text" id="input-'+key+' /"><br />');
+								break;
+							case "URL": 
+								$('#action-inputs').append('<input type="url" id="input-'+key+' /"><br />');
+								break;
+							case "GROUP": 
+								$('#action-inputs').append('<input type="text" id="input-'+key+'" value="todo" readonly/><br />');
+								break;
+							case "ATTRIBUTE": 
+								$('#action-inputs').append('<input type="url" id="input-'+key+'" value="todo" readonly/><br />');
+								break;
+							case "SELECT": 
+								if(!input.options){
+									console.error("Error while reading options of input '"+key+"' of action '"+action.name+"'. Check your syntax!");
+								}else{
+									var selector = $('<select id="input-'+key+' "></select><br />');
+									for(var i=0; i<input.options.length; i++){
+										for(optionname in input.options[i]){
+											selector.append('<option value="'+input.options[i][optionname]+'">'+optionname+'</option>');
+										}
+									}
+									$('#action-inputs').append(selector);
+								}
+								break;
+						}
+						
+					}
+				}))
+				.append($('<div id="action-inputs"></div>'))
+				.append($('<input type="button" value="add" />'))
+			)
+		);
+		for(var i=0; i<presetManager.getActions().length; i++){
+			var action = presetManager.getActions()[i];
+			var selected = (i==0) ? " selected" : "";
+			$('#action-selector').append($('<option value="'+i+'"'+selected+'>'+action.name+'</option>'));
+		}
+		$("action-selector").change();
 		return
 	}
 

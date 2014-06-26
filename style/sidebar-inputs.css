@@ -12,5 +12,50 @@
 	position: relative;
 	margin: 5px 5px 5px 5px;
 	border: 1px solid #E0E0E0;
-	height: 500px;
+	height: 100%;
+}
+
+
+#action-creator{
+	background-color: #0086cc;
+	color: white;
+	padding: 1px 15px 20px 15px;
+	width: 270px;
+	position: absolute;
+	bottom: 70px;
+	left: -6px;
+}
+
+#action-selector{
+	margin: 20px 0px;
+}
+
+#action-inputs label{
+	width: 90px;
+	display: inline-block;
+}
+
+#action-creator input[type=button]{
+	float: right;
+	border: none;
+	background-color: white;
+	border-bottom: 2px solid #ff7800; 
+}
+
+
+#action-inputs input, #action-inputs select{
+	color: black;
+	text-align: right;
+	width: 150px;
+	border: none;
+	padding: 2px 5px 2px 0px;
+}
+
+#action-inputs input[type=text]{
+}
+#action-inputs input[type=number]{
+}
+#action-inputs input[type=url]{
+}
+#action-inputs select{
 }

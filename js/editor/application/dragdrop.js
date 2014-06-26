@@ -114,6 +114,11 @@ DRAGDROP.loadTransitionDrag = function() {
         revert: "invalid",
         containment: "parent"
     });
+    $(".transition").unbind('click').on('click', function(){
+        SIDEBAR.setCurrentTool('Edit Link');
+        SIDEBAR.slideOutInputs();
+        SIDEBAR.slideInInputs();
+    });
 }
 
 DRAGDROP.createStateDom = function() {

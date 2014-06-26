@@ -13,3 +13,11 @@ function PresetManager(file){
 	    console.log( "complete" );
 	});
 }
+
+PresetManager.prototype.getActions = function(){
+	return this.data.actions;
+}
+
+PresetManager.prototype.getTransitions = function(){
+	return this.data.actions;
+}
