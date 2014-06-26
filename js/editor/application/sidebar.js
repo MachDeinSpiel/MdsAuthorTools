@@ -163,7 +163,7 @@ SIDEBAR.createInputs = function() {
 			.append($('<div id="end-action-wrapper"></div>'))   
 			.append($('<div id="action-creator"></div>')
 				.append($("<h4>New Action</h4>"))
-				.append($("<label><input type='radio' name='action-type' value='start action'>Start action</label> <br>"))
+				.append($("<label><input type='radio' name='action-type' value='start action' checked='checked'>Start action</label> <br>"))
 				.append($("<label><input type='radio' name='action-type' value='do action'>Do action</label><br>"))
 				.append($("<label><input type='radio' name='action-type' value='end action'>End action</label><br>"))
 				.append($('<select id="action-selector"></select>').on('change', function(){
@@ -171,16 +171,16 @@ SIDEBAR.createInputs = function() {
 					$('#action-inputs').html('');
 					for(key in action.inputs){
 						var input = action.inputs[key];
-						$('#action-inputs').append('<label to="input-'+key+'">'+key+'</label>');
+						$('#action-inputs').append('<label to="input-'+key+'" title="'+input.hint+'">'+key+'</label>');
 						switch(input.type){
 							case "NUMBER": 
-								$('#action-inputs').append('<input type="number" id="input-'+key+' /"><br />');
+								$('#action-inputs').append('<input type="number" id="input-'+key+' title="'+input.hint+'"/"><br />');
 								break;
 							case "STRING": 
-								$('#action-inputs').append('<input type="text" id="input-'+key+' /"><br />');
+								$('#action-inputs').append('<input type="text" id="input-'+key+' title="'+input.hint+'"/"><br />');
 								break;
 							case "URL": 
-								$('#action-inputs').append('<input type="url" id="input-'+key+' /"><br />');
+								$('#action-inputs').append('<input type="url" id="input-'+key+' title="'+input.hint+'"/"><br />');
 								break;
 							case "GROUP": 
 								$('#action-inputs').append('<input type="text" id="input-'+key+'" value="todo" readonly/><br />');
@@ -192,7 +192,7 @@ SIDEBAR.createInputs = function() {
 								if(!input.options){
 									console.error("Error while reading options of input '"+key+"' of action '"+action.name+"'. Check your syntax!");
 								}else{
-									var selector = $('<select id="input-'+key+' "></select><br />');
+									var selector = $('<select id="input-'+key+' " title="'+input.hint+'"></select><br />');
 									for(var i=0; i<input.options.length; i++){
 										for(optionname in input.options[i]){
 											selector.append('<option value="'+input.options[i][optionname]+'">'+optionname+'</option>');

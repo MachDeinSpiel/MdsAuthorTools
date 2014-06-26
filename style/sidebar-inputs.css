@@ -39,6 +39,11 @@
 	float: right;
 	border: none;
 	background-color: white;
+	border-bottom: 2px solid white; 
+	cursor: pointer;
+}
+
+#action-creator input[type=button]:hover{
 	border-bottom: 2px solid #ff7800; 
 }
 
