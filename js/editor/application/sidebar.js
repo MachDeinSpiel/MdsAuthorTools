@@ -24,6 +24,7 @@ SIDEBAR.transition = {
 SIDEBAR.tools = {
 	'New State': {
 		'class': 'toolbox-item tooldrag',
+		'id': 'tool-newstate',
 		'path': '',
 		'func': function() {
 			SIDEBAR.setCurrentTool('New State');
@@ -33,6 +34,7 @@ SIDEBAR.tools = {
 	},
 	'New Link': {
 		'class': 'toolbox-item',
+		'id': 'tool-newlink',
 		'path': '',
 		'func': function() {
 			SIDEBAR.setCurrentTool('New Link');
@@ -42,6 +44,7 @@ SIDEBAR.tools = {
 	},
 	'Move': {
 		'class': 'toolbox-item',
+		'id': 'tool-move',
 		'path': ''
 	}
 };
@@ -53,8 +56,7 @@ SIDEBAR.tools = {
 SIDEBAR.showTools = function() {
 	$.each(SIDEBAR.tools, function(index, value) {
 		$('#tools-wrapper').append(
-			$("<div></div>", {
-				"class": value.class,
+			$("<div id='"+value.id+"' class='"+value.class+"'></div>", {
 				text: index
 			}).on('click', function() {
 				if (value.func) {
@@ -208,17 +210,21 @@ SIDEBAR.createInputs = function() {
 					$('#'+type+'-wrapper').append($('<div class="action-element"></div>')
 										.append('<span>'+presetManager.getActions()[$('#action-selector').val()].name+'</span>')
 									);
+					for(var i=0; i<presetManager.getActions().length; i++){
+						var action = presetManager.getActions()[i];
+						var selected = (i==0) ? " selected" : "";
+						$('#action-selector').append($('<option value="'+i+'"'+selected+'>'+action.name+'</option>'));
+						var newState = SIDEBAR.getCurrentState().getClone();
+						newState.doAction = [];
+						for(var i=0; i<SIDEBAR.getCurrentState().doAction.length; i++){
+							newState.doAction.push(SIDEBAR.getCurrentState().doAction[i]);
+						}
+						//historyManager.onNewCommand(new UpdateStateCommand(newState, ));
+					}
 				}))
 			)
 		);
-		for(var i=0; i<presetManager.getActions().length; i++){
-			var action = presetManager.getActions()[i];
-			var selected = (i==0) ? " selected" : "";
-			$('#action-selector').append($('<option value="'+i+'"'+selected+'>'+action.name+'</option>'));
-			//var newState = SIDEBAR.getCurrentState().getClone();
-			//newState.do
-			//UpdateStateCommand(data,oldData) 
-		}
+		
 		$("action-selector").change();
 		return
 	}
