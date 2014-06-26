@@ -1,4 +1,4 @@
-function State(x, y, id) {
+function State(x, y, id, type) {
 	//Tool related
 	this.x = x;
 	this.y = y;
@@ -9,8 +9,9 @@ function State(x, y, id) {
 	this.startAction = undefined;
 	this.doAction = undefined;
 	this.endAction = undefined;
-	this.isStart = false;
-	this.isEnd = false;
+
+	//start end "normal"
+	this.type = type;
 
 	this.createDom().appendTo("#editor-divs");
 
