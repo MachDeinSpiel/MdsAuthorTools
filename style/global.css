@@ -20,3 +20,15 @@ ul.menu{
 .invisible{
 	display: none;
 }
+
+
+input[type=button]{
+	border: none;
+	background-color: white;
+	border-bottom: 2px solid white; 
+	cursor: pointer;
+}
+
+input[type=button]:hover{
+	border-bottom: 2px solid #ff7800; 
+}

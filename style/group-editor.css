@@ -65,3 +65,20 @@
 }
 
 
+#groups-list{
+	position: relative;
+}
+
+#create-group-panel{
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	height: 100px;
+	width: 100%;
+	background-color: #0086cc;
+	color: white;
+}
+
+#create-group-button{
+	float: right;
+}
