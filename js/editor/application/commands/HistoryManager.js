@@ -30,7 +30,9 @@ HistoryManager.prototype.redo = function() {
 	if (this.commands[this.index + 1] == undefined) {
 		throw new Error("nothing to redo");
 	} else {
+
 		this.commands[++this.index].redo();
+		
 	}
 
 };

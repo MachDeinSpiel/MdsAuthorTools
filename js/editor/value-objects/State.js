@@ -18,7 +18,9 @@ function State(x, y, id, type) {
 	DRAGDROP.LoadStateDrag();
 }
 
-
+State.prototype.getClone = function(){
+	return jQuery.extend(true,{},this);
+}
 
 State.prototype.createDom = function() { 	
 	var titlediv = $("<div></div>", {
@@ -33,6 +35,11 @@ State.prototype.createDom = function() {
 	}).append(titlediv);
 
 	return this.domObj;
+} 	
+
+
+State.prototype.updateInfo = function(data){
+	this.name = data.name;
 }
 
 
