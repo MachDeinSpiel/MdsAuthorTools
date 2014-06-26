@@ -9,10 +9,10 @@ HistoryManager.prototype.onNewCommand = function(command) {
 		throw new Error("Can't add non-command object to history", command);
 	} else {
 		this.commands[++this.index] = command;
-		console.log(this.index);
-		/**
-		 * return all date back to the "view" if used and not!!!!!!!! MAD ANDREAS
-		 */
+		while(this.commands.length > this.index+1){
+			this.commands.pop();
+			console.info(this.commands.length);
+		}
 		return command.execute();
 	}
 };
@@ -32,7 +32,7 @@ HistoryManager.prototype.redo = function() {
 	} else {
 
 		this.commands[++this.index].redo();
-		
+
 	}
 
 };
