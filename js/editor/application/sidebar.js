@@ -211,20 +211,22 @@ SIDEBAR.createInputs = function() {
 					$('#'+type+'-wrapper').append($('<div class="action-element"></div>')
 										.append('<span>'+presetManager.getActions()[$('#action-selector').val()].name+'</span>')
 									);
-					for(var i=0; i<presetManager.getActions().length; i++){
-						var action = presetManager.getActions()[i];
-						var selected = (i==0) ? " selected" : "";
-						$('#action-selector').append($('<option value="'+i+'"'+selected+'>'+action.name+'</option>'));
+					
 						var newState = SIDEBAR.getCurrentState().getClone();
 						newState.doAction = [];
 						for(var i=0; i<SIDEBAR.getCurrentState().doAction.length; i++){
 							newState.doAction.push(SIDEBAR.getCurrentState().doAction[i]);
-						}
 						//historyManager.onNewCommand(new UpdateStateCommand(newState, ));
 					}
 				}))
 			)
 		);
+
+		for(var i=0; i<presetManager.getActions().length; i++){
+			var action = presetManager.getActions()[i];
+			var selected = (i==0) ? " selected" : "";
+			$('#action-selector').append($('<option value="'+i+'"'+selected+'>'+action.name+'</option>'));
+		}
 		
 		$("action-selector").change();
 		return
