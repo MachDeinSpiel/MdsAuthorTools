@@ -15,19 +15,21 @@ DRAGDROP.LoadStateDrag = function() {
         start: function() {
             startX = parseInt(this.style.left);
             startY = parseInt(this.style.top);
-            stateID = $(this).attr('state-id');
+            SIDEBAR.setState(stateManager.getStateByID($(this).attr('state-id')));
         },
         drag: function() {
-            stateManager.getStateByID(stateID).x = parseInt(this.style.left);
-            stateManager.getStateByID(stateID).y = parseInt(this.style.top);
-            //deltaX = parseInt(this.style.left) - startX;
-            //deltaY = parseInt(this.style.top) - startY;
+           
         },
         stop: function() {
+            var temp = {};
+            temp.x = parseInt(this.style.left);
+            temp.y = parseInt(this.style.top);
+            SIDEBAR.currentState.update(temp);
+            historyManager.onNewCommand(new UpdateStateCommand(SIDEBAR.currentState, stateManager.getStateByID($(this).attr('state-id')).getClone()));
 
-
-            deltaX = parseInt(this.style.left) - startX;
-            deltaY = parseInt(this.style.top) - startY;
+            // deltaX = parseInt(this.style.left) - startX;
+            // deltaY = parseInt(this.style.top) - startY;
+            
         }
     })
 

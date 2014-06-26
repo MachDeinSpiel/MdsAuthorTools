@@ -6,10 +6,9 @@ function StateManager() {
 }
 
 StateManager.prototype.addState = function(x, y) {
-
 	var stateId = ++this.stateIndex;
 	console.log(this.stateIndex);
-	var temp = new State(x, y, stateId);
+	var temp = new State(x, y, stateId,'state');
 	this.states.push(temp);
 	return temp;
 }
