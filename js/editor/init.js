@@ -22,11 +22,11 @@ $(window).load(function() {
 	});
 
 	//set window in the right width
-	$("#editor-workspace").css("width", $("#editor-state-machine").width()-300);
+	$("#editor-workspace").css("width", $("#editor-state-machine").width() - 300);
 	CANVAS.init();
 
 	$(window).on('resize', function() {
-		$("#editor-workspace").css("width", $("#editor-state-machine").width()-300);
-		CANVAS.windowUpdate();		
+		$("#editor-workspace").css("width", $("#editor-state-machine").width() - 300);
+		CANVAS.windowUpdate();
 	});
 });
