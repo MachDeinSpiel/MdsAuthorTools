@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>MDS GameCreator</title>
-		<link href='http://fonts.googleapis.com/css?family=Gudea:400,700,400italic' rel='stylesheet' type='text/css'>
+		<!--<link href='http://fonts.googleapis.com/css?family=Gudea:400,700,400italic' rel='stylesheet' type='text/css'>-->
 		<link rel="stylesheet" type="text/css" href="style/global.css">
 		<link rel="stylesheet" type="text/css" href="style/layout.css">
 		<link rel="stylesheet" type="text/css" href="style/state.css">
@@ -81,6 +81,11 @@
 							<li>Medipacks</li>
 							<li>Players</li>
 						</ul>
+						<div id="create-group-panel">
+							<h3>New Group</h3>
+							<label>Name<input type="text" /></label>
+							<input type="button" id="create-group-button" value="add"/>
+						</div>
 					</div>
 					<div id="group-overview" class="group-editor-list">
 						<div class="group-editor-list-title">Bombs</div>
@@ -122,7 +127,7 @@
 		<script src="js/editor/application/exceptions/undefinedStateException.js" type="text/javascript" charset="utf-8" ></script>
 
 		<script src="js/editor/application/commands/Command.js" type="text/javascript" charset="utf-8" ></script>
-		<script src="js/editor/application/commands/UpdateStateCommand.js" type="text/javascript" charset="utf-8" ></script>
+		<script src="js/editor/application/commands/Command.js" type="text/javascript" charset="utf-8" ></script>
 		<script src="js/editor/application/commands/CreateStateCommand.js" type="text/javascript" charset="utf-8" ></script>
 		<script src="js/editor/application/commands/CreateTransitionCommand.js" type="text/javascript" charset="utf-8" ></script>
 		<script src="js/editor/application/commands/HistoryManager.js" type="text/javascript" charset="utf-8" ></script>
