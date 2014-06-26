@@ -28,7 +28,7 @@ SIDEBAR.tools = {
 		'func': function() {
 			SIDEBAR.setCurrentTool('New State');
 			SIDEBAR.slideOutInputs();
-			SIDEBAR.slideInInputs();
+			SIDEBAR.showInputs();
 		}
 	},
 	'New Link': {
@@ -37,7 +37,7 @@ SIDEBAR.tools = {
 		'func': function() {
 			SIDEBAR.setCurrentTool('New Link');
 			SIDEBAR.slideOutInputs();
-			SIDEBAR.slideInInputs();
+			SIDEBAR.showInputs();
 		}
 	},
 	'Move': {
@@ -67,33 +67,24 @@ SIDEBAR.showTools = function() {
 
 /** Saves old state and set new one */
 SIDEBAR.setState = function(state) {
-	SIDEBAR.saveInputs();
+	// SIDEBAR.saveInputs();
 	SIDEBAR.currentState = state.getClone();
 }
 
 
-SIDEBAR.showInputs = function() {
-	if (SIDEBAR.currentState.id == undefined) {
-		SIDEBAR.createInputs();
-	} else {
-		try {
-			SIDEBAR.createInputs();
-		} catch (e) {
-			console.error(e);
-			return;
-		}
-		SIDEBAR.slideInInputs();
-	}
-}
+
 
 SIDEBAR.saveInputs = function() {
 	if(SIDEBAR.currentTool != null){
-		if (SIDEBAR.currentTool === 'New State') {
-			if (!!SIDEBAR.currentState) {
-				var name = $("input[name='state-name']").val();
-				SIDEBAR.currentState.name = name;
-				SIDEBAR.currentState.validate();
-			}
+		var temp = {};
+		temp.name = $("input[name='state-name']").val();
+		temp.type = $("input[name='state-type']:checked").val();
+
+		SIDEBAR.currentState.update(temp);
+
+		if(SIDEBAR.currentState.isChanged){
+			historyManager.onNewCommand(new UpdateStateCommand(SIDEBAR.currentState, 
+				stateManager.getStateByID(SIDEBAR.currentState.id).getClone()));
 		}
 		if (SIDEBAR.currentTool === 'New Link') {
 			console.log('saved new link');
@@ -107,8 +98,13 @@ SIDEBAR.saveInputs = function() {
 	//TODO: Rest speichern, Command erstellen
 }
 
-SIDEBAR.slideInInputs = function() {
+SIDEBAR.showInputs = function() {
 	SIDEBAR.createInputs();
+	SIDEBAR.slideInInputs();
+}
+
+SIDEBAR.slideInInputs = function() {
+
 	$("#editor-side-inputs").css("left", 0);
 	$("#editor-side-tools").css("left", -300);
 }
@@ -134,20 +130,23 @@ SIDEBAR.createInputs = function() {
 				SIDEBAR.saveInputs();
 			}));
 		}
+	}
 
 	if(SIDEBAR.currentTool === 'Edit Link'){
-		dom.html('TODO!');
+		console.info('current tool = edit link');
+		
+		dom.append($("<button name='save' >Save</button>").on('click', function() {
+			SIDEBAR.saveInputs();
+		}));
 	}
-
-
-	}
+	
 	if (SIDEBAR.currentTool === 'New State') {
 		dom.append($("<input type='text' name='state-name' placeholder='State Name' autofocus value='" + SIDEBAR.currentState.name + "' />"));
 		dom.append($("<input type='text' name='state-action' placeholder='State Action' autofocus />"));
 		dom.append($("<form></form>")
-			.append($("<label><input type='radio' name='state-type' value='State'>State </label> <br>"))
-			.append($("<label><input type='radio' name='state-type' value='Start State'>Start State </label><br>"))
-			.append($("<label><input type='radio' name='state-type' value='End State'>End State </label><br>"))
+			.append($("<label><input type='radio' name='state-type' value='' "+ (SIDEBAR.currentState.type == '' ? "checked='checked'" : '' )+">State </label> <br>"))
+			.append($("<label><input type='radio' name='state-type' value='start-state' "+ (SIDEBAR.currentState.type == 'start-state' ? "checked='checked'" : '' )+">Start State </label><br>"))
+			.append($("<label><input type='radio' name='state-type' value='end-state' "+ (SIDEBAR.currentState.type == 'end-state' ? "checked='checked'" : '' )+">End State </label><br>"))
 		);
 		dom.append($("<button name='save' >Save</button>").on('click', function() {
 			SIDEBAR.saveInputs();
@@ -223,8 +222,6 @@ SIDEBAR.createInputs = function() {
 		$("action-selector").change();
 		return
 	}
-
-
 }
 
 

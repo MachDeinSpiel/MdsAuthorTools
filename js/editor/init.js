@@ -18,9 +18,9 @@ $(window).load(function() {
 		}
 	});
 
-	$("#editor-divs").on('click', function() {
-		SIDEBAR.saveInputs();
-	});
+	// $("#editor-divs").on('click', function() {
+	// 	SIDEBAR.saveInputs();
+	// });
 
 	//set window in the right width
 	$("#editor-workspace").css("width", $("#editor-state-machine").width() - 300);

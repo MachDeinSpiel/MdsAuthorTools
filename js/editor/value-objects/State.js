@@ -40,6 +40,7 @@ State.prototype.createDom = function() {
 
 
 State.prototype.update = function(data){
+	this.isChanged = false;
 	if((this.x != data.x) && data.x != undefined){
 		this.isChanged = true;
 		this.x = data.x;
@@ -64,16 +65,23 @@ State.prototype.update = function(data){
 		this.isChanged = true;
 		this.endAction = data.endAction;
 	}
+	if((this.type !== data.type) && data.type != undefined){
+		this.isChanged = true;
+		this.type = data.type;
+	}
 }
 
 
 State.prototype.validate = function(){
+	console.error('validate');
 	var dom = $("#editor-divs").find("[state-id='" + this.id + "']");
 	if(dom != []){
 		dom.find(".state-title").html(this.name);
 	}
 	dom.css('left',this.x);
 	dom.css('top', this.y);
-	dom.css('class',this.type);
-	DRAGDROP.LoadStateDrag();
+	dom.removeClass('start-state');
+	dom.removeClass('end-state');
+	dom.addClass(this.type);
+	// DRAGDROP.LoadStateDrag();
 }
