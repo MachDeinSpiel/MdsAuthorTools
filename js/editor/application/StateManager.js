@@ -7,7 +7,6 @@ function StateManager() {
 
 StateManager.prototype.addState = function(x, y) {
 	var stateId = ++this.stateIndex;
-	console.log(this.stateIndex);
 	var temp = new State(x, y, stateId,'state');
 	this.states.push(temp);
 	return temp;
@@ -81,7 +80,7 @@ StateManager.prototype.drawTransitions = function() {
 StateManager.prototype.updateState = function(data){
 	$.each(this.states, function(index, value){
 		if(value.id == data.id){
-			value.name = data.name;
+			value.update(data);
 			value.validate();
 		}
 	});

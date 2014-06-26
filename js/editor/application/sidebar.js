@@ -222,5 +222,4 @@ SIDEBAR.createInputs = function() {
 
 SIDEBAR.setCurrentTool = function(tool) {
 	SIDEBAR.currentTool = tool;
-	console.error(tool);
 }

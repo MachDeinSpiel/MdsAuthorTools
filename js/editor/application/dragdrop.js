@@ -13,9 +13,10 @@ DRAGDROP.LoadStateDrag = function() {
         revert: "invalid",
         containment: "parent",
         start: function() {
+            SIDEBAR.setState(stateManager.getStateByID($(this).attr('state-id')));
             startX = parseInt(this.style.left);
             startY = parseInt(this.style.top);
-            SIDEBAR.setState(stateManager.getStateByID($(this).attr('state-id')));
+            $(this).attr('noclick',1);
         },
         drag: function() {
            
@@ -24,12 +25,14 @@ DRAGDROP.LoadStateDrag = function() {
             var temp = {};
             temp.x = parseInt(this.style.left);
             temp.y = parseInt(this.style.top);
+            temp.domObj = SIDEBAR.currentState.domObj;
             SIDEBAR.currentState.update(temp);
+ 
             historyManager.onNewCommand(new UpdateStateCommand(SIDEBAR.currentState, stateManager.getStateByID($(this).attr('state-id')).getClone()));
-
+          
             // deltaX = parseInt(this.style.left) - startX;
             // deltaY = parseInt(this.style.top) - startY;
-            
+
         }
     })
 
@@ -52,16 +55,22 @@ DRAGDROP.LoadStateDrag = function() {
             SIDEBAR.createInputs();
             event.stopPropagation();
         } else {
-            SIDEBAR.currentTool = 'New State';
-            var cl = $(this).attr("class").split(' ')[0];
-            if (cl === 'state') {
-                /**
-                 * Current State setzen
-                 */
-                SIDEBAR.setState(stateManager.getStateByID($(this).attr('state-id')));
-                SIDEBAR.showInputs();
-                //dont propagete event to the parent
-                event.stopPropagation();
+            if ($(this).attr('noclick') == 1) {
+                $(this).removeAttr('noclick');
+
+            } else 
+            {
+                /*SIDEBAR.currentTool = 'New State';*/
+                var cl = $(this).attr("class").split(' ')[0];
+                if (cl === 'state') {
+                    /**
+                     * Current State setzen
+                     */
+                    SIDEBAR.setState(stateManager.getStateByID($(this).attr('state-id')));
+                    SIDEBAR.showInputs();
+                    //dont propagete event to the parent
+                    event.stopPropagation();
+                }
             }
         }
     });
