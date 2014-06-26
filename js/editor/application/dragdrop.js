@@ -13,7 +13,6 @@ DRAGDROP.LoadStateDrag = function() {
         revert: "invalid",
         containment: "parent",
         start: function() {
-            SIDEBAR.setState(stateManager.getStateByID($(this).attr('state-id')));
             startX = parseInt(this.style.left);
             startY = parseInt(this.style.top);
             $(this).attr('noclick',1);
@@ -22,13 +21,16 @@ DRAGDROP.LoadStateDrag = function() {
            
         },
         stop: function() {
+            SIDEBAR.setState(stateManager.getStateByID($(this).attr('state-id')));
             var temp = {};
             temp.x = parseInt(this.style.left);
             temp.y = parseInt(this.style.top);
-            temp.domObj = SIDEBAR.currentState.domObj;
             SIDEBAR.currentState.update(temp);
- 
-            historyManager.onNewCommand(new UpdateStateCommand(SIDEBAR.currentState, stateManager.getStateByID($(this).attr('state-id')).getClone()));
+            if(SIDEBAR.currentState.isChanged){
+                console.log("change");
+                historyManager.onNewCommand(new UpdateStateCommand(SIDEBAR.currentState, stateManager.getStateByID($(this).attr('state-id')).getClone()));
+            }
+            
           
             // deltaX = parseInt(this.style.left) - startX;
             // deltaY = parseInt(this.style.top) - startY;
@@ -37,8 +39,7 @@ DRAGDROP.LoadStateDrag = function() {
     })
 
     $(".state").unbind("click").on('click', function(event) {
-
-
+        console.info('clicked on state');
         if (SIDEBAR.currentTool === 'New Link') {
             if (SIDEBAR.transition.mode) {
                 SIDEBAR.transition.start = stateManager.getStateByID($(this).attr('state-id'));
@@ -55,23 +56,24 @@ DRAGDROP.LoadStateDrag = function() {
             SIDEBAR.createInputs();
             event.stopPropagation();
         } else {
+            SIDEBAR.setCurrentTool('New State');
             if ($(this).attr('noclick') == 1) {
                 $(this).removeAttr('noclick');
-
-            } else 
-            {
+            } else {
                 /*SIDEBAR.currentTool = 'New State';*/
                 var cl = $(this).attr("class").split(' ')[0];
                 if (cl === 'state') {
                     /**
                      * Current State setzen
                      */
+                    
                     SIDEBAR.setState(stateManager.getStateByID($(this).attr('state-id')));
                     SIDEBAR.showInputs();
                     //dont propagete event to the parent
-                    event.stopPropagation();
-                }
+                 
+                }    
             }
+            event.stopPropagation();
         }
     });
 }
@@ -127,8 +129,7 @@ DRAGDROP.loadTransitionDrag = function() {
     });
     $(".transition").unbind('click').on('click', function(){
         SIDEBAR.setCurrentTool('Edit Link');
-        SIDEBAR.slideOutInputs();
-        SIDEBAR.slideInInputs();
+        SIDEBAR.showInputs();
     });
 }
 

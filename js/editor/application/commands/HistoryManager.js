@@ -11,14 +11,14 @@ HistoryManager.prototype.onNewCommand = function(command) {
 		this.commands[++this.index] = command;
 		while(this.commands.length > this.index+1){
 			this.commands.pop();
-			console.info(this.commands.length);
+
 		}
 		return command.execute();
 	}
 };
 
 HistoryManager.prototype.undo = function() {
-	console.log(this.commands[this.index]);
+
 	if (this.commands[this.index] == undefined) {
 		throw new Error("nothing to undo");
 	} else {
