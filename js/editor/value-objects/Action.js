@@ -1,4 +1,4 @@
-function Action(presetData, dom){
-	this.presetData = presetData;
-	this.dom = dom;
+function Action(inputs, json){
+	this.json = json;
+	this.inputs = inputs;
 }
