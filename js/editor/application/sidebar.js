@@ -121,9 +121,9 @@ SIDEBAR.createInputs = function() {
 	var dom = $("#inputs-wrapper").html('');
 
 	if (SIDEBAR.currentTool === 'New Link') {
-		dom.html('Choos two states!');
+		dom.html('Choose two states!');
 		if (SIDEBAR.transition.start != null) {
-			dom.html('Choos <b>another</b> states!');
+			dom.html('Choose <b>another</b> state!');
 			dom.append($("<p>" + SIDEBAR.transition.start.name + "</p>"));
 		}
 
@@ -131,7 +131,7 @@ SIDEBAR.createInputs = function() {
 			dom.append($("<button name='save' >Save</button>").on('click', function() {
 				SIDEBAR.saveInputs();
 			}));
-			dom.html('Setted both states!');
+			dom.html('Set both states!');
 			
 		}
 	}
@@ -240,7 +240,7 @@ SIDEBAR.createInputs = function() {
 						inputs[key] = $('#input-'+key).val();
 
 					}
-					var newAction = new Action(inputs, action.json);
+					var newAction = new Action(action.name, inputs, action.json);
 					console.log(temp);
 					actionMap[type].push(newAction);
 					console.log(temp.startAction, SIDEBAR.currentState.startAction);

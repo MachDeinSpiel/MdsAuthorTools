@@ -33,7 +33,13 @@ State.prototype.createDom = function() {
 		"class"		: "state",
 		"style"		: "left: " + this.x + "px; top: " + this.y + "px;",
 		"state-id"	: ""+this.id
-	}).append(titlediv);
+	}).append(titlediv)
+		.append($('<div class="state-action-wrapper"></div>')
+			.append('<div class="state-action-title">Start Actions</div><ol class="state-start-action-container action-container"></ol>'))
+		.append($('<div class="state-action-wrapper"></div>')
+			.append('<div class="state-action-title">Do Actions</div><ol class="state-do-action-container action-container"></ol>'))
+		.append($('<div class="state-action-wrapper"></div>')
+			.append('<div class="state-action-title">End Actions</div><ol class="state-end-action-container action-container"></ol>'));
 
 	return this.domObj;
 } 	
@@ -78,7 +84,38 @@ State.prototype.validate = function(){
 	var dom = $("#editor-divs").find("[state-id='" + this.id + "']");
 	if(dom != []){
 		dom.find(".state-title").html(this.name);
+		
+		var actionWrapper = dom.find('.state-action-wrapper');
+		for(var i=0; i<actionWrapper.length; i++){
+			console.log(actionWrapper[i]);
+			actionWrapper[i].style.display ='none';
+		}
+		if(this.startAction.length > 0){
+			actionWrapper[0].style.display = 'block';
+			dom.find(".state-start-action-container").html("");
+			this.startAction.forEach(function(action){
+				dom.find(".state-start-action-container").append('<li>'+action.name+'</li>');
+			});
+		}
+		if(this.doAction.length > 0){
+			actionWrapper[1].style.display = 'block';
+			dom.find(".state-do-action-container").html("");
+			this.doAction.forEach(function(action){
+				dom.find(".state-do-action-container").append('<li>'+action.name+'</li>');
+			});
+		}
+		if(this.endAction.length > 0){
+			actionWrapper[2].style.display = 'block';
+			dom.find(".state-end-action-container").html("");
+			this.endAction.forEach(function(action){
+				dom.find(".state-end-action-container").append('<li>'+action.name+'</li>');
+			});
+		}
+		
+		
 	}
+	
+
 	dom.css('left',this.x);
 	dom.css('top', this.y);
 	dom.removeClass('start-state');
