@@ -210,13 +210,37 @@ SIDEBAR.createInputs = function() {
 					$('#'+type+'-wrapper').append($('<div class="action-element"></div>')
 										.append('<span>'+presetManager.getActions()[$('#action-selector').val()].name+'</span>')
 									);
-					
-						var newState = SIDEBAR.getCurrentState().getClone();
-						newState.doAction = [];
-						for(var i=0; i<SIDEBAR.getCurrentState().doAction.length; i++){
-							newState.doAction.push(SIDEBAR.getCurrentState().doAction[i]);
-						//historyManager.onNewCommand(new UpdateStateCommand(newState, ));
+					var temp = SIDEBAR.getCurrentState().getClone();
+					var actionMap = {"start-action" : temp.startAction,
+									 "do-action" : temp.doAction,
+									 "end-action" : temp.endAction};
+
+
+					var inputs = {};
+					//copy input, insert data which was entered by user
+					for(key in action.inputs){
+						var input = {};
+						input.type = action.inputs[key].type;
+						input.hint = action.inputs[key].hint;
+						//copy options if not undefined
+						if(!action.inputs[key].options){
+							input.options = [];
+							var inopts = action.inputs[key].options;
+							for(var k =0; k<inopts.length; i++){
+								var tempOpt = {};
+								for(oKey in inopts){
+									tempOpt[oKey] = inopts[oKey];
+								}
+								input.options.push(tempOpt);
+							}
+						}
+						input.input = $('#input-'+key);
+
 					}
+					var newAction = new Action(inputs, action.input.json);
+					temp[actionMap[type]].push(newAction);
+					SIDEBAR.getCurrentState.update(temp);
+					
 				}))
 			)
 		);

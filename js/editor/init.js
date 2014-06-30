@@ -5,6 +5,13 @@ var stateManager,
 
 $(window).load(function() {
 
+	//init();
+	//showLogin(function(){
+		init();
+	//});
+});
+
+function init(){
 	stateManager = new StateManager();
 	historyManager = new HistoryManager();
 
@@ -34,4 +41,4 @@ $(window).load(function() {
 
 	presetManager = new PresetManager("assets/json/presets.json");
 	groupEditor = new GroupEditor();
-});
+}
