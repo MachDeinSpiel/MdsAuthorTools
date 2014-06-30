@@ -6,9 +6,9 @@ function State(x, y, id, type) {
 	this.id = id;
 	//Game related
 	this.name = "State " +id;
-	this.startAction = undefined;
-	this.doAction = undefined;
-	this.endAction = undefined;
+	this.startAction = [];
+	this.doAction = [];
+	this.endAction = [];
 
 	//start end "normal"
 	this.type = type;
@@ -40,7 +40,6 @@ State.prototype.createDom = function() {
 
 
 State.prototype.update = function(data){
-	this.isChanged = false;
 	if((this.x != data.x) && data.x != undefined){
 		this.isChanged = true;
 		this.x = data.x;
@@ -53,15 +52,15 @@ State.prototype.update = function(data){
 		this.isChanged = true;
 		this.name = data.name;
 	}
-	if((this.startAction !== data.startAction) && data.startAction != undefined){
+	if((this.startAction != data.startAction) && data.startAction != undefined){
 		this.isChanged = true;
 		this.startAction = data.startAction;
 	}
-	if((this.doAction !== data.doAction) && data.doAction != undefined){
+	if((this.doAction != data.doAction) && data.doAction != undefined){
 		this.isChanged = true;
 		this.doAction = data.doAction;
 	}
-	if((this.endAction !== data.endAction) && data.endAction != undefined){
+	if((this.endAction != data.endAction) && data.endAction != undefined){
 		this.isChanged = true;
 		this.endAction = data.endAction;
 	}
@@ -69,6 +68,8 @@ State.prototype.update = function(data){
 		this.isChanged = true;
 		this.type = data.type;
 	}
+
+	console.log("update. isChanged:", this.isChanged);
 }
 
 

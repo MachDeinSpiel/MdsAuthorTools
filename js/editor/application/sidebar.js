@@ -87,6 +87,7 @@ SIDEBAR.saveInputs = function() {
 		if(SIDEBAR.currentState.isChanged){
 			historyManager.onNewCommand(new UpdateStateCommand(SIDEBAR.currentState, 
 				stateManager.getStateByID(SIDEBAR.currentState.id).getClone()));
+			this.currentState.isChanged = false;
 		}
 		if (SIDEBAR.currentTool === 'New Link') {
 			console.log('saved new link');
@@ -127,10 +128,11 @@ SIDEBAR.createInputs = function() {
 		}
 
 		if (SIDEBAR.transition.end != null) {
-			dom.html('Setted both states!');
 			dom.append($("<button name='save' >Save</button>").on('click', function() {
 				SIDEBAR.saveInputs();
 			}));
+			dom.html('Setted both states!');
+			
 		}
 	}
 
@@ -143,6 +145,9 @@ SIDEBAR.createInputs = function() {
 	}
 	
 	if (SIDEBAR.currentTool === 'New State') {
+		dom.append($("<button name='save' >Save</button>").on('click', function() {
+			SIDEBAR.saveInputs();
+		}));
 		dom.append($("<input type='text' name='state-name' placeholder='State Name' autofocus value='" + SIDEBAR.currentState.name + "' />"));
 		dom.append($("<input type='text' name='state-action' placeholder='State Action' autofocus />"));
 		dom.append($("<form></form>")
@@ -150,9 +155,7 @@ SIDEBAR.createInputs = function() {
 			.append($("<label><input type='radio' name='state-type' value='start-state' "+ (SIDEBAR.currentState.type == 'start-state' ? "checked='checked'" : '' )+">Start State </label><br>"))
 			.append($("<label><input type='radio' name='state-type' value='end-state' "+ (SIDEBAR.currentState.type == 'end-state' ? "checked='checked'" : '' )+">End State </label><br>"))
 		);
-		dom.append($("<button name='save' >Save</button>").on('click', function() {
-			SIDEBAR.saveInputs();
-		}));
+		
 		dom.append($('<div></div>')
 			.append($('<h3>Start actions</h3>'))
 			.append($('<div id="start-action-wrapper"></div>'))   
@@ -173,13 +176,13 @@ SIDEBAR.createInputs = function() {
 						$('#action-inputs').append('<label to="input-'+key+'" title="'+input.hint+'">'+key+'</label>');
 						switch(input.type){
 							case "NUMBER": 
-								$('#action-inputs').append('<input type="number" id="input-'+key+' title="'+input.hint+'"/"><br />');
+								$('#action-inputs').append('<input type="number" id="input-'+key+'" title="'+input.hint+'"/"><br />');
 								break;
 							case "STRING": 
-								$('#action-inputs').append('<input type="text" id="input-'+key+' title="'+input.hint+'"/"><br />');
+								$('#action-inputs').append('<input type="text" id="input-'+key+'" title="'+input.hint+'"/"><br />');
 								break;
 							case "URL": 
-								$('#action-inputs').append('<input type="url" id="input-'+key+' title="'+input.hint+'"/"><br />');
+								$('#action-inputs').append('<input type="url" id="input-'+key+'" title="'+input.hint+'"/"><br />');
 								break;
 							case "GROUP": 
 								$('#action-inputs').append('<input type="text" id="input-'+key+'" value="todo" readonly/><br />');
@@ -210,7 +213,7 @@ SIDEBAR.createInputs = function() {
 					$('#'+type+'-wrapper').append($('<div class="action-element"></div>')
 										.append('<span>'+presetManager.getActions()[$('#action-selector').val()].name+'</span>')
 									);
-					var temp = SIDEBAR.getCurrentState().getClone();
+					var temp = SIDEBAR.currentState.getClone();
 					var actionMap = {"start-action" : temp.startAction,
 									 "do-action" : temp.doAction,
 									 "end-action" : temp.endAction};
@@ -223,7 +226,7 @@ SIDEBAR.createInputs = function() {
 						input.type = action.inputs[key].type;
 						input.hint = action.inputs[key].hint;
 						//copy options if not undefined
-						if(!action.inputs[key].options){
+						if(action.inputs[key].options != undefined){
 							input.options = [];
 							var inopts = action.inputs[key].options;
 							for(var k =0; k<inopts.length; i++){
@@ -234,13 +237,17 @@ SIDEBAR.createInputs = function() {
 								input.options.push(tempOpt);
 							}
 						}
-						input.input = $('#input-'+key);
+						inputs[key] = $('#input-'+key).val();
 
 					}
-					var newAction = new Action(inputs, action.input.json);
-					temp[actionMap[type]].push(newAction);
-					SIDEBAR.getCurrentState.update(temp);
+					var newAction = new Action(inputs, action.json);
+					console.log(temp);
+					actionMap[type].push(newAction);
+					console.log(temp.startAction, SIDEBAR.currentState.startAction);
+					SIDEBAR.currentState.update(temp);
+
 					
+
 				}))
 			)
 		);

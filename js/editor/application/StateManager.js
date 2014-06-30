@@ -82,6 +82,7 @@ StateManager.prototype.updateState = function(data){
 		if(value.id == data.id){
 			value.update(data);
 			value.validate();
+			console.log("updateState, data:", data);
 		}
 	});
 	
