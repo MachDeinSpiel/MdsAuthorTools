@@ -79,8 +79,8 @@ function generateServer(asObject){
 
 function getNumberofTeams(){
 	var i=0;
-	for(var key in groups){
-		if(group[key].joinable){
+	for(var key in groupEditor.groups){
+		if(groupEditor.groups[key].joinable){
 			i++;
 		}
 	}
