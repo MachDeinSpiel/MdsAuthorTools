@@ -10,8 +10,15 @@ function Condition(){
 Condition.prototype.generateText = function(){
 	this.text = this.data.name;
 	var that = this;
-	$.each(this.inputs, function (key, value) {
+	$.each(that.inputs, function (key, value) {
 		that.text = that.text+", "+value;
-		console.log(value);
 	});	
+}
+
+Condition.prototype.generateJson = function(){
+	var that = this; 
+	$.each(that.inputs, function(key, value){
+		that.data.json = that.data.json.replace("_"+key+"_", value); 
+	});
+	return this.data.json;
 }
