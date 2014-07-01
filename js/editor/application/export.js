@@ -1,13 +1,23 @@
-function exportConfig(){
+function generateConfig(serverURL, clientURL, asObj){
 	var config = {};
 	config.name = document.querySelector('input[name=config-game-name]').value;
 	config.author = document.querySelector('input[name=config-author-name]').value;
 	config.version = document.querySelector('input[name=config-version]').value;
+	config.minplayers = parseInt(document.querySelector('input[name=config-min-player]').value);
 	config.maxplayers = parseInt(document.querySelector('input[name=config-max-player]').value);
+	config.teams = getNumberofTeams();
+	config.isteamgame = (config.teams!=0);
+	config.apptheme = "light";
+	config.serverurl = serverURL;
+	config.clienturl = clientURL;
+
+	if(asObj){
+		return config;
+	}
 	return JSON.stringify(config);
 }
 
-function exportServer(asObject){
+function generateServer(asObject){
 	var ex = {};
 	var groups = groupEditor.groups;
 	for(var key in groups){
@@ -62,13 +72,14 @@ function exportServer(asObject){
 
 }
 
-function isGameTeamGame(){
+function getNumberofTeams(){
+	var i=0;
 	for(var key in groups){
 		if(group[key].joinable){
-			return true;
+			i++;
 		}
 	}
-	return false;
+	return i;
 }
 
 function lengthOf(obj){
