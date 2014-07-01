@@ -23,7 +23,7 @@ function GroupEditor(){
 			alert('An attribute with name "'+inputName.val()+'" already exists in group "'+selectedGroup+'"');
 		}
 		inputName.val("");
-		e.stopPropagation();
+		//e.stopPropagation();
 	});
 
 	$('#create-member-panel input[type=button][value=add]').on('click', function(e){
@@ -39,13 +39,26 @@ function GroupEditor(){
 	this.groupList.on('click', function(){
 		scope.editGroup();
 	});
+	$('#group-detail-list').on('click', function(){
+		scope.editMember();
+	});
+
+
+	//ui-stuff
+	$('#member-attributes').accordion();
+
 
 	//test
 	this.addGroup("cooleLeute");
 	this.addAttribute("cooleLeute", "stinkt", {type:"value"});
 	this.addAttribute("cooleLeute", "haus", {type:"position"});
 	this.addMember("cooleLeute", "Hans", {});
+	this.groups.cooleLeute.members.Hans.haus.longitude= 8.809935626983588;
+	this.groups.cooleLeute.members.Hans.haus.latitude= 53.083995593445756;
+	this.groups.cooleLeute.members.Hans.haus.zoom= 16;
+	this.groups.cooleLeute.members.Hans.stinkt.value= "manchmal";
 	this.editGroup();
+	this.editMember();
 }
 
 GroupEditor.prototype.addGroup = function(groupName){
@@ -97,7 +110,8 @@ GroupEditor.prototype.editGroup = function(groupName){
 	if(this.groups[groupName] == undefined){
 		$('#group-detail-list div.group-editor-list-title').html('');
 		$('#create-attribute-panel input').attr('disabled', true);
-		$('#group-detail-list').css('opacity', '0.1');
+		$('#group-detail-list').css('opacity', '0.3');
+		this.editMember();
 		return;
 	}
 	$('#group-detail-list div.group-editor-list-title').html(groupName+'-Config');
@@ -123,10 +137,10 @@ GroupEditor.prototype.editGroup = function(groupName){
 			)
 			.append($('<input type="button" value="delete" style="float:right;" />').on('click', function(e){
 				scope.removeAttribute(groupName, $(this.parentNode).attr('attr-name'));
-				e.stopPropagation();
+				//e.stopPropagation();
 			}))
-			.on('click', function(){
-				//scope.editGroup(groupName);
+			.on('click', function(e){
+				e.stopPropagation();
 			}));
 	}
 
@@ -139,8 +153,9 @@ GroupEditor.prototype.editGroup = function(groupName){
 				scope.removeMember(groupName, $(this.parentNode).attr('member-name'));
 				e.stopPropagation();
 			}))
-			.on('click', function(){
-				//scope.editGroup(groupName);
+			.on('click', function(e){
+				scope.editMember(groupName, $(this).attr('member-name'));
+				e.stopPropagation();
 			}));
 	}
 
@@ -202,4 +217,56 @@ GroupEditor.prototype.removeMember = function(groupName, memberName){
 	delete this.groups[groupName].members[memberName];
 	this.editGroup(groupName);
 	return true;
+}
+
+GroupEditor.prototype.editMember = function(groupName, memberName){
+	if(this.groups[groupName] == undefined || this.groups[groupName].members[memberName] == undefined){
+		$('#member-details').css('opacity', '0.3');
+		$('#member-details .group-editor-list-title').html('');
+		$('#member-attributes').html('');
+		return false;
+	}
+	$('#member-details').css('opacity', '1');
+	$('#member-details .group-editor-list-title').html(memberName);
+	var member = this.groups[groupName].members[memberName];
+	for(var key in member){
+		$('#member-attributes').append('<h3>'+key+'</h3>')
+		var attributeSetter = $('<div class="attribute-setter"></div>');
+		switch(member[key].type){
+			case "value":
+				attributeSetter.append($('<input type="text" />')
+					.val(member[key].value)
+					.attr('name', key)
+					.on('change', function(e){
+						member[$(this).attr('name')].value = $(this).val();
+					})
+				);
+				break;
+			case "position":
+				attributeSetter.append($('<fieldset class="gllpLatlonPicker"></fieldset>')
+					.attr('name', key)
+    				.append('<input type="text" class="gllpSearchField">')
+    				.append('<input type="button" class="gllpSearchButton" value="search">')
+    				.append('<div class="gllpMap">Google Maps</div>')
+    				.append('<input type="hidden" class="gllpLatitude" value="'+member[key].latitude+'"/>')
+    				.append('<input type="hidden" class="gllpLongitude" value="'+member[key].longitude+'"/>')
+    				.append('<input type="hidden" class="gllpZoom" value="'+member[key].zoom+'"/>')
+    			);
+				break;
+		}
+		$('#member-attributes').append(attributeSetter); 
+	}
+	$(".gllpLatlonPicker").each(function() {
+		(new GMapsLatLonPicker()).init( $(this) );
+	});
+	$('#member-attributes').accordion('refresh');
+	$(document).unbind("location_changed").bind("location_changed", function(event, object) {
+	//console.log(object);
+	//console.log("changed: " + $(object).attr('id') );
+		member[$(object).attr('name')].latitude = $(object).find('.gllpLatitude').val();
+		member[$(object).attr('name')].longitude = $(object).find('.gllpLongitude').val();
+		member[$(object).attr('name')].zoom = $(object).find('.gllpZoom').val();
+	});
+
+
 }
