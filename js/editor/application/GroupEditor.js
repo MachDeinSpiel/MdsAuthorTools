@@ -152,6 +152,15 @@ GroupEditor.prototype.addAttribute = function(groupName, attributeName, attribut
 	}
 	this.groups[groupName].attributes[attributeName] = attribute;
 	this.editGroup(groupName);
+	//allen membern der gruppe das attribu hinzufügen
+	var allMembers = this.groups[groupName].members;
+	for(var member in allMembers){
+		allMembers[member][attributeName] = {};
+		//kopieren, damit nicht alle das gleiche haben
+		for(var key in attribute){
+			allMembers[member][attributeName][key] = attribute[key];
+		}
+	}
 	return true;
 }
 
@@ -161,6 +170,11 @@ GroupEditor.prototype.removeAttribute = function(groupName, attributeName){
 	}
 	delete this.groups[groupName].attributes[attributeName];
 	this.editGroup(groupName);
+	//in allen membern der gruppe das attribut löschen
+	var allMembers = this.groups[groupName].members;
+	for(var member in allMembers){
+		delete allMembers[member][attributeName];
+	}
 	return true;
 }
 
@@ -170,6 +184,14 @@ GroupEditor.prototype.addMember = function(groupName, memberName, member){
 	}
 	this.groups[groupName].members[memberName] = member;
 	this.editGroup(groupName);
+	var attributes = this.groups[groupName].attributes;
+	for(var attr in attributes){
+		member[attr] = {}
+		//kopieren
+		for(var key in attributes[attr]){
+			member[attr][key] = attributes[attr][key];
+		}
+	}
 	return true;
 }
 
