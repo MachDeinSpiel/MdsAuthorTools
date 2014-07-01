@@ -21,9 +21,13 @@ function GroupEditor(){
 		}
 		inputName.val("");
 	});
+
+
+	this.editGroup();
 }
 
 GroupEditor.prototype.addGroup = function(groupName){
+	if(groupName)
 	var scope = this;
 	if(this.groups[groupName] == undefined){
 		this.groups[groupName] = {members: {}, attributes: {}};
@@ -59,15 +63,17 @@ GroupEditor.prototype.editGroup = function(groupName){
 	this.groupList.find('ul li').removeClass('selected');
 	this.attributeList.find('ul li').remove();
 	if(this.groups[groupName] == undefined){
-		$('#create-attribute-panel').css('display', 'none');
+		$('#create-attribute-panel input').attr('disabled', true);
+		$('#group-detail-list div.group-editor-list-title').html('<i>no group selected</i>');
 		return;
 	}
-	$('#create-attribute-panel').css('display', 'block');
+	$('#group-detail-list div.group-editor-list-title').html(groupName+'-Config');
+	$('#create-attribute-panel input').attr('disabled', false);
 	var selectedGroup = this.groups[groupName];
 	this.groupList.find('ul li[group-name='+groupName+']').addClass('selected');
 	for(var key in selectedGroup.attributes){
 		console.log(key);
-		this.attributeList.find('ul')
+		$('#group-attribute-overview')
 		.append($('<li>'+key+'</li>')
 			.attr('attr-name', key)
 			.append($('<input type="button" value="delete" style="float:right;" />').on('click', function(){

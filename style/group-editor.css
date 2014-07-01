@@ -66,9 +66,6 @@
 }
 
 .creation-panel{
-	position: absolute;
-	bottom: 0px;
-	left: 0px;
 	width: 100%;
 	background-color: #0086cc;
 	color: white;
@@ -76,11 +73,13 @@
 
 #create-group-panel{
 	height: 100px;
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
 }
 
 #create-attribute-panel{
 	height: 100px;
-	display: none;
 }
 
 #creation-button{
