@@ -87,22 +87,24 @@
 						<div class="group-editor-list-title">Groups</div>
 						<ul></ul>
 						<div id="create-group-panel" class="creation-panel">
-							<h3>New Group</h3>
-							<label>Name<input type="text" name="group-name"/></label>
-							<input type="button" id="create-group-button" value="add"/>
+							<input type="text" name="group-name" placeholder="name of new group"/>
+							<input type="button" id="create-group-button" class="creation-button"value="add"/>
 						</div>
 					</div>
 					<div id="group-detail-list" class="group-editor-list">
-						<div class="group-editor-list-title"><i>no group selected</i></div>
+						<div class="group-editor-list-title"></div>
 						<div class="group-editor-sublist-title">Attributes</div>
 						<ul id="group-attribute-overview"></ul>
 						<div id="create-attribute-panel" class="creation-panel">
-							<h3>New Attribute</h3>
-							<label>Name<input type="text" name="attribute-name"/></label>
-							<input type="button" class="creation-button" value="add"/>
+							<input type="text" name="attribute-name" placeholder="new attribute"/>
+							<input type="button" class="creation-button" class="creation-button" value="add"/>
 						</div>
 						<div class="group-editor-sublist-title">Members</div>
 						<ul id="group-member-overview"></ul>
+						<div id="create-member-panel" class="creation-panel">
+							<input type="text" name="member-name" placeholder="new member"/></label>
+							<input type="button" class="creation-button" class="creation-button" value="add"/>
+						</div>
 					</div>
 					<div id="member-list" class="group-editor-list">
 						

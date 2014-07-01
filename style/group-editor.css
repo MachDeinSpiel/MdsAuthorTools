@@ -9,7 +9,7 @@
 }
 
 .group-editor-list ul{
-	min-height: 30%;
+
 }
 
 .group-editor-list li,.group-editor-list ul{
@@ -51,11 +51,12 @@
 .group-editor-list-title{
 	margin-top: -33px;
 	font-size: 20pt;
+	min-height: 33px;
 }
 
 .group-editor-sublist-title{
 	font-size: 16pt;
-	padding: 10px 0px 10px 5px;
+	padding: 0px 0px 10px 5px;
 	margin-top: 20px;
 
 }
@@ -66,22 +67,22 @@
 }
 
 .creation-panel{
+	padding: 5px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	background-color: rgb(240,240,240);
 	width: 100%;
-	background-color: #0086cc;
-	color: white;
 }
 
-#create-group-panel{
-	height: 100px;
-	position: absolute;
-	bottom: 0px;
-	left: 0px;
+.creation-panel input[type=text]{
+	border: none;
+	font-size: 14pt;
 }
 
-#create-attribute-panel{
-	height: 100px;
-}
 
-#creation-button{
+
+
+.creation-button{
 	float: right;
 }
