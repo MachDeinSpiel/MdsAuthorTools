@@ -27,9 +27,11 @@ function generateServer(asObject){
 		}else{
 			ex[key] = {};
 			console.log("gen group "+key,group);
+			var createdTemp = false;
 			if(lengthOf(group.members) == 0){
 				console.log("addtemp");
 				groupEditor.addMember(key, "template", {}); //todo : nur temporär
+				createdTemp = true;
 			}
 			for(var memberName in group.members){
 				var member = group.members[memberName];
@@ -38,7 +40,7 @@ function generateServer(asObject){
 					var attribute = member[attributeName];
 					switch(attribute.type){
 						case 'value':
-							ex[key][memberName][attributeName] = attribute.value;
+							ex[key][memberName][attributeName] = (attribute.value != undefined) ? attribute.value : "null";
 							break;
 						case 'position':
 							ex[key][memberName].longitude = parseFloat(attribute.longitude);
@@ -60,6 +62,9 @@ function generateServer(asObject){
 					ex[key][memberName].latitude= "null";
 				}
 				ex[key][memberName].pathKey = memberName;
+			}
+			if(createdTemp){
+				groupEditor.removeMember(key, "template");
 			}
 		}
 
