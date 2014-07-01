@@ -97,12 +97,19 @@ SIDEBAR.saveInputs = function() {
 			SIDEBAR.transition.mode = true;
 			SIDEBAR.setCurrentTool(null);
 		}
-		console.log($("#inputs-wrapper :input"));
+		
 
-		if (SIDEBAR.currentTool === 'Edit Link' && SIDEBAR.currentTransition.isChanged) {
-			
-			historyManager.onNewCommand(new UpdateTransitionCommand(SIDEBAR.currentTransition, 
-				stateManager.getTransitionById(SIDEBAR.currentTransition.id).getClone()));
+		if (SIDEBAR.currentTool === 'Edit Link' ) {
+			var transitioninputs = $("#inputs-wrapper :input");
+			console.log(transitioninputs.filter("[name='group-select']").val());
+			console.log(transitioninputs.filter("[name='selector']").val());
+			console.log(transitioninputs.filter("[name='condition-quantifier-value]").val());
+			console.log(transitioninputs.filter("[name='condition-radius']").val());
+			console.log(transitioninputs.filter("[name='condition-button']").val());
+			if(SIDEBAR.currentTransition.isChanged){
+				historyManager.onNewCommand(new UpdateTransitionCommand(SIDEBAR.currentTransition, 
+					stateManager.getTransitionById(SIDEBAR.currentTransition.id).getClone()));
+			}
 		}
 	}
 	SIDEBAR.slideOutInputs();
@@ -137,8 +144,6 @@ SIDEBAR.createGroupSelector = function() {
 
 SIDEBAR.createSelector = function(data) {
 	console.info(data);
-	var selectorDom = $("<div></div>");
-	selectorDom.append('<label>Select:</label>');
 	var selector = $('<select name="selector"></select>');
 	$.each(data, function(key, value){
 		console.log(value);
@@ -146,58 +151,47 @@ SIDEBAR.createSelector = function(data) {
 			selector.append($('<option value="' + value + '">' + key + '</option>)'));
 		});	
 	});
-	return selectorDom.append(selector);
+	return selector;
+}
+
+SIDEBAR.encodeTransitionValues = function(key, value, dom){
+	switch (value.type) {
+		case "GROUP":
+			dom.append($("<label>Select Group</label>"));
+			dom.append(SIDEBAR.createGroupSelector());
+			break;
+		case "NUMBER":
+			var NUMBER = $("<div>");
+			NUMBER.append($("<label>"+key+"</label>"));
+			NUMBER.append($("<input type='number' name='condition-quantifier-value' class='sidebar-input' ></input>"));
+			dom.append(NUMBER);
+			break;
+		case "SELECT":
+			var SELECT = $("<div>");
+			SELECT.append($("<label>"+key+"</label>"));
+			SELECT.append(SIDEBAR.createSelector(value.options));
+			dom.append(SELECT);
+			break;
+		case "STRING":
+			var STRING = $("<div>");
+			STRING.append($("<label>"+key+"</label>"));
+			STRING.append($("<input name='condition-button' type='text' placeholder='name of the button'></input>"));
+			dom.append(STRING);
+			break;
+		case "ATTRIBUTE":
+			//TODO:
+			break;
+	}
 }
 
 
 SIDEBAR.generateTransitionInputs = function(inputs) {
 	console.info('______________generateTransitionInputs_______________');
-	var inputsarray = [];
+	var inputsdiv = $("<div>");
 	$.each(inputs, function(key, value) {
-		switch (key) {
-			case "group":
-				inputsarray.push($("<label>"+value.hint+"</label>"));
-				inputsarray.push(SIDEBAR.createGroupSelector());
-				break;
-			case "quantifier":
-
-				inputsarray.push(SIDEBAR.createSelector(value.options));
-				break;
-			case "value":
-				var dom = $("<div>");
-				dom.append($("<label>"+value.hint+"</label>"));
-				
-				if(value.type == "NUMBER"){
-					dom.append($("<input class='sidebar-input' type='number'></input>"));
-				} else {
-					dom.append($("<input class='sidebar-input' type='text' placeholder='name of the button'></input>"));
-				}
-				inputsarray.push(dom);
-				break;
-			case "radius":
-				var dom = $("<div>");
-				dom.append($("<label>"+value.hint+"</label>"));
-				dom.append($("<input class='sidebar-input' type='number' min='0'></input>"));
-				inputsarray.push(dom);
-				break;
-			case "button":
-				var dom = $("<div>");
-				dom.append($("<label>Button name</label>"));
-				dom.append($("<input class='sidebar-input' type='text' placeholder='name of the button'></input>"));
-				inputsarray.push(dom);
-				break;
-			case "attribute":
-
-				break;
-			case "checkType":
-
-				break;
-			case "compValue":
-
-				break;
-		}
+		SIDEBAR.encodeTransitionValues(key,value,inputsdiv);
 	});
-	return inputsarray;
+	return inputsdiv;
 }
 
 SIDEBAR.createInputs = function() {
@@ -241,17 +235,9 @@ SIDEBAR.createInputs = function() {
 			var inputs = $("#transition-inputs");
 			inputs.html('');
 			var transitions = presetManager.getTransitions();
-
-			$.each(SIDEBAR.generateTransitionInputs(transitions[this.value].inputs), function(key, value) {
-				inputs.append(value);
-				
-			});
+			inputs.append(SIDEBAR.generateTransitionInputs(transitions[this.value].inputs));
 		});
-
-		$.each(SIDEBAR.generateTransitionInputs(presetManager.getTransitions()[0].inputs), function(key, value) {
-			
-			inputarea.append(value)
-		});
+		inputarea.append(SIDEBAR.generateTransitionInputs(presetManager.getTransitions()[0].inputs));
 
 		transSelect.appendTo(transitionDom);
 		inputarea.appendTo(transitionDom);
