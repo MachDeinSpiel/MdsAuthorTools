@@ -78,11 +78,15 @@
 .creation-panel input[type=text]{
 	border: none;
 	font-size: 14pt;
+	margin-right: 10px;
 }
-
-
-
 
 .creation-button{
 	float: right;
+}
+
+.group-editor-list ul li label{
+	font-size: 12pt;
+	font-size: 12pt;
+	margin-left: 10px;
 }

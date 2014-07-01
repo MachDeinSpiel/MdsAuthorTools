@@ -50,10 +50,17 @@ GroupEditor.prototype.addGroup = function(groupName){
 	if(groupName)
 	var scope = this;
 	if(this.groups[groupName] == undefined){
-		this.groups[groupName] = {members: {}, attributes: {}};
+		var joinable= $('#create-group-panel').find('input[name=group-joinable]').is(':checked');
+		this.groups[groupName] = {members: {}, attributes: {}, joinable: joinable};
+		
 		this.groupList.find('ul')
 		.append($('<li>'+groupName+'</li>')
 			.attr('group-name', groupName)
+			.append($('<label title="Players can join this group before the game starts (for teams)."></label>')
+				.append($('<input type="checkbox" name="group-joinable" '+(joinable ? 'checked ' : '')+'/><span>joinable</span>'))
+				.on('click', function(){
+					scope.groups[groupName].joinable = $(this).is(':checked');
+				}))
 			.append($('<input type="button" value="delete" style="float:right;" />').on('click', function(e){
 				scope.removeGroup($(this.parentNode).attr('group-name'));
 				e.stopPropagation();
@@ -99,7 +106,6 @@ GroupEditor.prototype.editGroup = function(groupName){
 
 	//attribute ul füllen
 	for(var key in selectedGroup.attributes){
-		console.log(key);
 		$('#group-attribute-overview')
 		.append($('<li>'+key+'</li>')
 			.attr('attr-name', key)
@@ -114,7 +120,6 @@ GroupEditor.prototype.editGroup = function(groupName){
 
 	//member ul füllen
 	for(var key in selectedGroup.members){
-		console.log(key);
 		$('#group-member-overview')
 		.append($('<li>'+key+'</li>')
 			.attr('member-name', key)
