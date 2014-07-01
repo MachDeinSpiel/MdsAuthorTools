@@ -127,7 +127,7 @@ GroupEditor.prototype.editGroup = function(groupName){
 		this.editMember();
 		return;
 	}
-	$('#group-detail-list div.group-editor-list-title').html(groupName+'-Config');
+	$('#group-detail-list div.group-editor-list-title').html('Edit Group: '+groupName);
 	$('#create-attribute-panel input').attr('disabled', false);
 	$('#group-detail-list').css('opacity', '1');
 	var selectedGroup = this.groups[groupName];
