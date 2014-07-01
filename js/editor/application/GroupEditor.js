@@ -86,6 +86,7 @@ GroupEditor.prototype.editGroup = function(groupName){
 	this.attributeList.find('li').remove();
 	this.memberList.find('li').remove();
 	if(this.groups[groupName] == undefined){
+		$('#group-detail-list div.group-editor-list-title').html('');
 		$('#create-attribute-panel input').attr('disabled', true);
 		$('#group-detail-list').css('opacity', '0.1');
 		return;
