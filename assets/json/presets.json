@@ -123,7 +123,8 @@
                 },
                 "radius": {
                     "type": "NUMBER",
-                    "deafult": 0
+                    "deafult": 0,
+                    "hint": "Choose a radius"
                 }
             },
             "json": " \"event\": \"locationEvent\", \"condition\": { \"name\": \"nearby\", \"params\": { \"object\": { \"name\": \"_group_\", \"quantifier\": { \"checkType\": \"_quantifier_\", \"value\": _value_ } }, \"subject\": { \"name\": \"self\", \"quantifier\": { \"checkType\": \"equals\", \"value\": 1 } }, \"radius\": _radius_ } }"
