@@ -4,6 +4,8 @@ SIDEBAR = window.SIDEBAR || {};
 SIDEBAR.currentState = false;
 SIDEBAR.currentTransition = false;
 SIDEBAR.currentTool = null;
+SIDEBAR.selectedCondtion = false;
+
 
 SIDEBAR.transition = {
 	start: null,
@@ -101,11 +103,15 @@ SIDEBAR.saveInputs = function() {
 
 		if (SIDEBAR.currentTool === 'Edit Link' ) {
 			var transitioninputs = $("#inputs-wrapper :input");
-			console.log(transitioninputs.filter("[name='group-select']").val());
-			console.log(transitioninputs.filter("[name='selector']").val());
-			console.log(transitioninputs.filter("[name='condition-quantifier-value]").val());
-			console.log(transitioninputs.filter("[name='condition-radius']").val());
-			console.log(transitioninputs.filter("[name='condition-button']").val());
+			var i = 0;
+			var tempCond = new Condition();
+			$.each(presetManager.getTransitions()[SIDEBAR.selectedCondtion].inputs, function(key,value){
+				console.log(key, $("[input-id='"+(i)+"']").val());
+				tempCond.inputs[key] = $("[input-id='"+(i++)+"']").val();
+			});
+			tempCond.data = jQuery.extend(true,{},presetManager.getTransitions()[SIDEBAR.selectedCondtion]);
+			tempCond.generateText();
+			SIDEBAR.currentTransition.update({"condition": tempCond});
 			if(SIDEBAR.currentTransition.isChanged){
 				historyManager.onNewCommand(new UpdateTransitionCommand(SIDEBAR.currentTransition, 
 					stateManager.getTransitionById(SIDEBAR.currentTransition.id).getClone()));
@@ -131,10 +137,10 @@ SIDEBAR.slideOutInputs = function() {
 	$("#editor-side-tools").css("left", 0);
 }
 
-SIDEBAR.createGroupSelector = function() {
+SIDEBAR.createGroupSelector = function(id) {
 	var groups = groupEditor.groups;
 	var groupsDom = $("<div></div>");
-	var groupSelect = $('<select name="group-select"></select>');
+	var groupSelect = $('<select name="group-select" input-id="'+id+'"></select>');
 
 	$.each(groups, function(key, value) {
 		groupSelect.append($('<option value="' + key + '">' + key + '</option>)'));
@@ -142,9 +148,9 @@ SIDEBAR.createGroupSelector = function() {
 	return groupsDom.append(groupSelect);
 }
 
-SIDEBAR.createSelector = function(data) {
+SIDEBAR.createSelector = function(data, id) {
 	console.info(data);
-	var selector = $('<select name="selector"></select>');
+	var selector = $('<select name="selector" input-id="'+id+'""></select>');
 	$.each(data, function(key, value){
 		console.log(value);
 		$.each(value, function(key, value){
@@ -154,28 +160,28 @@ SIDEBAR.createSelector = function(data) {
 	return selector;
 }
 
-SIDEBAR.encodeTransitionValues = function(key, value, dom){
+SIDEBAR.encodeTransitionValues = function(key, value, dom, id){
 	switch (value.type) {
 		case "GROUP":
 			dom.append($("<label>Select Group</label>"));
-			dom.append(SIDEBAR.createGroupSelector());
+			dom.append(SIDEBAR.createGroupSelector(id));
 			break;
 		case "NUMBER":
 			var NUMBER = $("<div>");
 			NUMBER.append($("<label>"+key+"</label>"));
-			NUMBER.append($("<input type='number' name='condition-quantifier-value' class='sidebar-input' ></input>"));
+			NUMBER.append($("<input type='number' name='condition-quantifier-value' class='sidebar-input' input-id='"+id+"'></input>"));
 			dom.append(NUMBER);
 			break;
 		case "SELECT":
 			var SELECT = $("<div>");
 			SELECT.append($("<label>"+key+"</label>"));
-			SELECT.append(SIDEBAR.createSelector(value.options));
+			SELECT.append(SIDEBAR.createSelector(value.options, id));
 			dom.append(SELECT);
 			break;
 		case "STRING":
 			var STRING = $("<div>");
 			STRING.append($("<label>"+key+"</label>"));
-			STRING.append($("<input name='condition-button' type='text' placeholder='name of the button'></input>"));
+			STRING.append($("<input name='condition-button' type='text' placeholder='name of the button' input-id='"+id+"'></input>"));
 			dom.append(STRING);
 			break;
 		case "ATTRIBUTE":
@@ -188,8 +194,9 @@ SIDEBAR.encodeTransitionValues = function(key, value, dom){
 SIDEBAR.generateTransitionInputs = function(inputs) {
 	console.info('______________generateTransitionInputs_______________');
 	var inputsdiv = $("<div>");
+	var i = 0;
 	$.each(inputs, function(key, value) {
-		SIDEBAR.encodeTransitionValues(key,value,inputsdiv);
+		SIDEBAR.encodeTransitionValues(key,value,inputsdiv, i++);
 	});
 	return inputsdiv;
 }
@@ -209,7 +216,6 @@ SIDEBAR.createInputs = function() {
 				SIDEBAR.saveInputs();
 			}));
 			dom.html('Set both states!');
-
 		}
 	}
 
@@ -234,16 +240,13 @@ SIDEBAR.createInputs = function() {
 		transSelect.on('change', function() {
 			var inputs = $("#transition-inputs");
 			inputs.html('');
-			var transitions = presetManager.getTransitions();
-			inputs.append(SIDEBAR.generateTransitionInputs(transitions[this.value].inputs));
+			SIDEBAR.selectedCondtion = this.value;
+			inputs.append(SIDEBAR.generateTransitionInputs(presetManager.getTransitions()[this.value].inputs));
 		});
 		inputarea.append(SIDEBAR.generateTransitionInputs(presetManager.getTransitions()[0].inputs));
-
+		SIDEBAR.selectedCondtion = 0;
 		transSelect.appendTo(transitionDom);
 		inputarea.appendTo(transitionDom);
-		transitionDom.append($("<button style='position: relative; margin-top: 20px;' name='save'>add</button>").on('click', function() {
-			var transitions = presetManager.getTransitions();
-		}));
 		transitionDom.appendTo(dom);
 	}
 

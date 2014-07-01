@@ -49,6 +49,7 @@ Transition.prototype.getClone = function(){
 }
 
 Transition.prototype.update = function(data){
+	console.log(data);
 	if(this.condition != data.condition){
 		this.condition = data.condition;
 		this.isChanged = true;
@@ -56,7 +57,14 @@ Transition.prototype.update = function(data){
 }
 
 Transition.prototype.validate = function(){
-	this.domObj.text = this.condition.text;
+	if(this.condition != undefined){
+		this.domObj.text(this.condition.text);
+		console.log(this.condition.text);
+	} else {
+		this.domObj.text("No Condition");
+		console.log("No Condition");
+	}
+		
 }
 
 
