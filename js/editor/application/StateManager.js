@@ -81,10 +81,10 @@ StateManager.prototype.removeTransition = function(trans) {
 
 StateManager.prototype.updateTransition = function(trans) {
 	$.each(this.transitions, function(index, value){
-		if(value.id == data.id){
-			value.update(data);
+		if(value.id == trans.id){
+			value.update(trans);
 			value.validate();
-			console.log("updateState, data:", data);
+			console.log("updateTransition, data:", trans);
 		}
 	});
 }
