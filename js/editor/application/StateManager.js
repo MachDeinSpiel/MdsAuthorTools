@@ -3,6 +3,7 @@ function StateManager() {
 	this.states = [];
 	this.transitions = [];
 	this.stateIndex = 0;
+	this.transitionIndex = 0;
 }
 
 StateManager.prototype.addState = function(x, y) {
@@ -44,7 +45,7 @@ StateManager.prototype.removeState = function(state) {
 };
 
 StateManager.prototype.linkStates = function(state_1, state_2){
-	var temp = new Transition(state_1, state_2);
+	var temp = new Transition(state_1, state_2, ++this.transitionIndex);
 	this.transitions.push(temp);
 	return temp;
 }
@@ -54,6 +55,14 @@ StateManager.prototype.addTransitionByTransition = function(trans) {
 	$("#editor-divs").append(trans.domObj);
 	DRAGDROP.loadTransitionDrag();
 };
+
+StateManager.prototype.getTransitionById = function(id) {
+	var trans = this.transitions[id - 1];
+	if (trans === undefined) {
+		throw new undefinedStateException(id);
+	}
+	return trans;
+}
 
 StateManager.prototype.removeTransition = function(trans) {
 	var i = -1;
@@ -69,6 +78,16 @@ StateManager.prototype.removeTransition = function(trans) {
 		throw new Error('NO INDEX -1 in transitions');
 	}
 };
+
+StateManager.prototype.updateTransition = function(trans) {
+	$.each(this.transitions, function(index, value){
+		if(value.id == data.id){
+			value.update(data);
+			value.validate();
+			console.log("updateState, data:", data);
+		}
+	});
+}
 
 StateManager.prototype.drawTransitions = function() {
 	$.each(this.transitions, function(index, value){

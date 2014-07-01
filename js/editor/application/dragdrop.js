@@ -129,6 +129,7 @@ DRAGDROP.loadTransitionDrag = function() {
     });
     $(".transition").unbind('click').on('click', function(){
         SIDEBAR.setCurrentTool('Edit Link');
+        SIDEBAR.setTransition(stateManager.getTransitionById($(this).attr('transition-id')));
         SIDEBAR.showInputs();
     });
 }

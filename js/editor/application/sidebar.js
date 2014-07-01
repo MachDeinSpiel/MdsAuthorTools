@@ -2,6 +2,7 @@ SIDEBAR = window.SIDEBAR || {};
 
 /** @type {STATE} [The Actual State is stored here] */
 SIDEBAR.currentState = false;
+SIDEBAR.currentTransition = false;
 SIDEBAR.currentTool = null;
 
 SIDEBAR.transition = {
@@ -67,10 +68,12 @@ SIDEBAR.showTools = function() {
 	});
 }
 
-/** Saves old state and set new one */
 SIDEBAR.setState = function(state) {
-	// SIDEBAR.saveInputs();
 	SIDEBAR.currentState = state.getClone();
+}
+
+SIDEBAR.setTransition = function(trans) {
+	SIDEBAR.currentTransition = trans.getClone();
 }
 
 
@@ -82,21 +85,27 @@ SIDEBAR.saveInputs = function() {
 		temp.type = $("input[name='state-type']:checked").val();
 
 		SIDEBAR.currentState.update(temp);
-
 		if (SIDEBAR.currentState.isChanged) {
 			historyManager.onNewCommand(new UpdateStateCommand(SIDEBAR.currentState,
 				stateManager.getStateByID(SIDEBAR.currentState.id).getClone()));
 			this.currentState.isChanged = false;
 		}
+
 		if (SIDEBAR.currentTool === 'New Link') {
 			SIDEBAR.transition.start = null;
 			SIDEBAR.transition.end = null;
 			SIDEBAR.transition.mode = true;
 			SIDEBAR.setCurrentTool(null);
 		}
+		console.log($("#inputs-wrapper :input"));
+
+		if (SIDEBAR.currentTool === 'Edit Link' && SIDEBAR.currentTransition.isChanged) {
+			
+			historyManager.onNewCommand(new UpdateTransitionCommand(SIDEBAR.currentTransition, 
+				stateManager.getTransitionById(SIDEBAR.currentTransition.id).getClone()));
+		}
 	}
 	SIDEBAR.slideOutInputs();
-	//TODO: Rest speichern, Command erstellen
 }
 
 SIDEBAR.showInputs = function() {
@@ -147,41 +156,44 @@ SIDEBAR.generateTransitionInputs = function(inputs) {
 	$.each(inputs, function(key, value) {
 		switch (key) {
 			case "group":
-				console.log("group");
 				inputsarray.push($("<label>"+value.hint+"</label>"));
 				inputsarray.push(SIDEBAR.createGroupSelector());
 				break;
 			case "quantifier":
-				console.log("quantifier");
+
 				inputsarray.push(SIDEBAR.createSelector(value.options));
 				break;
 			case "value":
-				console.log("value");
-				inputsarray.push($("<label>"+value.hint+"</label>"));
+				var dom = $("<div>");
+				dom.append($("<label>"+value.hint+"</label>"));
+				
 				if(value.type == "NUMBER"){
-					inputsarray.push($("<input class='sidebar-input' type='number'></input>"));
+					dom.append($("<input class='sidebar-input' type='number'></input>"));
 				} else {
-					inputsarray.push($("<input class='sidebar-input' type='text' placeholder='name of the button'></input>"));
+					dom.append($("<input class='sidebar-input' type='text' placeholder='name of the button'></input>"));
 				}
+				inputsarray.push(dom);
 				break;
 			case "radius":
-				console.log("radius");
-				inputsarray.push($("<label>"+value.hint+"</label>"));
-				inputsarray.push($("<input class='sidebar-input' type='number' min='0'></input>"));
+				var dom = $("<div>");
+				dom.append($("<label>"+value.hint+"</label>"));
+				dom.append($("<input class='sidebar-input' type='number' min='0'></input>"));
+				inputsarray.push(dom);
 				break;
 			case "button":
-				console.log("button");
-				inputsarray.push($("<label>Button name</label>"));
-				inputsarray.push($("<input class='sidebar-input' type='text' placeholder='name of the button'></input>"));
+				var dom = $("<div>");
+				dom.append($("<label>Button name</label>"));
+				dom.append($("<input class='sidebar-input' type='text' placeholder='name of the button'></input>"));
+				inputsarray.push(dom);
 				break;
 			case "attribute":
-				console.log("attribute");
+
 				break;
 			case "checkType":
-				console.log("checkType");
+
 				break;
 			case "compValue":
-				console.log("compValue");
+
 				break;
 		}
 	});
