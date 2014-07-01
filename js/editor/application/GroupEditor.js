@@ -18,7 +18,8 @@ function GroupEditor(){
 	$('#create-attribute-panel input[type=button][value=add]').on('click', function(e){
 		var selectedGroup = $(scope.groupList).find('.selected').attr('group-name');
 		var inputName = $('#create-attribute-panel input[name=attribute-name]');
-		if(!scope.addAttribute(selectedGroup, inputName.val(), {})){
+		var type = $('#create-attribute-panel select[name=attribute-type]').val();
+		if(!scope.addAttribute(selectedGroup, inputName.val(), {type:type})){
 			alert('An attribute with name "'+inputName.val()+'" already exists in group "'+selectedGroup+'"');
 		}
 		inputName.val("");
@@ -41,7 +42,8 @@ function GroupEditor(){
 
 	//test
 	this.addGroup("cooleLeute");
-	this.addAttribute("cooleLeute", "stinkt", {});
+	this.addAttribute("cooleLeute", "stinkt", {type:"value"});
+	this.addAttribute("cooleLeute", "haus", {type:"position"});
 	this.addMember("cooleLeute", "Hans", {});
 	this.editGroup();
 }
@@ -106,9 +108,19 @@ GroupEditor.prototype.editGroup = function(groupName){
 
 	//attribute ul füllen
 	for(var key in selectedGroup.attributes){
+		var currentType = selectedGroup.attributes[key].type;
 		$('#group-attribute-overview')
 		.append($('<li>'+key+'</li>')
 			.attr('attr-name', key)
+			.append('<span>Type:</span>')
+			.append($('<select name="attribute-type">')
+				.append('<option value="value" '+(currentType == 'value' ? 'selected ' : '')+'>Value</option>')
+				.append('<option value="position" '+(currentType == 'position' ? 'selected ' : '')+'>Position</option>')
+				.append('<option value="group" '+(currentType == 'group' ? 'selected ' : '')+'>Group</option>')
+				.on('change', function(){
+					selectedGroup.attributes[$(this.parentNode).attr('attr-name')].type = $(this).val();
+				})
+			)
 			.append($('<input type="button" value="delete" style="float:right;" />').on('click', function(e){
 				scope.removeAttribute(groupName, $(this.parentNode).attr('attr-name'));
 				e.stopPropagation();
