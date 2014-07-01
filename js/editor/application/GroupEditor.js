@@ -52,11 +52,24 @@ function GroupEditor(){
 	this.addGroup("cooleLeute");
 	this.addAttribute("cooleLeute", "stinkt", {type:"value"});
 	this.addAttribute("cooleLeute", "haus", {type:"position"});
+	this.addAttribute("cooleLeute", "reiseziel", {type:"position"});
 	this.addMember("cooleLeute", "Hans", {});
 	this.groups.cooleLeute.members.Hans.haus.longitude= 8.809935626983588;
 	this.groups.cooleLeute.members.Hans.haus.latitude= 53.083995593445756;
 	this.groups.cooleLeute.members.Hans.haus.zoom= 16;
+	this.groups.cooleLeute.members.Hans.reiseziel.longitude= 2.7453447000000324;
+	this.groups.cooleLeute.members.Hans.reiseziel.latitude= 39.5157819;
+	this.groups.cooleLeute.members.Hans.reiseziel.zoom= 11;
 	this.groups.cooleLeute.members.Hans.stinkt.value= "manchmal";
+
+	this.addMember("cooleLeute", "Flo Rista", {});
+	this.groups.cooleLeute.members["Flo Rista"].haus.longitude= -3.6870743986219168;
+	this.groups.cooleLeute.members["Flo Rista"].haus.latitude= 41.67323938824088;
+	this.groups.cooleLeute.members["Flo Rista"].haus.zoom= 18;
+	this.groups.cooleLeute.members["Flo Rista"].reiseziel.longitude= 10.38930058479309;
+	this.groups.cooleLeute.members["Flo Rista"].reiseziel.latitude= 46.92182347638428;
+	this.groups.cooleLeute.members["Flo Rista"].reiseziel.zoom= 11;
+	this.groups.cooleLeute.members["Flo Rista"].stinkt.value= "höchstens nach Blumen";
 	this.editGroup();
 	this.editMember();
 }
@@ -132,7 +145,12 @@ GroupEditor.prototype.editGroup = function(groupName){
 				.append('<option value="position" '+(currentType == 'position' ? 'selected ' : '')+'>Position</option>')
 				.append('<option value="group" '+(currentType == 'group' ? 'selected ' : '')+'>Group</option>')
 				.on('change', function(){
+					var allMembers = selectedGroup.members;
+					for(var member in allMembers){
+						allMembers[member][$(this.parentNode).attr('attr-name')].type = $(this).val();
+					}
 					selectedGroup.attributes[$(this.parentNode).attr('attr-name')].type = $(this).val();
+					scope.editMember();
 				})
 			)
 			.append($('<input type="button" value="delete" style="float:right;" />').on('click', function(e){
@@ -220,14 +238,14 @@ GroupEditor.prototype.removeMember = function(groupName, memberName){
 }
 
 GroupEditor.prototype.editMember = function(groupName, memberName){
+	$('#member-attributes').html('');
 	if(this.groups[groupName] == undefined || this.groups[groupName].members[memberName] == undefined){
 		$('#member-details').css('opacity', '0.3');
 		$('#member-details .group-editor-list-title').html('');
-		$('#member-attributes').html('');
 		return false;
 	}
 	$('#member-details').css('opacity', '1');
-	$('#member-details .group-editor-list-title').html(memberName);
+	$('#member-details .group-editor-list-title').html('Edit Member:'+memberName);
 	var member = this.groups[groupName].members[memberName];
 	for(var key in member){
 		$('#member-attributes').append('<h3>'+key+'</h3>')
@@ -243,14 +261,20 @@ GroupEditor.prototype.editMember = function(groupName, memberName){
 				);
 				break;
 			case "position":
+				var lat = member[key].latitude;
+				var lon = member[key].longitude;
+				var zoom = member[key].zoom;
+				var lat = (lat == undefined) ? 20 : lat;
+				var lon = (lon == undefined) ? 20 : lon;
+				var zoom = (zoom == undefined) ? 3 : zoom;
 				attributeSetter.append($('<fieldset class="gllpLatlonPicker"></fieldset>')
 					.attr('name', key)
     				.append('<input type="text" class="gllpSearchField">')
     				.append('<input type="button" class="gllpSearchButton" value="search">')
     				.append('<div class="gllpMap">Google Maps</div>')
-    				.append('<input type="hidden" class="gllpLatitude" value="'+member[key].latitude+'"/>')
-    				.append('<input type="hidden" class="gllpLongitude" value="'+member[key].longitude+'"/>')
-    				.append('<input type="hidden" class="gllpZoom" value="'+member[key].zoom+'"/>')
+    				.append('<input type="hidden" class="gllpLatitude" value="'+lat+'"/>')
+    				.append('<input type="hidden" class="gllpLongitude" value="'+lon+'"/>')
+    				.append('<input type="hidden" class="gllpZoom" value="'+zoom+'"/>')
     			);
 				break;
 		}
@@ -260,6 +284,7 @@ GroupEditor.prototype.editMember = function(groupName, memberName){
 		(new GMapsLatLonPicker()).init( $(this) );
 	});
 	$('#member-attributes').accordion('refresh');
+	$('#member-attributes').accordion({ active: "h3:last" })
 	$(document).unbind("location_changed").bind("location_changed", function(event, object) {
 	//console.log(object);
 	//console.log("changed: " + $(object).attr('id') );
