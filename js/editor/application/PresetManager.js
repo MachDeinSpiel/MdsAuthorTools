@@ -19,5 +19,5 @@ PresetManager.prototype.getActions = function(){
 }
 
 PresetManager.prototype.getTransitions = function(){
-	return this.data.actions;
+	return this.data.transitions;
 }

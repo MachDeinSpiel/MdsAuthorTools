@@ -137,11 +137,16 @@ SIDEBAR.createInputs = function() {
 	}
 
 	if(SIDEBAR.currentTool === 'Edit Link'){
-		console.info('current tool = edit link');
-		
-		dom.append($("<button name='save' >Save</button>").on('click', function() {
+		dom.append($("<button name='save'>Save</button>").on('click', function() {
 			SIDEBAR.saveInputs();
 		}));
+		dom.append('<label style="margin-top: 20px;" for="transition">Select a condition:</label>');
+		var transSelect = $('<select name="transition"></select>');
+
+		$.each(presetManager.getTransitions(),function(key, value){
+			transSelect.append($('<option value="'+value.json+'">'+value.name+'</option>)'));
+		});
+		transSelect.appendTo(dom);
 	}
 	
 	if (SIDEBAR.currentTool === 'New State') {
