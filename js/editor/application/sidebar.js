@@ -209,6 +209,7 @@ SIDEBAR.createInputs = function() {
 				}))
 				.append($('<div id="action-inputs"></div>'))
 				.append($('<input type="button" value="add" />').on('click', function(){
+					var action = presetManager.getActions()[$('#action-selector').val()];
 					var type = $('input[name=action-type]:checked').val();
 					$('#'+type+'-wrapper').append($('<div class="action-element"></div>')
 										.append('<span>'+presetManager.getActions()[$('#action-selector').val()].name+'</span>')
@@ -237,13 +238,12 @@ SIDEBAR.createInputs = function() {
 								input.options.push(tempOpt);
 							}
 						}
-						inputs[key] = $('#input-'+key).val();
+						input.value = $('#input-'+key).val();
+						inputs[key] = input;
 
 					}
 					var newAction = new Action(action.name, inputs, action.json);
-					console.log(temp);
 					actionMap[type].push(newAction);
-					console.log(temp.startAction, SIDEBAR.currentState.startAction);
 					SIDEBAR.currentState.update(temp);
 
 					
