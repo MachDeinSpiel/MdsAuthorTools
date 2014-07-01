@@ -85,8 +85,11 @@
 	float: right;
 }
 
-.group-editor-list ul li label{
+.group-editor-list ul li label, .group-editor-list ul li span{
 	font-size: 12pt;
-	font-size: 12pt;
-	margin-left: 10px;
+	margin-left: 16px;
+}
+
+.group-editor-list ul li label span{
+	margin: 0px;
 }
