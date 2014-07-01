@@ -149,21 +149,20 @@ SIDEBAR.createInputs = function() {
 			SIDEBAR.saveInputs();
 		}));
 		dom.append($("<input type='text' name='state-name' placeholder='State Name' autofocus value='" + SIDEBAR.currentState.name + "' />"));
-		dom.append($("<input type='text' name='state-action' placeholder='State Action' autofocus />"));
 		dom.append($("<form></form>")
-			.append($("<label><input type='radio' name='state-type' value='' "+ (SIDEBAR.currentState.type == '' ? "checked='checked'" : '' )+">State </label> <br>"))
-			.append($("<label><input type='radio' name='state-type' value='start-state' "+ (SIDEBAR.currentState.type == 'start-state' ? "checked='checked'" : '' )+">Start State </label><br>"))
-			.append($("<label><input type='radio' name='state-type' value='end-state' "+ (SIDEBAR.currentState.type == 'end-state' ? "checked='checked'" : '' )+">End State </label><br>"))
+			.append($("<label><input type='radio' name='state-type' value='' "+ (SIDEBAR.currentState.type == '' ? "checked='checked'" : '' )+">State </label>"))
+			.append($("<label><input type='radio' name='state-type' value='start-state' "+ (SIDEBAR.currentState.type == 'start-state' ? "checked='checked'" : '' )+">Start State </label>"))
+			.append($("<label><input type='radio' name='state-type' value='end-state' "+ (SIDEBAR.currentState.type == 'end-state' ? "checked='checked'" : '' )+">End State </label>"))
 		);
 		
-		dom.append($('<div></div>')
+		dom.append($('<div id="accordion"></div>')
 			.append($('<h3>Start actions</h3>'))
 			.append($('<div id="start-action-wrapper"></div>'))   
 			.append($('<h3>Do actions</h3>'))
-			.append($('<div id="do-action-wrapper"></div>'))   
+			.append($('<div id="do-action-wrapper"></div>'))
 			.append($('<h3>End actions</h3>'))
-			.append($('<div id="end-action-wrapper"></div>'))   
-			.append($('<div id="action-creator"></div>')
+			.append($('<div id="end-action-wrapper"></div>')));
+		dom.append($('<div id="action-creator"></div>')
 				.append($("<h4>New Action</h4>"))
 				.append($("<label><input type='radio' name='action-type' value='start-action' checked='checked'>Start action</label> <br>"))
 				.append($("<label><input type='radio' name='action-type' value='do-action'>Do action</label><br>"))
@@ -205,6 +204,7 @@ SIDEBAR.createInputs = function() {
 								break;
 						}
 						
+						
 					}
 				}))
 				.append($('<div id="action-inputs"></div>'))
@@ -214,12 +214,14 @@ SIDEBAR.createInputs = function() {
 					$('#'+type+'-wrapper').append($('<div class="action-element"></div>')
 										.append('<span>'+presetManager.getActions()[$('#action-selector').val()].name+'</span>')
 									);
+							
+
 					var temp = SIDEBAR.currentState.getClone();
 					var actionMap = {"start-action" : temp.startAction,
 									 "do-action" : temp.doAction,
 									 "end-action" : temp.endAction};
 
-
+					jQuery('[id="accordion"]').accordion( "refresh" );
 					var inputs = {};
 					//copy input, insert data which was entered by user
 					for(key in action.inputs){
@@ -249,9 +251,15 @@ SIDEBAR.createInputs = function() {
 					
 
 				}))
-			)
-		);
-
+			);
+		
+		console.log(jQuery('[id="accordion"]').accordion({ 
+			
+			animate: 100,
+			collapsible: true,
+			heightStyle: "auto"
+		 }));
+		
 		for(var i=0; i<presetManager.getActions().length; i++){
 			var action = presetManager.getActions()[i];
 			var selected = (i==0) ? " selected" : "";

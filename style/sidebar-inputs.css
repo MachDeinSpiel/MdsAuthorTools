@@ -59,3 +59,67 @@
 #action-inputs select{
 	width: 155px;
 }
+
+
+
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default {
+	height: 30px;
+	border-radius: 0px;
+	border: 1px solid #ccc;
+	font-weight: normal;
+	color: #000;
+}
+.ui-state-default a,
+.ui-state-default a:link,
+.ui-state-default a:visited {
+	color: #fff;
+	text-decoration: none;
+}
+.ui-state-hover,
+.ui-widget-content .ui-state-hover,
+.ui-widget-header .ui-state-hover,
+.ui-state-focus,
+.ui-widget-content .ui-state-focus,
+.ui-widget-header .ui-state-focus {
+	border-radius: 0px;
+	background: #0086cc;
+	font-weight: normal;
+	color: #fff;
+	cursor: pointer;
+}
+.ui-state-hover a,
+.ui-state-hover a:hover,
+.ui-state-hover a:link,
+.ui-state-hover a:visited,
+.ui-state-focus a,
+.ui-state-focus a:hover,
+.ui-state-focus a:link,
+.ui-state-focus a:visited {
+	border-radius: 0px;
+	color: #fff;
+	text-decoration: none;
+}
+.ui-state-active,
+.ui-widget-content .ui-state-active,
+.ui-widget-header .ui-state-active {
+	border-radius: 0px;
+	border: 1px solid #aaaaaa;
+	background: #0086cc;
+	font-weight: normal;
+	color: #fff;
+}
+.ui-state-active a,
+.ui-state-active a:link,
+.ui-state-active a:visited {
+	border-radius: 0px;
+	color: #212121;
+	text-decoration: none;
+}
+
+.ui-accordion .ui-accordion-content{
+	padding: 1em 0.2em; 
+	border-top: 0;
+	overflow: auto;
+}
