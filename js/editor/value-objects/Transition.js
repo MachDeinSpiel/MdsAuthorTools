@@ -1,17 +1,19 @@
-function Transition(startState, endState){
+function Transition(startState, endState, id){
 	console.log("New Transition with states:",startState,endState);
 	this.startState = startState;
 	this.endState = endState;
 	this.condition = undefined;
-
 	this.points = [];
+	this.isChanged = false;
+	this.id = id
 
 	var x = (startState.x+endState.x)/2;
 	var y = (startState.y+endState.y)/2;
 	this.domObj = $("<div></div>", {
 		"class": "transition",
 		"style": "left: " + x + "px; top: " + y + "px;",
-		"text" : "Transition"
+		"text" : "Transition",
+		"transition-id" : this.id
 	}).appendTo('#editor-divs');
 
 	DRAGDROP.loadTransitionDrag();
@@ -41,6 +43,22 @@ Transition.prototype.draw = function() {
 	CANVAS.drawLine(p1.startX, p1.startY, p1.endX, p1.endY);
 	CANVAS.drawArrow(p2.startX, p2.startY, p2.endX, p2.endY);
 };
+
+Transition.prototype.getClone = function(){
+	return jQuery.extend(true,{},this);
+}
+
+Transition.prototype.update = function(data){
+	if(this.condition != data.condition){
+		this.condition = data.condition;
+		this.isChanged = true;
+	}
+}
+
+Transition.prototype.validate = function(){
+	this.domObj.text = this.condition.text;
+}
+
 
 Transition.prototype.findDrawingPoints = function(fx, fy, fw, fh, sx, sy, sw, sh){
 	var startX = 0,
