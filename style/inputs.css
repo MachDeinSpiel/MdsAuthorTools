@@ -38,7 +38,7 @@ button[name="save"]{
 	border: none;
 	background-color: #0086cc;
 	color: #fff;
-	box-shadow: 0px 3px 5px #888;
+	box-shadow: 0px 3px 2px #888;
 }
 
 button[name="save"]:active{
