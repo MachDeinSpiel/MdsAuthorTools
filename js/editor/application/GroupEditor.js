@@ -57,6 +57,7 @@ GroupEditor.prototype.removeGroup = function(groupName){
 GroupEditor.prototype.editGroup = function(groupName){
 	var scope = this;
 	this.groupList.find('ul li').removeClass('selected');
+	this.attributeList.find('ul li').remove();
 	if(this.groups[groupName] == undefined){
 		$('#create-attribute-panel').css('display', 'none');
 		return;
@@ -64,8 +65,6 @@ GroupEditor.prototype.editGroup = function(groupName){
 	$('#create-attribute-panel').css('display', 'block');
 	var selectedGroup = this.groups[groupName];
 	this.groupList.find('ul li[group-name='+groupName+']').addClass('selected');
-
-	this.attributeList.find('ul li').remove();
 	for(var key in selectedGroup.attributes){
 		console.log(key);
 		this.attributeList.find('ul')
