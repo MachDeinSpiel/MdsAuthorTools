@@ -5,6 +5,7 @@
 	height: 80%;
 	margin: 20px 10px 0px 10px;
 	float: left;
+	position: relative;
 }
 
 .group-editor-list ul{
@@ -64,21 +65,24 @@
 	height: 100%;
 }
 
-
-#groups-list{
-	position: relative;
-}
-
-#create-group-panel{
+.creation-panel{
 	position: absolute;
 	bottom: 0px;
 	left: 0px;
-	height: 100px;
 	width: 100%;
 	background-color: #0086cc;
 	color: white;
 }
 
-#create-group-button{
+#create-group-panel{
+	height: 100px;
+}
+
+#create-attribute-panel{
+	height: 100px;
+	display: none;
+}
+
+#creation-button{
 	float: right;
 }
