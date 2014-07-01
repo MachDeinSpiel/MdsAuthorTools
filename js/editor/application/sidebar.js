@@ -56,7 +56,7 @@ SIDEBAR.tools = {
 SIDEBAR.showTools = function() {
 	$.each(SIDEBAR.tools, function(index, value) {
 		$('#tools-wrapper').append(
-			$("<div id='"+value.id+"' class='"+value.class+"'></div>", {
+			$("<div id='" + value.id + "' class='" + value.class + "'></div>", {
 				text: index
 			}).on('click', function() {
 				if (value.func) {
@@ -75,22 +75,20 @@ SIDEBAR.setState = function(state) {
 
 
 
-
 SIDEBAR.saveInputs = function() {
-	if(SIDEBAR.currentTool != null){
+	if (SIDEBAR.currentTool != null) {
 		var temp = {};
 		temp.name = $("input[name='state-name']").val();
 		temp.type = $("input[name='state-type']:checked").val();
 
 		SIDEBAR.currentState.update(temp);
 
-		if(SIDEBAR.currentState.isChanged){
-			historyManager.onNewCommand(new UpdateStateCommand(SIDEBAR.currentState, 
+		if (SIDEBAR.currentState.isChanged) {
+			historyManager.onNewCommand(new UpdateStateCommand(SIDEBAR.currentState,
 				stateManager.getStateByID(SIDEBAR.currentState.id).getClone()));
 			this.currentState.isChanged = false;
 		}
 		if (SIDEBAR.currentTool === 'New Link') {
-			console.log('saved new link');
 			SIDEBAR.transition.start = null;
 			SIDEBAR.transition.end = null;
 			SIDEBAR.transition.mode = true;
@@ -117,6 +115,79 @@ SIDEBAR.slideOutInputs = function() {
 	$("#editor-side-tools").css("left", 0);
 }
 
+SIDEBAR.createGroupSelector = function() {
+	var groups = groupEditor.groups;
+	var groupsDom = $("<div></div>");
+	var groupSelect = $('<select name="group-select"></select>');
+
+	$.each(groups, function(key, value) {
+		groupSelect.append($('<option value="' + key + '">' + key + '</option>)'));
+	});
+	return groupsDom.append(groupSelect);
+}
+
+SIDEBAR.createSelector = function(data) {
+	console.info(data);
+	var selectorDom = $("<div></div>");
+	selectorDom.append('<label>Select:</label>');
+	var selector = $('<select name="selector"></select>');
+	$.each(data, function(key, value){
+		console.log(value);
+		$.each(value, function(key, value){
+			selector.append($('<option value="' + value + '">' + key + '</option>)'));
+		});	
+	});
+	return selectorDom.append(selector);
+}
+
+
+SIDEBAR.generateTransitionInputs = function(inputs) {
+	console.info('______________generateTransitionInputs_______________');
+	var inputsarray = [];
+	$.each(inputs, function(key, value) {
+		switch (key) {
+			case "group":
+				console.log("group");
+				inputsarray.push($("<label>"+value.hint+"</label>"));
+				inputsarray.push(SIDEBAR.createGroupSelector());
+				break;
+			case "quantifier":
+				console.log("quantifier");
+				inputsarray.push(SIDEBAR.createSelector(value.options));
+				break;
+			case "value":
+				console.log("value");
+				inputsarray.push($("<label>"+value.hint+"</label>"));
+				if(value.type == "NUMBER"){
+					inputsarray.push($("<input class='sidebar-input' type='number'></input>"));
+				} else {
+					inputsarray.push($("<input class='sidebar-input' type='text' placeholder='name of the button'></input>"));
+				}
+				break;
+			case "radius":
+				console.log("radius");
+				inputsarray.push($("<label>"+value.hint+"</label>"));
+				inputsarray.push($("<input class='sidebar-input' type='number' min='0'></input>"));
+				break;
+			case "button":
+				console.log("button");
+				inputsarray.push($("<label>Button name</label>"));
+				inputsarray.push($("<input class='sidebar-input' type='text' placeholder='name of the button'></input>"));
+				break;
+			case "attribute":
+				console.log("attribute");
+				break;
+			case "checkType":
+				console.log("checkType");
+				break;
+			case "compValue":
+				console.log("compValue");
+				break;
+		}
+	});
+	return inputsarray;
+}
+
 SIDEBAR.createInputs = function() {
 	var dom = $("#inputs-wrapper").html('');
 
@@ -132,11 +203,11 @@ SIDEBAR.createInputs = function() {
 				SIDEBAR.saveInputs();
 			}));
 			dom.html('Set both states!');
-			
+
 		}
 	}
 
-	if(SIDEBAR.currentTool === 'Edit Link'){
+	if (SIDEBAR.currentTool === 'Edit Link') {
 		dom.append($("<button style='position: relative;' name='save'>Save</button>").on('click', function() {
 			SIDEBAR.saveInputs();
 		}));
@@ -146,143 +217,162 @@ SIDEBAR.createInputs = function() {
 		});
 
 		transitionDom.append('<label for="transition">Select a condition:</label>');
-		var transSelect = $('<select name="transition"></select>');
+		var transSelect = $('<select name="transition" style="height: 30px; margin-bottom: 20px; "></select>');
 
-		$.each(presetManager.getTransitions(),function(key, value){
-			transSelect.append($('<option value="'+key+'">'+value.name+'</option>)'));
+		$.each(presetManager.getTransitions(), function(key, value) {
+			transSelect.append($('<option value="' + key + '">' + value.name + '</option>)'));
 		});
 
+		var inputarea = $("<div id='transition-inputs'></div>");
 
+		transSelect.on('change', function() {
+			var inputs = $("#transition-inputs");
+			inputs.html('');
+			var transitions = presetManager.getTransitions();
+
+			$.each(SIDEBAR.generateTransitionInputs(transitions[this.value].inputs), function(key, value) {
+				inputs.append(value);
+				
+			});
+		});
+
+		$.each(SIDEBAR.generateTransitionInputs(presetManager.getTransitions()[0].inputs), function(key, value) {
+			
+			inputarea.append(value)
+		});
 
 		transSelect.appendTo(transitionDom);
-		transitionDom.append($("<button style='position: relative;' name='save'>add</button>").on('click',function(){
-			console.log(transSelect.val());	
+		inputarea.appendTo(transitionDom);
+		transitionDom.append($("<button style='position: relative; margin-top: 20px;' name='save'>add</button>").on('click', function() {
+			var transitions = presetManager.getTransitions();
 		}));
 		transitionDom.appendTo(dom);
 	}
-	
+
 	if (SIDEBAR.currentTool === 'New State') {
 		dom.append($("<button name='save' >Save</button>").on('click', function() {
 			SIDEBAR.saveInputs();
 		}));
 		dom.append($("<input type='text' name='state-name' placeholder='State Name' autofocus value='" + SIDEBAR.currentState.name + "' />"));
 		dom.append($("<form></form>")
-			.append($("<label><input type='radio' name='state-type' value='' "+ (SIDEBAR.currentState.type == '' ? "checked='checked'" : '' )+">State </label>"))
-			.append($("<label><input type='radio' name='state-type' value='start-state' "+ (SIDEBAR.currentState.type == 'start-state' ? "checked='checked'" : '' )+">Start State </label>"))
-			.append($("<label><input type='radio' name='state-type' value='end-state' "+ (SIDEBAR.currentState.type == 'end-state' ? "checked='checked'" : '' )+">End State </label>"))
+			.append($("<label><input type='radio' name='state-type' value='' " + (SIDEBAR.currentState.type == '' ? "checked='checked'" : '') + ">State </label>"))
+			.append($("<label><input type='radio' name='state-type' value='start-state' " + (SIDEBAR.currentState.type == 'start-state' ? "checked='checked'" : '') + ">Start State </label>"))
+			.append($("<label><input type='radio' name='state-type' value='end-state' " + (SIDEBAR.currentState.type == 'end-state' ? "checked='checked'" : '') + ">End State </label>"))
 		);
-		
+
 		dom.append($('<div id="accordion"></div>')
 			.append($('<h3>Start actions</h3>'))
-			.append($('<div id="start-action-wrapper"></div>'))   
+			.append($('<div id="start-action-wrapper"></div>'))
 			.append($('<h3>Do actions</h3>'))
 			.append($('<div id="do-action-wrapper"></div>'))
 			.append($('<h3>End actions</h3>'))
 			.append($('<div id="end-action-wrapper"></div>')));
 		dom.append($('<div id="action-creator"></div>')
-				.append($("<h4>New Action</h4>"))
-				.append($("<label><input type='radio' name='action-type' value='start-action' checked='checked'>Start action</label> <br>"))
-				.append($("<label><input type='radio' name='action-type' value='do-action'>Do action</label><br>"))
-				.append($("<label><input type='radio' name='action-type' value='end-action'>End action</label><br>"))
-				.append($('<select id="action-selector"></select>').on('change', function(){
-					var action = presetManager.getActions()[this.value];
-					$('#action-inputs').html('');
-					for(key in action.inputs){
-						var input = action.inputs[key];
-						$('#action-inputs').append('<label to="input-'+key+'" title="'+input.hint+'">'+key+'</label>');
-						switch(input.type){
-							case "NUMBER": 
-								$('#action-inputs').append('<input type="number" id="input-'+key+'" title="'+input.hint+'"/"><br />');
-								break;
-							case "STRING": 
-								$('#action-inputs').append('<input type="text" id="input-'+key+'" title="'+input.hint+'"/"><br />');
-								break;
-							case "URL": 
-								$('#action-inputs').append('<input type="url" id="input-'+key+'" title="'+input.hint+'"/"><br />');
-								break;
-							case "GROUP": 
-								$('#action-inputs').append('<input type="text" id="input-'+key+'" value="todo" readonly/><br />');
-								break;
-							case "ATTRIBUTE": 
-								$('#action-inputs').append('<input type="url" id="input-'+key+'" value="todo" readonly/><br />');
-								break;
-							case "SELECT": 
-								if(!input.options){
-									console.error("Error while reading options of input '"+key+"' of action '"+action.name+"'. Check your syntax!");
-								}else{
-									var selector = $('<select id="input-'+key+' " title="'+input.hint+'"></select><br />');
-									for(var i=0; i<input.options.length; i++){
-										for(optionname in input.options[i]){
-											selector.append('<option value="'+input.options[i][optionname]+'">'+optionname+'</option>');
-										}
+			.append($("<h4>New Action</h4>"))
+			.append($("<label><input type='radio' name='action-type' value='start-action' checked='checked'>Start action</label> <br>"))
+			.append($("<label><input type='radio' name='action-type' value='do-action'>Do action</label><br>"))
+			.append($("<label><input type='radio' name='action-type' value='end-action'>End action</label><br>"))
+			.append($('<select id="action-selector"></select>').on('change', function() {
+				var action = presetManager.getActions()[this.value];
+				$('#action-inputs').html('');
+				for (key in action.inputs) {
+					var input = action.inputs[key];
+					$('#action-inputs').append('<label to="input-' + key + '" title="' + input.hint + '">' + key + '</label>');
+					switch (input.type) {
+						case "NUMBER":
+							$('#action-inputs').append('<input type="number" id="input-' + key + '" title="' + input.hint + '"/"><br />');
+							break;
+						case "STRING":
+							$('#action-inputs').append('<input type="text" id="input-' + key + '" title="' + input.hint + '"/"><br />');
+							break;
+						case "URL":
+							$('#action-inputs').append('<input type="url" id="input-' + key + '" title="' + input.hint + '"/"><br />');
+							break;
+						case "GROUP":
+							$('#action-inputs').append('<input type="text" id="input-' + key + '" value="todo" readonly/><br />');
+							break;
+						case "ATTRIBUTE":
+							$('#action-inputs').append('<input type="url" id="input-' + key + '" value="todo" readonly/><br />');
+							break;
+						case "SELECT":
+							if (!input.options) {
+								console.error("Error while reading options of input '" + key + "' of action '" + action.name + "'. Check your syntax!");
+							} else {
+								var selector = $('<select id="input-' + key + ' " title="' + input.hint + '"></select><br />');
+								for (var i = 0; i < input.options.length; i++) {
+									for (optionname in input.options[i]) {
+										selector.append('<option value="' + input.options[i][optionname] + '">' + optionname + '</option>');
 									}
-									$('#action-inputs').append(selector);
 								}
-								break;
-						}
-						
-						
-					}
-				}))
-				.append($('<div id="action-inputs"></div>'))
-				.append($('<input type="button" value="add" />').on('click', function(){
-					var action = presetManager.getActions()[$('#action-selector').val()];
-					var type = $('input[name=action-type]:checked').val();
-					$('#'+type+'-wrapper').append($('<div class="action-element"></div>')
-										.append('<span>'+presetManager.getActions()[$('#action-selector').val()].name+'</span>')
-									);
-							
-
-					var temp = SIDEBAR.currentState.getClone();
-					var actionMap = {"start-action" : temp.startAction,
-									 "do-action" : temp.doAction,
-									 "end-action" : temp.endAction};
-
-					jQuery('[id="accordion"]').accordion( "refresh" );
-					var inputs = {};
-					//copy input, insert data which was entered by user
-					for(key in action.inputs){
-						var input = {};
-						input.type = action.inputs[key].type;
-						input.hint = action.inputs[key].hint;
-						//copy options if not undefined
-						if(action.inputs[key].options != undefined){
-							input.options = [];
-							var inopts = action.inputs[key].options;
-							for(var k =0; k<inopts.length; i++){
-								var tempOpt = {};
-								for(oKey in inopts){
-									tempOpt[oKey] = inopts[oKey];
-								}
-								input.options.push(tempOpt);
+								$('#action-inputs').append(selector);
 							}
-						}
-						input.value = $('#input-'+key).val();
-						inputs[key] = input;
-
+							break;
 					}
-					var newAction = new Action(action.name, inputs, action.json);
-					actionMap[type].push(newAction);
-					SIDEBAR.currentState.update(temp);
 
-					
 
-				}))
-			);
-		
-		console.log(jQuery('[id="accordion"]').accordion({ 
-			
+				}
+			}))
+			.append($('<div id="action-inputs"></div>'))
+			.append($('<input type="button" value="add" />').on('click', function() {
+				var action = presetManager.getActions()[$('#action-selector').val()];
+				var type = $('input[name=action-type]:checked').val();
+				$('#' + type + '-wrapper').append($('<div class="action-element"></div>')
+					.append('<span>' + presetManager.getActions()[$('#action-selector').val()].name + '</span>')
+				);
+
+
+				var temp = SIDEBAR.currentState.getClone();
+				var actionMap = {
+					"start-action": temp.startAction,
+					"do-action": temp.doAction,
+					"end-action": temp.endAction
+				};
+
+				jQuery('[id="accordion"]').accordion("refresh");
+				var inputs = {};
+				//copy input, insert data which was entered by user
+				for (key in action.inputs) {
+					var input = {};
+					input.type = action.inputs[key].type;
+					input.hint = action.inputs[key].hint;
+					//copy options if not undefined
+					if (action.inputs[key].options != undefined) {
+						input.options = [];
+						var inopts = action.inputs[key].options;
+						for (var k = 0; k < inopts.length; i++) {
+							var tempOpt = {};
+							for (oKey in inopts) {
+								tempOpt[oKey] = inopts[oKey];
+							}
+							input.options.push(tempOpt);
+						}
+					}
+					input.value = $('#input-' + key).val();
+					inputs[key] = input;
+
+				}
+				var newAction = new Action(action.name, inputs, action.json);
+				actionMap[type].push(newAction);
+				SIDEBAR.currentState.update(temp);
+
+
+
+			}))
+		);
+
+		jQuery('[id="accordion"]').accordion({
+
 			animate: 100,
 			collapsible: true,
 			heightStyle: "auto"
-		 }));
-		
-		for(var i=0; i<presetManager.getActions().length; i++){
+		});
+
+		for (var i = 0; i < presetManager.getActions().length; i++) {
 			var action = presetManager.getActions()[i];
-			var selected = (i==0) ? " selected" : "";
-			$('#action-selector').append($('<option value="'+i+'"'+selected+'>'+action.name+'</option>'));
+			var selected = (i == 0) ? " selected" : "";
+			$('#action-selector').append($('<option value="' + i + '"' + selected + '>' + action.name + '</option>'));
 		}
-		
+
 		$("action-selector").change();
 		return
 	}
