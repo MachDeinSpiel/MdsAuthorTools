@@ -1,7 +1,8 @@
 var stateManager,
 	historyManager,
 	presetManager,
-	groupEditor;
+	groupEditor,
+	exporter;
 
 $(window).load(function() {
 
@@ -41,4 +42,5 @@ function init(){
 
 	presetManager = new PresetManager("assets/json/presets.json");
 	groupEditor = new GroupEditor();
+	exporter = new Exporter();
 }

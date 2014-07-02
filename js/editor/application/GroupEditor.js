@@ -80,15 +80,19 @@ GroupEditor.prototype.addGroup = function(groupName){
 	if(this.groups[groupName] == undefined){
 		var joinable= $('#create-group-panel').find('input[name=group-joinable]').is(':checked');
 		this.groups[groupName] = {members: {}, attributes: {}, joinable: joinable};
+		this.makeGroupJoinable(groupName, joinable);
 		
 		this.groupList.find('ul')
 		.append($('<li>'+groupName+'</li>')
 			.attr('group-name', groupName)
 			.append($('<label title="Players can join this group before the game starts (for teams)."></label>')
-				.append($('<input type="checkbox" name="group-joinable" '+(joinable ? 'checked ' : '')+'/><span>joinable</span>'))
-				.on('click', function(){
-					scope.groups[groupName].joinable = $(this).is(':checked');
+				.append($('<input type="checkbox" name="group-joinable" '+(joinable ? 'checked ' : '')+'/>')
+				.on('change', function(){
+					var checked = $(this).is(':checked');
+					scope.makeGroupJoinable(groupName, checked);
 				}))
+			)
+			.append('<span>joinable</span>')
 			.append($('<input type="button" value="delete" style="float:right;" />').on('click', function(e){
 				scope.removeGroup($(this.parentNode).attr('group-name'));
 				e.stopPropagation();
@@ -176,6 +180,16 @@ GroupEditor.prototype.editGroup = function(groupName){
 				e.stopPropagation();
 			}));
 	}
+
+	if(selectedGroup.joinable){
+		$('#group-member-overview input').attr("disabled", true);
+		$('#create-member-panel input').attr("disabled", true);
+	}else{
+		$('#group-member-overview input').attr("disabled", false);
+		$('#create-member-panel input').attr("disabled", false);
+	}
+
+
 
 }
 
@@ -292,6 +306,26 @@ GroupEditor.prototype.editMember = function(groupName, memberName){
 		member[$(object).attr('name')].longitude = $(object).find('.gllpLongitude').val();
 		member[$(object).attr('name')].zoom = $(object).find('.gllpZoom').val();
 	});
+
+
+}
+
+GroupEditor.prototype.makeGroupJoinable = function(groupName, joinable){
+	console.log(groupName, joinable);
+	if(this.groups[groupName] == undefined){
+		return false;
+	}
+	this.groups[groupName].joinable = joinable;
+	if(joinable){
+		for(var member in this.groups[groupName].members){
+			delete this.groups[groupName].members[member];
+		}
+		this.addMember(groupName, "team-attributes", {});
+	}else{
+		this.removeMember(groupName, "team-attributes");
+	}
+
+	return true;
 
 
 }
