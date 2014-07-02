@@ -6,9 +6,9 @@ function showLogin(callback){
 		if(loggedIn){
 			hideLogin();
 			var name = $('#login-panel input[name=login-name').val();
-			var pw = $('#login-panel input[name=password-name').val();
-
-			callback(name, pw);
+			var pw = $('#login-panel input[name=login-password').val();
+			var passhash = CryptoJS.MD5(pw).toString();
+			callback(name, passhash);
 		}
 	});
 }
