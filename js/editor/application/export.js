@@ -1,11 +1,28 @@
-function generateConfig(serverURL, clientURL, asObj){
+function Exporter(){
+	this.clientURL = null;
+	this.serverURL = null;
+}
+
+Exporter.prototype.export = function(){
+	var serverJSON = this.generateConfig();
+	var name = document.querySelector('input[name=config-game-name]').value;
+	var url = "http://mds.informatik.hs-bremen.de:1380/authortools/upload.php?t="+(new Date()).getTime();
+	$.post(url, 'gamename='+name+'&json='+serverJSON, function(data){
+		console.log(data);
+		showLogin(function(name, pw){
+			console.log(name, pw);
+		});
+	});
+}
+
+Exporter.prototype.generateConfig = function(serverURL, clientURL, asObj){
 	var config = {};
 	config.name = document.querySelector('input[name=config-game-name]').value;
 	config.author = document.querySelector('input[name=config-author-name]').value;
 	config.version = document.querySelector('input[name=config-version]').value;
 	config.minplayers = parseInt(document.querySelector('input[name=config-min-player]').value);
 	config.maxplayers = parseInt(document.querySelector('input[name=config-max-player]').value);
-	config.teams = getNumberofTeams();
+	config.teams = this.getNumberofTeams();
 	config.isteamgame = (config.teams!=0);
 	config.apptheme = "light";
 	config.serverurl = serverURL;
@@ -17,20 +34,42 @@ function generateConfig(serverURL, clientURL, asObj){
 	return JSON.stringify(config);
 }
 
-function generateServer(asObject){
+Exporter.prototype.generateServer = function(asObject){
 	var ex = {};
 	var groups = groupEditor.groups;
 	for(var key in groups){
 		var group = groups[key];
 		if(group.joinable){
-			//TODO: team-stuff
+			if(ex['Teams'] == undefined){
+				ex['Teams'] = {};
+			}
+			ex['Teams'][key] = {};
+			console.log("Group:",group);
+			var member = group.members['team-attributes'];
+			for(var attributeName in member){
+					var attribute = member[attributeName];
+					switch(attribute.type){
+						case 'value':
+							ex['Teams'][key][attributeName] = (attribute.value != undefined) ? attribute.value : "null";
+							break;
+						case 'position':
+							ex['Teams'][key][attributeName].longitude = parseFloat(attribute.longitude);
+							ex['Teams'][key][attributeName].latitude = parseFloat(attribute.latitude);
+							break;
+						case 'group':
+							ex['Teams'][key][attributeName] = {dummy: "dummy"}; //TODO: dummy?
+							break;
+					}
+					
+				}
+
 		}else{
 			ex[key] = {};
 			console.log("gen group "+key,group);
 			var createdTemp = false;
-			if(lengthOf(group.members) == 0){
+			if(this.lengthOf(group.members) == 0){
 				console.log("addtemp");
-				groupEditor.addMember(key, "template", {}); //todo : nur temporär
+				groupEditor.addMember(key, "template", {});
 				createdTemp = true;
 			}
 			for(var memberName in group.members){
@@ -43,8 +82,14 @@ function generateServer(asObject){
 							ex[key][memberName][attributeName] = (attribute.value != undefined) ? attribute.value : "null";
 							break;
 						case 'position':
-							ex[key][memberName].longitude = parseFloat(attribute.longitude);
-							ex[key][memberName].latitude = parseFloat(attribute.latitude);
+							//Wenn attribut "position" heißt, speichere lon/lat direkt im member
+							if(attributeName == 'position'){
+								ex[key][memberName].longitude = parseFloat(attribute.longitude);
+								ex[key][memberName].latitude = parseFloat(attribute.latitude);
+							}else{
+								ex[key][memberName][attributeName].longitude = parseFloat(attribute.longitude);
+								ex[key][memberName][attributeName].latitude = parseFloat(attribute.latitude);
+							}
 							break;
 						case 'group':
 							ex[key][memberName][attributeName] = {dummy: "dummy"}; //TODO: dummy?
@@ -77,7 +122,7 @@ function generateServer(asObject){
 
 }
 
-function getNumberofTeams(){
+Exporter.prototype.getNumberofTeams = function(){
 	var i=0;
 	for(var key in groupEditor.groups){
 		if(groupEditor.groups[key].joinable){
@@ -87,10 +132,14 @@ function getNumberofTeams(){
 	return i;
 }
 
-function lengthOf(obj){
+Exporter.prototype.lengthOf = function(obj){
 	var i=0;
 	for(var k in obj){
 		i++;
 	}
 	return i;
 }
+
+
+//function upload
+//http://mds.informatik.hs-bremen.de:1380/authortools/upload.php
