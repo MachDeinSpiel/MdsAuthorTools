@@ -30,9 +30,12 @@ SIDEBAR.tools = {
 		'id': 'tool-newstate',
 		'path': '',
 		'func': function() {
-			SIDEBAR.setCurrentTool('New State');
-			SIDEBAR.slideOutInputs();
-			SIDEBAR.showInputs();
+			 SIDEBAR.setState(historyManager.onNewCommand(new CreateStateCommand({
+                    'left': parseInt(0),
+                    'top': parseInt(0)
+                })));
+            SIDEBAR.setCurrentTool("New State");
+            SIDEBAR.showInputs();
 		}
 	},
 	'New Link': {
@@ -115,6 +118,7 @@ SIDEBAR.saveInputs = function() {
 			if(SIDEBAR.currentTransition.isChanged){
 				historyManager.onNewCommand(new UpdateTransitionCommand(SIDEBAR.currentTransition, 
 					stateManager.getTransitionById(SIDEBAR.currentTransition.id).getClone()));
+				stateManager.getTransitionById(SIDEBAR.currentTransition.id).isChanged = false;
 			}
 		}
 	}
