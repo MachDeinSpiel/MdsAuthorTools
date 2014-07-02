@@ -42,5 +42,7 @@ MENU.execute = function(what){
 		case 'redo':	historyManager.redo();
 						$("li[data-panel='editor-state-machine']").click(); 
 						break;
+		case 'upload': 	exporter.export();
+						break; 
 	}
 }

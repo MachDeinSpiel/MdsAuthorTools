@@ -19,9 +19,10 @@
 	<body>
 		<div id="login-wrapper">
 			<div id="login-panel">
-				<input type="text" name="login-name" />
-				<input type="password" name="login-password" />
-				<input type="button" id="login-button" value="login"/>
+				<h2>Login</h2>
+				<label>Username:<br /><input type="text" name="login-name" /></label><br />
+				<label>Password:<br /><input type="password" name="login-password" /></label>
+				<input type="button" id="login-button" value="login" />
 			</div>
 		</div>
 		<div id="wrapper">
@@ -34,6 +35,7 @@
 					<li>View</li>
 					<li data-command="undo">Undo</li>
 					<li data-command="redo">Redo</li>
+					<li data-command="upload">Upload to Server</li>
 				</ul>
 				<ul id="editor-top-switcher" class="menu">
 					<li data-panel="editor-game" class="selected">GameSettings</li>
@@ -49,10 +51,10 @@
 							<div class="label"></div>
 							<input type="text" name="config-game-name" placeholder="game name" class="large" />
 						</div>
-						<div class="input-wrapper large">
+						<!--<div class="input-wrapper large">
 							<div class="label"></div>
 							<input type="text" name="config-author-name" placeholder="author name" class="large" />
-						</div>
+						</div>-->
 						<div class="input-wrapper small">
 							<div class="label"></div>
 							<input type="text" name="config-version" placeholder="version" class="small" />
@@ -127,6 +129,7 @@
 		<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 		<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
 		<script src="js/jquery-gmaps-latlon-picker.js"></script>
+		<script src="http://crypto-js.googlecode.com/svn/tags/3.0.2/build/rollups/md5.js"></script>
 		<script src="js/editor/application/exceptions/undefinedStateException.js" type="text/javascript" charset="utf-8" ></script>
 		
 		<script src="js/editor/application/login.js" type="text/javascript" charset="utf-8" ></script>
