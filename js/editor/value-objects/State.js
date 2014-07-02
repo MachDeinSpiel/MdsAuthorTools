@@ -74,20 +74,16 @@ State.prototype.update = function(data){
 		this.isChanged = true;
 		this.type = data.type;
 	}
-
-	console.log("update. isChanged:", this.isChanged);
 }
 
 
 State.prototype.validate = function(){
-	console.error('validate');
 	var dom = $("#editor-divs").find("[state-id='" + this.id + "']");
 	if(dom != []){
 		dom.find(".state-title").html(this.name);
 		
 		var actionWrapper = dom.find('.state-action-wrapper');
 		for(var i=0; i<actionWrapper.length; i++){
-			console.log(actionWrapper[i]);
 			actionWrapper[i].style.display ='none';
 		}
 		if(this.startAction.length > 0){

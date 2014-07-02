@@ -24,14 +24,6 @@
         {
             "name" : "Start Reaction Mini App",
             "inputs": {
-                "subject": {
-                    "type": "STRING",
-                    "hint": "Player who will play the MiniApp usually self"
-                },
-                "obcject": {
-                    "type": "STRING",
-                    "hint": "In case the MiniApp should require an object but usually null"
-                },
         "attribute": {
             "type": "ATTRIBUTE",
                         "hint": "The attribute the MiniApp changes" 
@@ -53,19 +45,11 @@
                         "hint": "Number to add to the choosen attribute in case of loose, it should be negative"
         }
             },
-            "json":" {\"ident\": \"startMiniApp\", \"defaults\": {\"name\": \"Reaction\", \"subject\": _notValue.subject_, \"object\": \"_notValue.object_\", \"attribute\": \"_attribute_\", \"minScore\": \"_minScore_\", \"factor\": \"_factor_\", \"setWin\": \"_setWin_\", \"setLoose\": \"_setLoose_\"}}"
+            "json":" {\"ident\": \"startMiniApp\", \"defaults\": {\"name\": \"Reaction\", \"subject\": _notValue.self_, \"object\": \"null\", \"attribute\": \"_attribute_\", \"minScore\": \"_minScore_\", \"factor\": \"_factor_\", \"setWin\": \"_setWin_\", \"setLoose\": \"_setLoose_\"}}"
         },
         {
             "name" : "Start Puzzle Mini App",
             "inputs": {
-                "subject": {
-                    "type": "STRING",
-                    "hint": "Player who will play the MiniApp usually self"
-                },
-                "obcject": {
-                    "type": "STRING",
-                    "hint": "In case the MiniApp should require an object but usually null"
-                },
         "attribute": {
             "type": "ATTRIBUTE",
                         "hint": "The attribute the MiniApp changes" 
@@ -85,19 +69,11 @@
                         "hint": "Value the attribute is set to in case of loose"
         }
             },
-            "json":" {\"ident\": \"startMiniApp\", \"defaults\": {\"name\": \"Puzzle\", \"subject\": _notValue.subject_, \"object\": \"_notValue.object_\", \"attribute\": \"_attribute_\", \"minScore\": \"_minScore_\", \"factor\": \"null\", \"setWin\": \"_setWin_\", \"setLoose\": \"_setLoose_\"}}"
+            "json":" {\"ident\": \"startMiniApp\", \"defaults\": {\"name\": \"Puzzle\", \"subject\": _notValue.self_, \"object\": \"null\", \"attribute\": \"_attribute_\", \"minScore\": \"_minScore_\", \"factor\": \"null\", \"setWin\": \"_setWin_\", \"setLoose\": \"_setLoose_\"}}"
         },
         {
             "name" : "Start Pipes Mini App",
             "inputs": {
-                "subject": {
-                    "type": "STRING",
-                    "hint": "Player who will play the MiniApp usually self"
-                },
-                "obcject": {
-                    "type": "STRING",
-                    "hint": "In case the MiniApp should require an object but usually null"
-                },
         "attribute": {
             "type": "ATTRIBUTE",
                         "hint": "The attribute the MiniApp changes" 
@@ -117,7 +93,7 @@
                         "hint": "Value the attribute is set to in case of loose"
         }
             },
-            "json":" {\"ident\": \"startMiniApp\", \"defaults\": {\"name\": \"Pipes\", \"subject\": _notValue.subject_, \"object\": \"_notValue.object_\", \"attribute\": \"_attribute_\", \"minScore\": \"_minScore_\", \"factor\": \"null\", \"setWin\": \"_setWin_\", \"setLoose\": \"_setLoose_\"}}"
+            "json":" {\"ident\": \"startMiniApp\", \"defaults\": {\"name\": \"Pipes\", \"subject\": _notValue.self_, \"object\": \"null\", \"attribute\": \"_attribute_\", \"minScore\": \"_minScore_\", \"factor\": \"null\", \"setWin\": \"_setWin_\", \"setLoose\": \"_setLoose_\"}}"
         },
     {
             "name" : "SetStringAttribute",

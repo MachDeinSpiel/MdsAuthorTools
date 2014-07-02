@@ -16,12 +16,12 @@ DRAGDROP.LoadStateDrag = function() {
             startX = parseInt(this.style.left);
             startY = parseInt(this.style.top);
             $(this).attr('noclick',1);
+            SIDEBAR.setState(stateManager.getStateByID($(this).attr('state-id')));
         },
         drag: function() {
            
         },
         stop: function() {
-            SIDEBAR.setState(stateManager.getStateByID($(this).attr('state-id')));
             var temp = {};
             temp.x = parseInt(this.style.left);
             temp.y = parseInt(this.style.top);
@@ -29,11 +29,6 @@ DRAGDROP.LoadStateDrag = function() {
             if(SIDEBAR.currentState.isChanged){
                 historyManager.onNewCommand(new UpdateStateCommand(SIDEBAR.currentState, stateManager.getStateByID($(this).attr('state-id')).getClone()));
             }
-            
-          
-            // deltaX = parseInt(this.style.left) - startX;
-            // deltaY = parseInt(this.style.top) - startY;
-
         }
     })
 
@@ -48,7 +43,11 @@ DRAGDROP.LoadStateDrag = function() {
                     start: SIDEBAR.transition.start,
                     end: SIDEBAR.transition.end
                 }));
-                SIDEBAR.saveInputs();
+                SIDEBAR.transition.start = null;
+                SIDEBAR.transition.end = null;
+                SIDEBAR.transition.mode = true;
+                SIDEBAR.setCurrentTool(null);
+                SIDEBAR.slideOutInputs();
             }
 
             SIDEBAR.createInputs();

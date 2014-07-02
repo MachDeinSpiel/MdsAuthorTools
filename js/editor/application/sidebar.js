@@ -247,6 +247,9 @@ SIDEBAR.createInputs = function() {
 		transSelect.appendTo(transitionDom);
 		inputarea.appendTo(transitionDom);
 		transitionDom.appendTo(dom);
+		dom.append($("<button style='position: relative; margin-top: 20px;' name='delete'>delete</button>").on('click', function() {
+			historyManager.onNewCommand(new DeleteTransitionCommand(stateManager.getTransitionById(SIDEBAR.currentTransition.id).getClone()));
+		}));
 	}
 
 	if (SIDEBAR.currentTool === 'New State') {
@@ -354,12 +357,10 @@ SIDEBAR.createInputs = function() {
 				var newAction = new Action(action.name, inputs, action.json);
 				actionMap[type].push(newAction);
 				SIDEBAR.currentState.update(temp);
-
-
-
-			}))
-		);
-
+			})));
+		dom.append($("<button style='position: relative; margin-top: 20px;' name='delete'>delete</button>").on('click', function() {
+			historyManager.onNewCommand(new DeleteStateCommand(stateManager.getStateByID(SIDEBAR.currentState.id).getClone()));
+		}));
 		jQuery('[id="accordion"]').accordion({
 
 			animate: 100,

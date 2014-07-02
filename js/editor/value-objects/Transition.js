@@ -1,5 +1,4 @@
 function Transition(startState, endState, id){
-	console.log("New Transition with states:",startState,endState);
 	this.startState = startState;
 	this.endState = endState;
 	this.condition = undefined;
@@ -12,7 +11,7 @@ function Transition(startState, endState, id){
 	this.domObj = $("<div></div>", {
 		"class": "transition",
 		"style": "left: " + x + "px; top: " + y + "px;",
-		"text" : "Transition",
+		"text" : "No Condition",
 		"transition-id" : this.id
 	}).appendTo('#editor-divs');
 
@@ -49,7 +48,6 @@ Transition.prototype.getClone = function(){
 }
 
 Transition.prototype.update = function(data){
-	console.log(data);
 	if(this.condition != data.condition){
 		this.condition = data.condition;
 		this.isChanged = true;
@@ -59,10 +57,8 @@ Transition.prototype.update = function(data){
 Transition.prototype.validate = function(){
 	if(this.condition != undefined){
 		this.domObj.text(this.condition.text);
-		console.log(this.condition.text);
 	} else {
 		this.domObj.text("No Condition");
-		console.log("No Condition");
 	}
 		
 }
