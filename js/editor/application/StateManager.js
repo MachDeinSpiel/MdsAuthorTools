@@ -84,7 +84,6 @@ StateManager.prototype.updateTransition = function(trans) {
 		if(value.id == trans.id){
 			value.update(trans);
 			value.validate();
-			console.log("updateTransition, data:", trans);
 		}
 	});
 }
@@ -101,7 +100,6 @@ StateManager.prototype.updateState = function(data){
 		if(value.id == data.id){
 			value.update(data);
 			value.validate();
-			console.log("updateState, data:", data);
 		}
 	});
 	

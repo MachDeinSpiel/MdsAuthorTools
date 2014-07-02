@@ -27,7 +27,6 @@ DRAGDROP.LoadStateDrag = function() {
             temp.y = parseInt(this.style.top);
             SIDEBAR.currentState.update(temp);
             if(SIDEBAR.currentState.isChanged){
-                console.log("change");
                 historyManager.onNewCommand(new UpdateStateCommand(SIDEBAR.currentState, stateManager.getStateByID($(this).attr('state-id')).getClone()));
             }
             
@@ -39,7 +38,6 @@ DRAGDROP.LoadStateDrag = function() {
     })
 
     $(".state").unbind("click").on('click', function(event) {
-        console.info('clicked on state');
         if (SIDEBAR.currentTool === 'New Link') {
             if (SIDEBAR.transition.mode) {
                 SIDEBAR.transition.start = stateManager.getStateByID($(this).attr('state-id'));
@@ -125,12 +123,19 @@ DRAGDROP.loadTransitionDrag = function() {
         stack: "#editor-divs div",
         distance: 10,
         revert: "invalid",
-        containment: "parent"
+        containment: "parent",
+        start: function(){
+            $(this).attr('noclick',1);
+        }
     });
     $(".transition").unbind('click').on('click', function(){
-        SIDEBAR.setCurrentTool('Edit Link');
-        SIDEBAR.setTransition(stateManager.getTransitionById($(this).attr('transition-id')));
-        SIDEBAR.showInputs();
+        if ($(this).attr('noclick') == 1) {
+                $(this).removeAttr('noclick');
+        } else {
+            SIDEBAR.setCurrentTool('Edit Link');
+            SIDEBAR.setTransition(stateManager.getTransitionById($(this).attr('transition-id')));
+            SIDEBAR.showInputs(); 
+        }
     });
 }
 

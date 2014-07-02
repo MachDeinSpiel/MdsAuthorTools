@@ -21,7 +21,105 @@
             },
             "json":" {\"ident\": \"changeAttribute\", \"defaults\": {\"attribute\": \"notValue.self._attribute_\", \"value\": _amount_, \"valueType\": \"_method_\", \"duration\": \"null\", \"ticks\": \"null\"}}"
         },
-		{
+        {
+            "name" : "Start Reaction Mini App",
+            "inputs": {
+                "subject": {
+                    "type": "STRING",
+                    "hint": "Player who will play the MiniApp usually self"
+                },
+                "obcject": {
+                    "type": "STRING",
+                    "hint": "In case the MiniApp should require an object but usually null"
+                },
+        "attribute": {
+            "type": "ATTRIBUTE",
+                        "hint": "The attribute the MiniApp changes" 
+        },
+        "minScore": {
+            "type": "NUMBER",
+                    "hint": "A number between 0 and 10, determines when the MiniApp is considered to be won"    
+        },
+        "factor": {
+                "type": "NUMBER",
+                    "hint": "Factor to multiply the results"    
+            },
+        "setWin": {
+            "type": "NUMBER",
+                        "hint": "Number to add to the choosen attribute in case of win" 
+        },
+        "setLoose": {
+            "type": "NUMBER",
+                        "hint": "Number to add to the choosen attribute in case of loose, it should be negative"
+        }
+            },
+            "json":" {\"ident\": \"startMiniApp\", \"defaults\": {\"name\": \"Reaction\", \"subject\": _notValue.subject_, \"object\": \"_notValue.object_\", \"attribute\": \"_attribute_\", \"minScore\": \"_minScore_\", \"factor\": \"_factor_\", \"setWin\": \"_setWin_\", \"setLoose\": \"_setLoose_\"}}"
+        },
+        {
+            "name" : "Start Puzzle Mini App",
+            "inputs": {
+                "subject": {
+                    "type": "STRING",
+                    "hint": "Player who will play the MiniApp usually self"
+                },
+                "obcject": {
+                    "type": "STRING",
+                    "hint": "In case the MiniApp should require an object but usually null"
+                },
+        "attribute": {
+            "type": "ATTRIBUTE",
+                        "hint": "The attribute the MiniApp changes" 
+        },
+        "minScore": {
+            "type": "NUMBER",
+                    "hint": "A number between 0 and 10, determines when the MiniApp is considered to be won"    
+        },
+        "setWin": {
+            "type": "SELECT",
+            "options": [{"true":"true"}, {"false":"false"}],
+                        "hint": "Value the attribute is set to in case of win"  
+        },
+        "setLoose": {
+            "type": "SELECT",
+            "options": [{"true":"true"}, {"false":"false"}],
+                        "hint": "Value the attribute is set to in case of loose"
+        }
+            },
+            "json":" {\"ident\": \"startMiniApp\", \"defaults\": {\"name\": \"Puzzle\", \"subject\": _notValue.subject_, \"object\": \"_notValue.object_\", \"attribute\": \"_attribute_\", \"minScore\": \"_minScore_\", \"factor\": \"null\", \"setWin\": \"_setWin_\", \"setLoose\": \"_setLoose_\"}}"
+        },
+        {
+            "name" : "Start Pipes Mini App",
+            "inputs": {
+                "subject": {
+                    "type": "STRING",
+                    "hint": "Player who will play the MiniApp usually self"
+                },
+                "obcject": {
+                    "type": "STRING",
+                    "hint": "In case the MiniApp should require an object but usually null"
+                },
+        "attribute": {
+            "type": "ATTRIBUTE",
+                        "hint": "The attribute the MiniApp changes" 
+        },
+        "minScore": {
+            "type": "NUMBER",
+                    "hint": "A number between 0 and 10, determines when the MiniApp is considered to be won"    
+        },
+        "setWin": {
+            "type": "SELECT",
+            "options": [{"true":"true"}, {"false":"false"}],
+                        "hint": "Value the attribute is set to in case of win"  
+        },
+        "setLoose": {
+            "type": "SELECT",
+            "options": [{"true":"true"}, {"false":"false"}],
+                        "hint": "Value the attribute is set to in case of loose"
+        }
+            },
+            "json":" {\"ident\": \"startMiniApp\", \"defaults\": {\"name\": \"Pipes\", \"subject\": _notValue.subject_, \"object\": \"_notValue.object_\", \"attribute\": \"_attribute_\", \"minScore\": \"_minScore_\", \"factor\": \"null\", \"setWin\": \"_setWin_\", \"setLoose\": \"_setLoose_\"}}"
+        },
+    {
             "name" : "SetStringAttribute",
             "inputs": {
                 "attribute": {
@@ -32,14 +130,14 @@
                     "type": "STRING",
                     "hint" : "New value for the attribute"
                 },
-			    "duration":{
+                "duration":{
                     "type": "NUMBER",
                     "hint" : "How long does the effect last in seconds"
                 }
             },
             "json":" {\"ident\": \"changeAttribute\", \"defaults\": {\"attribute\": \"notValue.self._attribute_\", \"value\": _value_, \"valueType\": \"set\", \"duration\": \"_duration_\", \"ticks\": \"null\"}}"
         },
-		{
+        {
             "name" : "SetNumberAttribute",
             "inputs": {
                 "attribute": {
@@ -53,7 +151,7 @@
             },
             "json":" {\"ident\": \"changeAttribute\", \"defaults\": {\"attribute\": \"notValue.self._attribute_\", \"value\": _value_, \"valueType\": \"set\", \"duration\": \"null\", \"ticks\": \"null\"}}"
         },
-		{
+        {
             "name" : "EffectOverTime",
             "inputs": {
                 "attribute": {
@@ -123,8 +221,7 @@
                 },
                 "radius": {
                     "type": "NUMBER",
-                    "deafult": 0,
-                    "hint": "Choose a radius"
+                    "deafult": 0
                 }
             },
             "json": " \"event\": \"locationEvent\", \"condition\": { \"name\": \"nearby\", \"params\": { \"object\": { \"name\": \"_group_\", \"quantifier\": { \"checkType\": \"_quantifier_\", \"value\": _value_ } }, \"subject\": { \"name\": \"self\", \"quantifier\": { \"checkType\": \"equals\", \"value\": 1 } }, \"radius\": _radius_ } }"
@@ -159,7 +256,7 @@
                     ],
                     "hint": "the method by which the values are compared"
                 },
-				"compValue": {
+                "compValue": {
                     "type": "NUMBER",
                     "hint": "Value to which the attribute is compared"
                 }

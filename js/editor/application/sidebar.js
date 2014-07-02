@@ -30,9 +30,12 @@ SIDEBAR.tools = {
 		'id': 'tool-newstate',
 		'path': '',
 		'func': function() {
-			SIDEBAR.setCurrentTool('New State');
-			SIDEBAR.slideOutInputs();
-			SIDEBAR.showInputs();
+			 SIDEBAR.setState(historyManager.onNewCommand(new CreateStateCommand({
+                    'left': parseInt(0),
+                    'top': parseInt(0)
+                })));
+            SIDEBAR.setCurrentTool("New State");
+            SIDEBAR.showInputs();
 		}
 	},
 	'New Link': {
@@ -100,13 +103,11 @@ SIDEBAR.saveInputs = function() {
 			SIDEBAR.setCurrentTool(null);
 		}
 		
-
 		if (SIDEBAR.currentTool === 'Edit Link' ) {
 			var transitioninputs = $("#inputs-wrapper :input");
 			var i = 0;
 			var tempCond = new Condition();
 			$.each(presetManager.getTransitions()[SIDEBAR.selectedCondtion].inputs, function(key,value){
-				console.log(key, $("[input-id='"+(i)+"']").val());
 				tempCond.inputs[key] = $("[input-id='"+(i++)+"']").val();
 			});
 			tempCond.data = jQuery.extend(true,{},presetManager.getTransitions()[SIDEBAR.selectedCondtion]);
@@ -115,6 +116,7 @@ SIDEBAR.saveInputs = function() {
 			if(SIDEBAR.currentTransition.isChanged){
 				historyManager.onNewCommand(new UpdateTransitionCommand(SIDEBAR.currentTransition, 
 					stateManager.getTransitionById(SIDEBAR.currentTransition.id).getClone()));
+				stateManager.getTransitionById(SIDEBAR.currentTransition.id).isChanged = false;
 			}
 		}
 	}
@@ -149,10 +151,8 @@ SIDEBAR.createGroupSelector = function(id) {
 }
 
 SIDEBAR.createSelector = function(data, id) {
-	console.info(data);
 	var selector = $('<select name="selector" input-id="'+id+'""></select>');
 	$.each(data, function(key, value){
-		console.log(value);
 		$.each(value, function(key, value){
 			selector.append($('<option value="' + value + '">' + key + '</option>)'));
 		});	
@@ -192,7 +192,6 @@ SIDEBAR.encodeTransitionValues = function(key, value, dom, id){
 
 
 SIDEBAR.generateTransitionInputs = function(inputs) {
-	console.info('______________generateTransitionInputs_______________');
 	var inputsdiv = $("<div>");
 	var i = 0;
 	$.each(inputs, function(key, value) {
