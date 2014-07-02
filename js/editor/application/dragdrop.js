@@ -27,7 +27,6 @@ DRAGDROP.LoadStateDrag = function() {
             temp.y = parseInt(this.style.top);
             SIDEBAR.currentState.update(temp);
             if(SIDEBAR.currentState.isChanged){
-                console.log("change");
                 historyManager.onNewCommand(new UpdateStateCommand(SIDEBAR.currentState, stateManager.getStateByID($(this).attr('state-id')).getClone()));
             }
             

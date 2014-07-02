@@ -103,13 +103,11 @@ SIDEBAR.saveInputs = function() {
 			SIDEBAR.setCurrentTool(null);
 		}
 		
-
 		if (SIDEBAR.currentTool === 'Edit Link' ) {
 			var transitioninputs = $("#inputs-wrapper :input");
 			var i = 0;
 			var tempCond = new Condition();
 			$.each(presetManager.getTransitions()[SIDEBAR.selectedCondtion].inputs, function(key,value){
-				console.log(key, $("[input-id='"+(i)+"']").val());
 				tempCond.inputs[key] = $("[input-id='"+(i++)+"']").val();
 			});
 			tempCond.data = jQuery.extend(true,{},presetManager.getTransitions()[SIDEBAR.selectedCondtion]);
@@ -153,10 +151,8 @@ SIDEBAR.createGroupSelector = function(id) {
 }
 
 SIDEBAR.createSelector = function(data, id) {
-	console.info(data);
 	var selector = $('<select name="selector" input-id="'+id+'""></select>');
 	$.each(data, function(key, value){
-		console.log(value);
 		$.each(value, function(key, value){
 			selector.append($('<option value="' + value + '">' + key + '</option>)'));
 		});	
@@ -196,7 +192,6 @@ SIDEBAR.encodeTransitionValues = function(key, value, dom, id){
 
 
 SIDEBAR.generateTransitionInputs = function(inputs) {
-	console.info('______________generateTransitionInputs_______________');
 	var inputsdiv = $("<div>");
 	var i = 0;
 	$.each(inputs, function(key, value) {
