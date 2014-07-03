@@ -6,7 +6,7 @@ if (isset($_POST['json'])) {
 
 	$json = $_POST['json'];
 	$gamename = $_POST['gamename'];
-	$time = time();
+	$time = microtime();
 	$filename = $gamename."_".$time.".json";
 	
 	$file = fopen("jsons/".$filename."","w");
