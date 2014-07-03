@@ -33,3 +33,7 @@
 	float: left;
 	border-right: 1px solid;
 }
+
+#raw-panel input[type=button]{
+	float: right;
+}
