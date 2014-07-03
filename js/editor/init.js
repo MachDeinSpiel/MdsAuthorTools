@@ -41,6 +41,12 @@ function init(){
 		CANVAS.windowUpdate();
 	});
 
+	$( document ).keypress(function(event){
+		if(event.keyCode == 176){
+			SIDEBAR.slideOutInputs();
+		}
+	});
+
 	presetManager = new PresetManager("assets/json/presets.json");
 	groupEditor = new GroupEditor();
 	exporter = new Exporter();
