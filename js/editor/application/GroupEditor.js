@@ -46,32 +46,6 @@ function GroupEditor(){
 
 	//ui-stuff
 	$('#member-attributes').accordion();
-
-
-	//test
-	this.addGroup("cooleLeute");
-	this.addAttribute("cooleLeute", "stinkt", {type:"value"});
-	this.addAttribute("cooleLeute", "haus", {type:"position"});
-	this.addAttribute("cooleLeute", "reiseziel", {type:"position"});
-	this.addMember("cooleLeute", "Hans", {});
-	this.groups.cooleLeute.members.Hans.haus.longitude= 8.809935626983588;
-	this.groups.cooleLeute.members.Hans.haus.latitude= 53.083995593445756;
-	this.groups.cooleLeute.members.Hans.haus.zoom= 16;
-	this.groups.cooleLeute.members.Hans.reiseziel.longitude= 2.7453447000000324;
-	this.groups.cooleLeute.members.Hans.reiseziel.latitude= 39.5157819;
-	this.groups.cooleLeute.members.Hans.reiseziel.zoom= 11;
-	this.groups.cooleLeute.members.Hans.stinkt.value= "manchmal";
-
-	this.addMember("cooleLeute", "Flo Rista", {});
-	this.groups.cooleLeute.members["Flo Rista"].haus.longitude= -3.6870743986219168;
-	this.groups.cooleLeute.members["Flo Rista"].haus.latitude= 41.67323938824088;
-	this.groups.cooleLeute.members["Flo Rista"].haus.zoom= 18;
-	this.groups.cooleLeute.members["Flo Rista"].reiseziel.longitude= 10.38930058479309;
-	this.groups.cooleLeute.members["Flo Rista"].reiseziel.latitude= 46.92182347638428;
-	this.groups.cooleLeute.members["Flo Rista"].reiseziel.zoom= 11;
-	this.groups.cooleLeute.members["Flo Rista"].stinkt.value= "höchstens nach Blumen";
-	this.editGroup();
-	this.editMember();
 }
 
 GroupEditor.prototype.addGroup = function(groupName){
