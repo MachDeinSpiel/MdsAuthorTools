@@ -16,7 +16,7 @@ function Exporter(){
 }
 
 Exporter.prototype.export = function(){
-	var config = this.generateConfig();
+	var config = this.generateConfig(true);
 	if(config == false){
 		return;
 	}
@@ -32,14 +32,14 @@ Exporter.prototype.export = function(){
 			config.clienturl ="";
 			config.author = name;
 			console.log(config);
-			var data = '{"mode":"config","username":'+name+', "password":'+pw+',"config":'+config+'}';
+			var data = '{"mode":"config","username":'+name+', "password":'+pw+',"config":'+JSON.stringify(config)+'}';
 			console.log("data:",data);
 			scope.websocket.send(data);
 		});
 	});
 }
 
-Exporter.prototype.generateConfig = function(serverURL, clientURL, asObj){
+Exporter.prototype.generateConfig = function(asObj){
 	var config = {};
 	config.name = document.querySelector('input[name=config-game-name]').value;
 	config.version = document.querySelector('input[name=config-version]').value;
