@@ -45,6 +45,8 @@ Exporter.prototype.generateConfig = function(asObj){
 	config.version = document.querySelector('input[name=config-version]').value;
 	config.minplayers = parseInt(document.querySelector('input[name=config-min-player]').value);
 	config.maxplayers = parseInt(document.querySelector('input[name=config-max-player]').value);
+	config.apptheme = $('#theme-selection').val();
+
 	for(var key in config){
 		if(config[key] == undefined){
 			$("li[data-panel='editor-game']").click(); 
@@ -70,8 +72,7 @@ Exporter.prototype.generateConfig = function(asObj){
 	}
 	config.teams = this.getNumberofTeams();
 	config.isteamgame = (config.teams!=0);
-	config.apptheme = "light";
-
+	
 
 	if(asObj){
 		return config;

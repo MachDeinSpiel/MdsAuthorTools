@@ -14,6 +14,7 @@
 		<link rel="stylesheet" type="text/css" href="style/group-editor.css">
 		<link rel="stylesheet" type="text/css" href="style/toolbox.css">
 		<link rel="stylesheet" type="text/css" href="style/sidebar-inputs.css">
+		<link rel="stylesheet" type="text/css" href="style/raw.css">
 		
 	</head>
 	<body>
@@ -25,17 +26,22 @@
 				<input type="button" id="login-button" value="login" />
 			</div>
 		</div>
+		<div id="raw-wrapper">
+			<div id="raw-panel">
+				<div>EditorClient</div>
+				<div>EditorServer</div>
+				<input type="button" value="upload" style="float:right;"/>
+			</div>
+		</div>
 		<div id="wrapper">
 			<div id="top-bar">
 				<div id="header-logo"></div>
 				<div id="top-title">Unnamed Game</div>
 				<ul id="window-menu" class="menu">
-					<li>File</li>
-					<li>Edit</li>
-					<li>View</li>
 					<li data-command="undo">Undo</li>
 					<li data-command="redo">Redo</li>
 					<li data-command="upload">Upload to Server</li>
+					<li data-command="raw">Enter raw JSON</li>
 				</ul>
 				<ul id="editor-top-switcher" class="menu">
 					<li data-panel="editor-game" class="selected">GameSettings</li>
@@ -168,6 +174,7 @@
 		<script src="js/editor/application/commands/HistoryManager.js" type="text/javascript" charset="utf-8" ></script>
 		<script src="js/editor/application/PresetManager.js" type="text/javascript" charset="utf-8" ></script>
 		<script src="js/editor/application/GroupEditor.js" type="text/javascript" charset="utf-8" ></script>
+		<script src="js/editor/application/raweditor.js" type="text/javascript" charset="utf-8" ></script>
 		
 		<script src="js/editor/init.js" type="text/javascript" charset="utf-8" ></script>
 	</body>

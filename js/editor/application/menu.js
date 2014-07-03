@@ -44,5 +44,7 @@ MENU.execute = function(what){
 						break;
 		case 'upload': 	exporter.export();
 						break; 
+		case 'raw': 	RAWEDITOR.show();
+						break; 
 	}
 }

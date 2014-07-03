@@ -20,6 +20,7 @@ function init(){
 	SIDEBAR.showTools();
 	DRAGDROP.LoadToolDrag();
 	DRAGDROP.LoadStateDrag();
+	RAWEDITOR.init();
 
 	$("#editor-divs").droppable({
 		drop: function(event, ui) {
