@@ -28,9 +28,15 @@
 		</div>
 		<div id="raw-wrapper">
 			<div id="raw-panel">
-				<div>EditorClient</div>
-				<div>EditorServer</div>
-				<input type="button" value="upload" style="float:right;"/>
+				<div class="raw-editors">
+					<h1>Client Json</h1>
+					<div id="editor-client" class="ace-editor">EditorClient</div>
+				</div>
+				<div class="raw-editors">
+					<h1>Server Json</h1>
+					<div id="editor-server" class="ace-editor">EditorServer</div>
+				</div>
+				<input type="button" value="upload" style="float:right;" onclick="RAWEDITOR.upload()" />
 			</div>
 		</div>
 		<div id="wrapper">
@@ -141,6 +147,7 @@
 				</div>
 			</div>
 		</div>
+		<script src="js/ace/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 		<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
